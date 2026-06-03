@@ -476,3 +476,38 @@ Admin update restrictions:
 - Admins cannot update inventory_units.drawn_by.
 - Admins cannot update inventory_units.draw_result_id.
 - Admins cannot update result-related inventory fields after inventory_units.status becomes drawn.
+
+## 21. Local Seed Data
+
+Local MVP seed data is stored in:
+
+```txt
+supabase/seed.sql
+```
+
+Run seed data through Supabase reset:
+
+```bash
+npx supabase db reset
+```
+
+Seed data includes:
+
+- 2 MVP mock themes
+- theme-based reward_items with S/A/B/C grades
+- 2 active gacha draw_products
+- 1 hidden ticket placeholder draw_product
+- draw_product_items pool configuration
+- 100 available inventory_units per active gacha product
+- published policy placeholder pages
+- published FAQ items
+
+Seed data must not create:
+
+- auth.users
+- profiles
+- user_draw_credits
+- draw_results
+- draw_logs
+
+Admin account setup should be handled separately after OAuth login by updating the logged-in profile role manually in local development.
