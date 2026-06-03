@@ -1,0 +1,852 @@
+@import 'tailwindcss';
+
+:root {
+  color: #171f2a;
+  background: #f5f7fa;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    linear-gradient(180deg, #ffffff 0, #f5f7fa 280px),
+    #f5f7fa;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-header {
+  display: flex;
+  min-height: 72px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid #e6eaf0;
+  background: rgb(255 255 255 / 0.9);
+  padding: 18px 20px;
+  backdrop-filter: blur(12px);
+}
+
+.brand,
+.admin-brand {
+  color: #111827;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.site-nav,
+.admin-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.header-right {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+}
+
+.site-nav {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.nav-link,
+.admin-nav-link {
+  border-radius: 8px;
+  color: #637083;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.nav-link {
+  padding: 9px 11px;
+}
+
+.nav-link.active,
+.admin-nav-link.active {
+  background: #eef4ff;
+  color: #1d4ed8;
+}
+
+.nav-link:hover,
+.admin-nav-link:hover {
+  background: #f0f3f8;
+  color: #111827;
+}
+
+.auth-header-area {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.auth-button,
+.auth-user-link {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
+.auth-button {
+  border: 0;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.auth-button-secondary {
+  background: #eef2f7;
+  color: #526172;
+}
+
+.auth-user-link {
+  max-width: 180px;
+  overflow: hidden;
+  background: #f6f8fb;
+  color: #111827;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-status-text {
+  color: #7b8794;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.page-container {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  padding: 36px 20px 56px;
+}
+
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid #e6eaf0;
+  color: #7b8794;
+  font-size: 14px;
+  padding: 20px;
+}
+
+.page-panel {
+  border: 1px solid #e4e9f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(31 41 55 / 0.07);
+  padding: 28px;
+}
+
+.page-panel-content {
+  display: grid;
+  gap: 20px;
+  max-width: 720px;
+}
+
+.page-panel h1 {
+  margin: 10px 0 0;
+  color: #111827;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.section-label {
+  margin: 0;
+  color: #4f6f9f;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.page-description {
+  max-width: 680px;
+  margin: 0;
+  color: #526172;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.primary-button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: default;
+  font: inherit;
+  font-weight: 800;
+  padding: 0 18px;
+  box-shadow: 0 10px 22px rgb(37 99 235 / 0.18);
+}
+
+.helper-text {
+  color: #7b8794;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.status-badge {
+  width: fit-content;
+  border-radius: 8px;
+  background: #eef8f3;
+  color: #047857;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 8px 10px;
+}
+
+.text-link {
+  display: inline-flex;
+  margin-top: 20px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.gacha-list-page {
+  display: grid;
+  gap: 28px;
+}
+
+.gacha-hero {
+  display: grid;
+  gap: 16px;
+  max-width: 760px;
+}
+
+.gacha-hero h1 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 850;
+  line-height: 1.12;
+}
+
+.gacha-hero p {
+  margin: 0;
+  color: #526172;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.gacha-card-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.gacha-card {
+  display: grid;
+  gap: 22px;
+  border: 1px solid #e4e9f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(31 41 55 / 0.07);
+  padding: 24px;
+}
+
+.gacha-card-header {
+  display: grid;
+  gap: 16px;
+}
+
+.gacha-card-title-group {
+  display: grid;
+  gap: 12px;
+}
+
+.gacha-card h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.gacha-price {
+  color: #111827;
+  font-size: 22px;
+}
+
+.gacha-description {
+  margin: 0;
+  color: #526172;
+  line-height: 1.65;
+}
+
+.gacha-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.gacha-meta-grid div {
+  border-radius: 8px;
+  background: #f6f8fb;
+  padding: 14px;
+}
+
+.gacha-meta-grid dt {
+  color: #7b8794;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gacha-meta-grid dd {
+  margin: 6px 0 0;
+  color: #111827;
+  font-weight: 800;
+}
+
+.grade-counts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.grade-pill {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #526172;
+  padding: 0 12px;
+}
+
+.grade-pill strong {
+  color: #111827;
+  font-size: 18px;
+}
+
+.detail-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 800;
+  padding: 0 18px;
+  width: 100%;
+}
+
+.state-card {
+  border: 1px solid #e4e9f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #526172;
+  padding: 24px;
+}
+
+.state-card-error {
+  display: grid;
+  gap: 8px;
+  border-color: #fecdd3;
+  background: #fff7f8;
+  color: #9f1239;
+}
+
+.auth-required-card {
+  display: grid;
+  gap: 20px;
+  max-width: 680px;
+  border: 1px solid #e4e9f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(31 41 55 / 0.07);
+  padding: 28px;
+}
+
+.auth-required-card h1 {
+  margin: 10px 0 0;
+  color: #111827;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.16;
+}
+
+.auth-required-card p {
+  margin: 0;
+  color: #526172;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.auth-error-text {
+  border-radius: 8px;
+  background: #fff7f8;
+  color: #9f1239 !important;
+  padding: 12px;
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.text-link-inline {
+  display: inline-flex;
+  color: #2563eb;
+  font-weight: 800;
+}
+
+.status-badge-active {
+  background: #eef8f3;
+  color: #047857;
+}
+
+.status-badge-limited {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.status-badge-soldOut {
+  background: #f2f4f7;
+  color: #526172;
+}
+
+.status-badge-hidden {
+  background: #f3f0ff;
+  color: #6d3bd1;
+}
+
+.gacha-detail-page {
+  display: grid;
+  gap: 24px;
+}
+
+.detail-hero-card,
+.info-card,
+.fairness-card,
+.sticky-cta-card {
+  border: 1px solid #e4e9f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(31 41 55 / 0.07);
+}
+
+.detail-hero-card {
+  display: grid;
+  gap: 24px;
+  padding: 28px;
+}
+
+.detail-hero-content {
+  display: grid;
+  gap: 18px;
+}
+
+.detail-hero-content h1 {
+  margin: 10px 0 0;
+  color: #111827;
+  font-size: clamp(34px, 6vw, 58px);
+  font-weight: 850;
+  line-height: 1.12;
+}
+
+.detail-hero-content p {
+  margin: 0;
+  color: #526172;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.purchase-summary-card {
+  display: grid;
+  gap: 12px;
+  border-radius: 8px;
+  background: #f6f8fb;
+  padding: 20px;
+}
+
+.purchase-summary-card strong {
+  color: #111827;
+  font-size: 28px;
+}
+
+.purchase-summary-card p {
+  margin: 0;
+  color: #7b8794;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.summary-label {
+  color: #7b8794;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.disabled-cta {
+  min-height: 48px;
+  border: 0;
+  border-radius: 8px;
+  background: #dbe3ef;
+  color: #637083;
+  cursor: not-allowed;
+  font: inherit;
+  font-weight: 850;
+  padding: 0 18px;
+}
+
+.detail-section-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.info-card,
+.fairness-card {
+  padding: 24px;
+}
+
+.info-card h2,
+.fairness-card h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.section-help,
+.fairness-card p {
+  margin: 10px 0 0;
+  color: #526172;
+  line-height: 1.65;
+}
+
+.detail-info-list {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+}
+
+.detail-info-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 8px;
+  background: #f6f8fb;
+  padding: 14px;
+}
+
+.detail-info-list dt {
+  color: #7b8794;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.detail-info-list dd {
+  margin: 0;
+  color: #111827;
+  font-weight: 850;
+  text-align: right;
+}
+
+.probability-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.probability-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.probability-meter {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #edf1f7;
+}
+
+.probability-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #2563eb;
+}
+
+.probability-row strong {
+  color: #111827;
+}
+
+.probability-row em {
+  color: #2563eb;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.grade-badge,
+.soft-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.grade-badge {
+  min-width: 36px;
+  min-height: 36px;
+  background: #eef4ff;
+  color: #1d4ed8;
+}
+
+.soft-badge {
+  min-height: 34px;
+  background: #f2f6fb;
+  color: #526172;
+  font-size: 13px;
+  padding: 0 10px;
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.section-heading-row h2 {
+  margin-top: 6px;
+}
+
+.reward-item-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.reward-item-card {
+  display: grid;
+  gap: 14px;
+  border: 1px solid #e8edf3;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 18px;
+}
+
+.reward-item-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reward-item-heading h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 17px;
+}
+
+.reward-item-heading p,
+.reward-item-description {
+  margin: 4px 0 0;
+  color: #637083;
+  line-height: 1.55;
+}
+
+.reward-item-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.reward-item-meta div {
+  border-radius: 8px;
+  background: #f6f8fb;
+  padding: 12px;
+}
+
+.reward-item-meta dt {
+  color: #7b8794;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.reward-item-meta dd {
+  margin: 5px 0 0;
+  color: #111827;
+  font-weight: 850;
+}
+
+.sticky-cta-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.sticky-cta-card div {
+  display: grid;
+  gap: 4px;
+}
+
+.sticky-cta-card strong {
+  color: #111827;
+}
+
+.sticky-cta-card span {
+  color: #526172;
+}
+
+.admin-shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  background: #f5f7fa;
+}
+
+.admin-sidebar {
+  border-bottom: 1px solid #e6eaf0;
+  background: #ffffff;
+  padding: 20px;
+}
+
+.admin-nav {
+  margin-top: 18px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.admin-nav-link {
+  padding: 10px 12px;
+}
+
+.admin-main {
+  padding: 24px 20px 56px;
+}
+
+.auth-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+@media (min-width: 760px) {
+  .site-header {
+    align-items: center;
+    padding: 0 32px;
+  }
+
+  .header-right {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    width: auto;
+  }
+
+  .site-nav {
+    justify-content: flex-end;
+  }
+
+  .page-container {
+    padding: 56px 28px 72px;
+  }
+
+  .page-panel {
+    padding: 44px;
+  }
+
+  .gacha-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gacha-card-header {
+    align-items: start;
+    grid-template-columns: 1fr auto;
+  }
+
+  .detail-button {
+    width: fit-content;
+  }
+
+  .detail-hero-card {
+    align-items: stretch;
+    grid-template-columns: 1fr 320px;
+    padding: 40px;
+  }
+
+  .detail-section-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reward-item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sticky-cta-card {
+    align-items: center;
+    grid-template-columns: 1fr auto;
+  }
+}
+
+@media (min-width: 960px) {
+  .admin-shell {
+    grid-template-columns: 248px 1fr;
+  }
+
+  .admin-sidebar {
+    border-right: 1px solid #e6eaf0;
+    border-bottom: 0;
+    padding: 28px 18px;
+  }
+
+  .admin-nav {
+    flex-direction: column;
+    margin-top: 28px;
+  }
+
+  .admin-main {
+    padding: 48px;
+  }
+}
