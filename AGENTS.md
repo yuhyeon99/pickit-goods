@@ -24,3 +24,25 @@ Before implementing features, read the following documents:
 - Admins can view draw results but cannot modify winning results.
 - Use mock data first when implementing UI pages.
 - After each task, summarize changed files and remaining work.
+
+
+## UI/UX Direction
+
+Use the clean, trustworthy product UI often seen in Toss app/web as the main visual reference.
+
+Do not copy Toss UI exactly. Instead, use it only as a reference for product clarity and interaction quality.
+
+- Wide spacing
+- Clear information hierarchy
+- Large titles and short descriptions
+- Rounded card layouts
+- Clear CTA buttons
+- Soft status badges
+- Mobile-first responsive layout
+- Flows where the user's next action is easy to understand
+- Friendly but trustworthy financial/product-service tone
+- Smooth micro-interactions where they help user understanding
+
+Before implementing or modifying user-facing pages, check `docs/UI_GUIDELINES.md`.
+
+For MVP, prioritize clarity over decoration.

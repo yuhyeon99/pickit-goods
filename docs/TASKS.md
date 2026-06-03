@@ -131,7 +131,7 @@ Requirements:
 
 Goal:
 
-Create mock data for UI development.
+Create mock data and Supabase seed data for UI and DB flow development.
 
 Include:
 
@@ -141,16 +141,42 @@ Include:
 - Ticket products
 - Ticket placeholder data only
 - Inventory summaries
-- Cart items
-- Draw results
-- Claim requests
+- draw_product_items pool configuration
+- 100 available inventory_units per active gacha product
 - FAQ items
+
+User-specific mock data such as cart items, draw results, and claim requests may be added as UI-only mock data later, but must not be inserted by the Supabase seed.
+
+Supabase seed file:
+
+```txt
+supabase/seed.sql
+```
+
+Seed rules:
+
+- Do not create auth.users.
+- Do not create profiles.
+- Do not create user_draw_credits.
+- Do not create draw_results.
+- Do not create draw_logs.
+- Admin profile role setup is handled separately after OAuth login.
+
+Seed verification:
+
+```bash
+npx supabase db reset
+```
 
 ## Task 6. User Static UI
 
 Goal:
 
 Implement user-facing static UI using mock data.
+
+Before UI work, read:
+
+- docs/UI_GUIDELINES.md
 
 Pages:
 
@@ -193,6 +219,10 @@ Goal:
 
 Implement minimal admin-facing static UI using mock data.
 
+Before admin UI work, read:
+
+- docs/UI_GUIDELINES.md
+
 Pages:
 
 - Admin dashboard
@@ -219,6 +249,10 @@ Important:
 Goal:
 
 Implement Supabase Google OAuth login.
+
+Before auth work, read:
+
+- docs/AUTH.md
 
 Requirements:
 
