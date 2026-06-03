@@ -65,7 +65,7 @@ create policy "profiles insert own"
 on public.profiles
 for insert
 to authenticated
-with check (id = auth.uid());
+with check (id = auth.uid() and role = 'user');
 
 create policy "profiles update own"
 on public.profiles
@@ -145,6 +145,20 @@ on public.inventory_units
 for select
 to authenticated
 using (public.is_admin());
+
+create policy "inventory_units public read available visible products"
+on public.inventory_units
+for select
+to anon, authenticated
+using (
+  status = 'available'
+  and exists (
+    select 1
+    from public.draw_products dp
+    where dp.id = draw_product_id
+      and dp.status in ('active', 'sold_out')
+  )
+);
 
 create policy "inventory_units admin insert"
 on public.inventory_units
