@@ -49,8 +49,12 @@ function GachaProductCard({ product }: { product: GachaProduct }) {
           </dd>
         </div>
         <div>
-          <dt>남은 재고</dt>
-          <dd>{product.availableInventoryCount}</dd>
+          <dt>구매 가능 수량</dt>
+          <dd>{product.remainingPurchaseQuantity}개</dd>
+        </div>
+        <div>
+          <dt>남은 뽑기 재고</dt>
+          <dd>{product.availableInventoryCount}개</dd>
         </div>
       </dl>
 
@@ -87,8 +91,8 @@ export function GachaListPage() {
         <span className="status-badge">판매중</span>
         <h1>가챠 목록</h1>
         <p>
-          현재 판매 중인 MVP 가챠 상품입니다. 남은 재고와 등급별 수량은 Supabase
-          seed data 기준으로 표시됩니다.
+          현재 판매 중인 MVP 가챠 상품입니다. 신규 구매 가능 수량과 등급별 남은
+          뽑기 재고를 구분해서 확인할 수 있습니다.
         </p>
       </div>
 

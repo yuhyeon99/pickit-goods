@@ -71,13 +71,17 @@ function AdminPoolCard({ pool }: { pool: AdminPool }) {
 
       <dl className="admin-pool-summary">
         <div>
-          <dt>판매량</dt>
+          <dt>판매된 가챠권</dt>
           <dd>
             {pool.soldCount} / {pool.salesLimit}
           </dd>
         </div>
         <div>
-          <dt>available</dt>
+          <dt>신규 구매 가능 수량</dt>
+          <dd>{pool.remainingPurchaseQuantity}</dd>
+        </div>
+        <div>
+          <dt>미추첨 재고</dt>
           <dd>{pool.availableInventoryCount}</dd>
         </div>
         <div>
@@ -202,7 +206,7 @@ export function AdminPoolsPage() {
       <div className="page-heading">
         <p className="section-label">Admin Pools</p>
         <h1>상품 풀/재고 구성 조회</h1>
-        <p>가챠별 상품 풀 설정 수량과 실제 inventory_units 상태 분포를 비교합니다. 수정 기능은 지원하지 않습니다.</p>
+        <p>가챠별 상품 풀 설정 수량, 신규 구매 가능 수량, 미추첨 재고와 실제 inventory_units 상태 분포를 비교합니다. 수정 기능은 지원하지 않습니다.</p>
       </div>
 
       <section className="admin-pool-filter-card">

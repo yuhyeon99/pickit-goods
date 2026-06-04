@@ -59,7 +59,7 @@ function CartItemCard({
 
       <dl className="cart-item-meta">
         <div>
-          <dt>남은 구매 가능</dt>
+          <dt>구매 가능 수량</dt>
           <dd>{item.product.remainingPurchaseQuantity}개</dd>
         </div>
         <div>

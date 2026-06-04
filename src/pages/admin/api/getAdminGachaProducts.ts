@@ -1,4 +1,5 @@
 import { supabase } from '../../../shared/api/supabaseClient';
+import { calculateRemainingPurchaseQuantity } from '../../../shared/lib/calculateRemainingPurchaseQuantity';
 import { calculateGradeProbabilities } from '../../gacha/lib/calculateGradeProbabilities';
 import type {
   DrawProductScope,
@@ -29,6 +30,7 @@ type DrawProductRow = {
 type InventoryUnitRow = {
   draw_product_id: string;
   grade: RewardGrade;
+  status: string;
 };
 
 type DrawProductItemRow = {
@@ -100,8 +102,7 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
   ] = await Promise.all([
     supabase
       .from('inventory_units')
-      .select('draw_product_id, grade')
-      .eq('status', 'available')
+      .select('draw_product_id, grade, status')
       .in('draw_product_id', productIds)
       .returns<InventoryUnitRow[]>(),
     supabase
@@ -132,14 +133,23 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
   }
 
   const inventoryByProduct = new Map<string, GradeCounts>();
+  const totalInventoryByProduct = new Map<string, number>();
   const rewardItemsByProduct = new Map<string, AdminGachaRewardItem[]>();
 
   for (const productId of productIds) {
     inventoryByProduct.set(productId, emptyGradeCounts());
+    totalInventoryByProduct.set(productId, 0);
     rewardItemsByProduct.set(productId, []);
   }
 
   for (const unit of inventoryUnits ?? []) {
+    totalInventoryByProduct.set(
+      unit.draw_product_id,
+      (totalInventoryByProduct.get(unit.draw_product_id) ?? 0) + 1,
+    );
+
+    if (unit.status !== 'available') continue;
+
     const counts = inventoryByProduct.get(unit.draw_product_id);
     if (!counts) continue;
     counts[unit.grade] += 1;
@@ -166,9 +176,10 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
       (sum, count) => sum + count,
       0,
     );
-    const remainingPurchaseQuantity = Math.max(
-      0,
-      Math.min(product.sales_limit - product.sold_count, availableInventoryCount),
+    const remainingPurchaseQuantity = calculateRemainingPurchaseQuantity(
+      product.sales_limit,
+      product.sold_count,
+      availableInventoryCount,
     );
 
     return {
@@ -184,6 +195,7 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
       soldCount: product.sold_count,
       remainingPurchaseQuantity,
       availableInventoryCount,
+      totalInventoryCount: totalInventoryByProduct.get(product.id) ?? availableInventoryCount,
       availableGradeCounts: gradeCounts,
       gradeProbabilities: calculateGradeProbabilities(gradeCounts, availableInventoryCount),
       rewardItems: rewardItemsByProduct.get(product.id) ?? [],

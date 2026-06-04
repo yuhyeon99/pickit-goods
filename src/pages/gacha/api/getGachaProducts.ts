@@ -1,4 +1,5 @@
 import { supabase } from '../../../shared/api/supabaseClient';
+import { calculateRemainingPurchaseQuantity } from '../../../shared/lib/calculateRemainingPurchaseQuantity';
 import type { GachaProduct, GradeCounts, RewardGrade } from '../model/types';
 
 type DrawProductRow = {
@@ -99,6 +100,11 @@ export async function getGachaProducts(): Promise<GachaProduct[]> {
       themeId: product.theme_id,
       themeName: product.themes?.name ?? null,
       availableInventoryCount,
+      remainingPurchaseQuantity: calculateRemainingPurchaseQuantity(
+        product.sales_limit,
+        product.sold_count,
+        availableInventoryCount,
+      ),
       availableGradeCounts: gradeCounts,
     };
   });

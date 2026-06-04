@@ -45,12 +45,8 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
     product.status,
     product.availableInventoryCount,
   );
-  const remainingPurchaseQuantity = Math.max(
-    0,
-    Math.min(product.salesLimit - product.soldCount, product.availableInventoryCount),
-  );
   const canAddToCart =
-    isAuthenticated && product.status === 'active' && remainingPurchaseQuantity > 0;
+    isAuthenticated && product.status === 'active' && product.remainingPurchaseQuantity > 0;
 
   const addCartMutation = useMutation({
     mutationFn: () =>
@@ -76,7 +72,7 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
     ? '로그인하고 장바구니 담기'
     : product.status !== 'active'
       ? '신규 구매 불가'
-      : remainingPurchaseQuantity < 1
+      : product.remainingPurchaseQuantity < 1
         ? '남은 수량 없음'
         : addCartMutation.isPending
           ? '담는 중'
@@ -108,7 +104,7 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
           </button>
           <p>
             {isAuthenticated
-              ? `남은 구매 가능 수량 ${remainingPurchaseQuantity}개`
+              ? `구매 가능 수량 ${product.remainingPurchaseQuantity}개`
               : '로그인 후 가챠 이용권을 장바구니에 담을 수 있습니다.'}
           </p>
           {addCartMutation.isSuccess ? (
@@ -143,8 +139,12 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
               </dd>
             </div>
             <div>
-              <dt>남은 재고</dt>
-              <dd>{product.availableInventoryCount}</dd>
+              <dt>구매 가능 수량</dt>
+              <dd>{product.remainingPurchaseQuantity}개</dd>
+            </div>
+            <div>
+              <dt>남은 뽑기 재고</dt>
+              <dd>{product.availableInventoryCount}개</dd>
             </div>
           </dl>
         </div>
@@ -152,7 +152,7 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
         <div className="info-card">
           <h2>등급별 확률</h2>
           <p className="section-help">
-            확률은 현재 남은 재고 기준으로 표시되며, 뽑기 진행 상황에 따라 변경될 수 있습니다.
+            확률은 현재 남은 뽑기 재고 기준으로 표시되며, 뽑기 진행 상황에 따라 변경될 수 있습니다.
           </p>
           <div className="probability-list">
             {product.gradeProbabilities.map((grade) => (
@@ -197,7 +197,7 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
         <div>
           <strong>{product.title}</strong>
           <span>
-            {formatPrice(product.price)} · 남은 구매 가능 {remainingPurchaseQuantity}개
+            {formatPrice(product.price)} · 구매 가능 수량 {product.remainingPurchaseQuantity}개
           </span>
         </div>
         <button

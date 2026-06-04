@@ -20,7 +20,7 @@ function ProbabilityPanel({ product }: { product: GachaPlayable }) {
     <section className="info-card">
       <h2>현재 확률</h2>
       <p className="section-help">
-        확률은 서버에 남아 있는 available 재고 기준이며, 다른 사용자의 뽑기 진행에 따라 바뀔 수
+        확률은 서버에 남아 있는 미추첨 재고 기준이며, 다른 사용자의 뽑기 진행에 따라 바뀔 수
         있습니다.
       </p>
       <div className="probability-list">
@@ -191,7 +191,7 @@ export function GachaPlayPage() {
           <strong>{product.unusedCreditCount}장</strong>
         </div>
         <div className="play-status-card">
-          <span className="summary-label">남은 재고</span>
+          <span className="summary-label">남은 뽑기 재고</span>
           <strong>{product.availableInventoryCount}개</strong>
         </div>
       </section>

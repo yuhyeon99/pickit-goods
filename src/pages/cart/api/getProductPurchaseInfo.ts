@@ -1,5 +1,5 @@
 import { supabase } from '../../../shared/api/supabaseClient';
-import { calculateRemainingPurchaseQuantity } from '../lib/calculateRemainingPurchaseQuantity';
+import { calculateRemainingPurchaseQuantity } from '../../../shared/lib/calculateRemainingPurchaseQuantity';
 import type { CartDrawProduct } from '../model/types';
 import type { DrawProductScope, DrawProductStatus } from '../../gacha/model/types';
 

@@ -1,4 +1,5 @@
 import { supabase } from '../../../shared/api/supabaseClient';
+import { calculateRemainingPurchaseQuantity } from '../../../shared/lib/calculateRemainingPurchaseQuantity';
 import type {
   DrawProductScope,
   DrawProductStatus,
@@ -205,6 +206,11 @@ export async function getAdminPools(): Promise<AdminPool[]> {
       themeName: firstRelation(product.themes)?.name ?? null,
       salesLimit: product.sales_limit,
       soldCount: product.sold_count,
+      remainingPurchaseQuantity: calculateRemainingPurchaseQuantity(
+        product.sales_limit,
+        product.sold_count,
+        productInventory.byStatus.available,
+      ),
       availableInventoryCount: productInventory.byStatus.available,
       totalInventoryCount: productInventory.total,
       hasMismatch: poolItems.some((item) => !item.isQuantityMatched),

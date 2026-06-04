@@ -36,6 +36,7 @@ export type AdminPool = {
   themeName: string | null;
   salesLimit: number;
   soldCount: number;
+  remainingPurchaseQuantity: number;
   availableInventoryCount: number;
   totalInventoryCount: number;
   hasMismatch: boolean;

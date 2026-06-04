@@ -16,6 +16,7 @@ export type GachaProduct = {
   themeId: string | null;
   themeName: string | null;
   availableInventoryCount: number;
+  remainingPurchaseQuantity: number;
   availableGradeCounts: GradeCounts;
 };
 

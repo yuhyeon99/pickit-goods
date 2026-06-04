@@ -67,18 +67,22 @@ function AdminGachaCard({ product }: { product: AdminGachaProduct }) {
           <dd>{product.themeName ?? '여러 테마'}</dd>
         </div>
         <div>
-          <dt>판매량</dt>
+          <dt>판매된 가챠권</dt>
           <dd>
             {product.soldCount} / {product.salesLimit}
           </dd>
         </div>
         <div>
-          <dt>남은 구매 가능</dt>
+          <dt>신규 구매 가능 수량</dt>
           <dd>{product.remainingPurchaseQuantity}</dd>
         </div>
         <div>
-          <dt>available 재고</dt>
+          <dt>미추첨 재고</dt>
           <dd>{product.availableInventoryCount}</dd>
+        </div>
+        <div>
+          <dt>전체 재고</dt>
+          <dd>{product.totalInventoryCount}</dd>
         </div>
       </dl>
 
@@ -177,7 +181,7 @@ export function AdminGachaPage() {
       <div className="page-heading">
         <p className="section-label">Admin Gacha</p>
         <h1>가챠 상품/재고 조회</h1>
-        <p>판매 상태, 판매 수량, available 재고, 등급별 확률과 구성 상품을 조회합니다. 상품 수정은 지원하지 않습니다.</p>
+        <p>판매된 가챠권, 신규 구매 가능 수량, 미추첨 재고, 등급별 확률과 구성 상품을 구분해서 조회합니다. 상품 수정은 지원하지 않습니다.</p>
       </div>
 
       <section className="admin-gacha-filter-card">

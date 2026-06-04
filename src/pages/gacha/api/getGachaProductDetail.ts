@@ -1,4 +1,5 @@
 import { supabase } from '../../../shared/api/supabaseClient';
+import { calculateRemainingPurchaseQuantity } from '../../../shared/lib/calculateRemainingPurchaseQuantity';
 import { calculateGradeProbabilities } from '../lib/calculateGradeProbabilities';
 import type {
   GachaProduct,
@@ -145,6 +146,11 @@ export async function getGachaProductDetail(
     themeId: product.theme_id,
     themeName: product.themes?.name ?? null,
     availableInventoryCount,
+    remainingPurchaseQuantity: calculateRemainingPurchaseQuantity(
+      product.sales_limit,
+      product.sold_count,
+      availableInventoryCount,
+    ),
     availableGradeCounts,
     rewardItems,
     gradeProbabilities: calculateGradeProbabilities(

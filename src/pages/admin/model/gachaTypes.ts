@@ -27,6 +27,7 @@ export type AdminGachaProduct = {
   soldCount: number;
   remainingPurchaseQuantity: number;
   availableInventoryCount: number;
+  totalInventoryCount: number;
   availableGradeCounts: GradeCounts;
   gradeProbabilities: GradeProbability[];
   rewardItems: AdminGachaRewardItem[];
