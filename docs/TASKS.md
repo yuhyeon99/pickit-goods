@@ -546,18 +546,24 @@ Policy:
 - Expiration does not restore draw_products.sold_count.
 - inventory_units remain deducted only at draw execution time.
 
-Planned database work:
+Implemented database/RPC work:
 
-- Add `user_draw_credits.expires_at`.
-- Backfill existing unused credits based on created_at or paid_at.
-- Add indexes or admin filters if needed for expiration review.
+- Added `user_draw_credits.expires_at`.
+- Backfilled existing credits from created_at + 30 days.
+- checkout_cart() sets expires_at to now() + 30 days.
+- draw_gacha() only selects unused credits with expires_at > now().
+- Added index for user/product/status/expires_at lookup.
 
-Planned app work:
+Implemented app work:
 
 - `/my/draws` displays issued date, expiration date, remaining days, and usable/expired state.
 - Draw play blocks expired credits.
-- Admin/user views distinguish unused, used, expired, and refunded credits.
-- Refund request flow checks unused status and validity period.
+- `/gacha/:id/play` excludes expired credits from usable credit count.
+
+Remaining work:
+
+- Admin/user views can further distinguish raw unused credits from usable unexpired credits.
+- Refund request flow should check unused status and validity period when implemented.
 
 Excluded from first pass unless explicitly scheduled:
 

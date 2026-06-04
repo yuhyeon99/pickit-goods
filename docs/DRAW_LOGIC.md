@@ -11,7 +11,7 @@ For the first MVP, only gacha draw is implemented end to end. Ticket draw logic 
 The server must:
 
 1. Verify the user
-2. Verify the user's unused draw credit
+2. Verify the user's unused and unexpired draw credit
 3. Select one available inventory unit using a secure random method
 4. Mark the inventory unit as drawn
 5. Mark the draw credit as used
@@ -94,7 +94,7 @@ Store enough audit data in draw_logs:
 1. User clicks draw button
 2. Client calls perform-gacha-draw Edge Function
 3. Server checks authenticated user
-4. Server checks unused gacha credit
+4. Server checks unused gacha credit with `expires_at > now()`
 5. Server checks draw product status
 6. Server checks available inventory units
 7. Server generates secure random value
@@ -243,7 +243,7 @@ Draw execution for existing credits:
 ```txt
 If draw_product.status = 'sold_out'
 and available inventory remains
-and the user has an unused matching credit
+and the user has an unused, unexpired matching credit
 then draw is still allowed.
 ```
 
@@ -258,9 +258,43 @@ sold_out + no available inventory -> 품절
 hidden -> not shown on user-facing screens
 ```
 
-sold_out means new purchases are not allowed. Draw is still allowed only when available inventory remains and the user has an unused matching credit.
+sold_out means new purchases are not allowed. Draw is still allowed only when available inventory remains and the user has an unused, unexpired matching credit.
 
-## 12. Probability Calculation
+## 12. Draw Credit Expiration
+
+Gacha credits expire 30 days after checkout.
+
+Checkout behavior:
+
+```txt
+checkout_cart()
+  ↓
+user_draw_credits inserted
+  ↓
+expires_at = now() + interval '30 days'
+```
+
+Draw behavior:
+
+```txt
+draw_gacha()
+  ↓
+select unused credit
+  ↓
+require expires_at > now()
+```
+
+If a user has only expired unused credits for a product, draw_gacha must reject the draw with a user-facing message that expired credits cannot be used.
+
+Expiration does not:
+
+- Restore draw_products.sold_count.
+- Select or deduct inventory_units.
+- Automatically refund the user.
+
+Automatic unused → expired synchronization is not implemented yet. UI and draw RPC treat `status = unused and expires_at <= now()` as expired.
+
+## 13. Probability Calculation
 
 Displayed probability should be calculated from available inventory units.
 
@@ -281,7 +315,7 @@ C = 60 / 100 = 60%
 
 If inventory changes, displayed probability should be refreshed.
 
-## 13. Client UI Rules
+## 14. Client UI Rules
 
 The client can:
 
@@ -299,7 +333,7 @@ The client cannot:
 - Create draw_result directly
 - Modify draw_logs
 
-## 14. Admin Rules
+## 15. Admin Rules
 
 Admins can:
 

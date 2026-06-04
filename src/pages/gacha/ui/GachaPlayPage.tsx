@@ -187,7 +187,7 @@ export function GachaPlayPage() {
 
       <section className="play-status-grid">
         <div className="play-status-card">
-          <span className="summary-label">보유 가챠권</span>
+          <span className="summary-label">사용 가능한 가챠권</span>
           <strong>{product.unusedCreditCount}장</strong>
         </div>
         <div className="play-status-card">
@@ -197,6 +197,12 @@ export function GachaPlayPage() {
       </section>
 
       <ProbabilityPanel product={product} />
+
+      {product.expiredCreditCount > 0 ? (
+        <section className="state-card">
+          만료된 가챠권 {product.expiredCreditCount}장은 사용할 수 없습니다.
+        </section>
+      ) : null}
 
       {!hasCredits ? (
         <section className="empty-cart-card">

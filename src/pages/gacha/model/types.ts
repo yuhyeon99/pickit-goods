@@ -43,6 +43,7 @@ export type GachaProductDetail = GachaProduct & {
 
 export type GachaPlayable = GachaProductDetail & {
   unusedCreditCount: number;
+  expiredCreditCount: number;
 };
 
 export type GachaDrawResult = {

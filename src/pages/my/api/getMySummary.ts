@@ -12,8 +12,14 @@ export async function getMySummary(userId: string): Promise<MySummary> {
     getCartItems(userId),
   ]);
 
+  const now = Date.now();
+  const isUsableCredit = (status: string, expiresAt: string) =>
+    status === 'unused' && new Date(expiresAt).getTime() > now;
+
   return {
-    unusedCreditCount: credits.filter((credit) => credit.status === 'unused').length,
+    unusedCreditCount: credits.filter((credit) =>
+      isUsableCredit(credit.status, credit.expiresAt),
+    ).length,
     usedCreditCount: credits.filter((credit) => credit.status === 'used').length,
     drawResultCount: results.length,
     claimRequestCount: claims.length,

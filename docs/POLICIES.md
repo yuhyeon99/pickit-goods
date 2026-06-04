@@ -282,9 +282,12 @@ Rules:
 - Expired credits are not drawable.
 - Expiration does not automatically restore sales capacity.
 - sold_count is not decremented on expiration.
-- The MVP does not include automatic expiration jobs or notifications unless implemented in a later task.
+- Automatic expiration jobs and notifications are not implemented yet.
+- Refund request creation/processing is not implemented yet.
+- The draw RPC excludes expired credits by requiring `expires_at > now()`.
+- The checkout RPC sets `expires_at = now() + interval '30 days'` when issuing credits.
 
-Planned UI requirements for `/my/draws`:
+UI requirements for `/my/draws`:
 
 - Show credit issue date.
 - Show expiration date.
@@ -292,9 +295,9 @@ Planned UI requirements for `/my/draws`:
 - Show whether the credit is usable or expired.
 - Hide or disable "뽑기하러 가기" for expired credits.
 
-Planned schema impact:
+Schema impact:
 
-- Add `user_draw_credits.expires_at`.
+- `user_draw_credits.expires_at` is required.
 - Keep user_draw_credits.status values: unused, used, expired, refunded, failed.
 
 ## 10. Claim Request Policy

@@ -1317,6 +1317,31 @@ a {
   color: #526172;
 }
 
+.draw-credit-meta {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+}
+
+.draw-credit-meta div {
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.draw-credit-meta dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.draw-credit-meta dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
 .won-item-card p,
 .won-item-actions span {
   margin: 0;
@@ -3200,6 +3225,10 @@ a {
 
   .draw-result-actions {
     grid-template-columns: repeat(2, minmax(0, max-content));
+  }
+
+  .draw-credit-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .won-item-grid {

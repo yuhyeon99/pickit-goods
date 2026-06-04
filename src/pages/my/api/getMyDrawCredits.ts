@@ -10,6 +10,7 @@ export type MyDrawCredit = {
   productStatus: DrawProductStatus;
   productScope: DrawProductScope;
   status: DrawCreditStatus;
+  expiresAt: string;
   createdAt: string;
 };
 
@@ -17,6 +18,7 @@ type DrawCreditRow = {
   id: string;
   draw_product_id: string;
   status: DrawCreditStatus;
+  expires_at: string;
   created_at: string;
   draw_products: {
     title: string;
@@ -33,6 +35,7 @@ export async function getMyDrawCredits(userId: string): Promise<MyDrawCredit[]> 
         id,
         draw_product_id,
         status,
+        expires_at,
         created_at,
         draw_products(
           title,
@@ -56,6 +59,7 @@ export async function getMyDrawCredits(userId: string): Promise<MyDrawCredit[]> 
     productStatus: credit.draw_products.status,
     productScope: credit.draw_products.scope,
     status: credit.status,
+    expiresAt: credit.expires_at,
     createdAt: credit.created_at,
   }));
 }

@@ -22,22 +22,61 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
+function formatDateOnly(value: string) {
+  return new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(value));
+}
+
+function getEffectiveStatus(credit: MyDrawCredit): DrawCreditStatus {
+  if (credit.status === 'unused' && new Date(credit.expiresAt).getTime() <= Date.now()) {
+    return 'expired';
+  }
+
+  return credit.status;
+}
+
+function getRemainingDays(expiresAt: string) {
+  const diff = new Date(expiresAt).getTime() - Date.now();
+  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+}
+
 function CreditCard({ credit }: { credit: MyDrawCredit }) {
-  const canPlay = credit.status === 'unused' && credit.productStatus !== 'hidden';
+  const effectiveStatus = getEffectiveStatus(credit);
+  const canPlay = effectiveStatus === 'unused' && credit.productStatus !== 'hidden';
+  const remainingDays = getRemainingDays(credit.expiresAt);
 
   return (
     <article className="draw-credit-card">
       <div>
         <div className="cart-item-title-row">
-          <span className={`credit-status-badge credit-status-${credit.status}`}>
-            {statusLabels[credit.status]}
+          <span className={`credit-status-badge credit-status-${effectiveStatus}`}>
+            {statusLabels[effectiveStatus]}
           </span>
           <span className="soft-badge">
             {credit.productScope === 'random' ? '랜덤 가챠' : '테마 가챠'}
           </span>
         </div>
         <h2>{credit.productTitle}</h2>
-        <p>발급일 {formatDate(credit.createdAt)}</p>
+        <dl className="draw-credit-meta">
+          <div>
+            <dt>발급일</dt>
+            <dd>{formatDate(credit.createdAt)}</dd>
+          </div>
+          <div>
+            <dt>만료일</dt>
+            <dd>{formatDateOnly(credit.expiresAt)}</dd>
+          </div>
+          <div>
+            <dt>남은 기간</dt>
+            <dd>{effectiveStatus === 'unused' ? `${remainingDays}일` : statusLabels[effectiveStatus]}</dd>
+          </div>
+        </dl>
+        {effectiveStatus === 'expired' ? (
+          <p>만료된 가챠권입니다. 이 가챠권으로는 추첨을 진행할 수 없습니다.</p>
+        ) : null}
       </div>
       {canPlay ? (
         <Link className="primary-link-button" to={`/gacha/${credit.drawProductId}/play`}>

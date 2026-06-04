@@ -269,7 +269,7 @@ Stores user's usable draw credits.
 | status | text | unused, used, expired, refunded, failed |
 | used_at | timestamptz | nullable |
 | refunded_at | timestamptz | nullable |
-| expires_at | timestamptz | planned, nullable until expiration policy migration |
+| expires_at | timestamptz | required, defaults to 30 days after issuance |
 | created_at | timestamptz | default now() |
 
 Rules:
@@ -279,8 +279,12 @@ Rules:
 - Draw credits are valid for 30 days after paid checkout.
 - Expired credits cannot be used for drawing.
 - Expiration changes credit usability but does not decrement draw_products.sold_count.
-- The first implementation should add and backfill expires_at through a future migration.
-- `/my/draws` should show issue date, expiration date, remaining days, and usable/expired state.
+- checkout_cart() sets expires_at to now() + interval '30 days' when credits are issued.
+- Existing credits are backfilled to created_at + interval '30 days' by migration.
+- draw_gacha() only selects unused credits where expires_at > now().
+- `/my/draws` shows issue date, expiration date, remaining days, and usable/expired state.
+- Automatic unused → expired synchronization is not implemented yet.
+- Refund request creation/processing is not implemented yet.
 
 Expiration design notes:
 
