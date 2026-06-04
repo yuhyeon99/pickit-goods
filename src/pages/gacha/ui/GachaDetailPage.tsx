@@ -1,5 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
+import { addCartItem } from '../../cart/api/addCartItem';
+import { useAuth } from '../../../shared/model/auth/useAuth';
 import { getGachaProductDetail } from '../api/getGachaProductDetail';
 import { getDrawProductDisplayStatus } from '../lib/getDrawProductDisplayStatus';
 import type { GachaProductDetail, GachaRewardItem } from '../model/types';
@@ -37,10 +39,48 @@ function RewardItemCard({ item }: { item: GachaRewardItem }) {
 }
 
 function DetailContent({ product }: { product: GachaProductDetail }) {
+  const { user, isAuthenticated, signInWithGoogle } = useAuth();
+  const queryClient = useQueryClient();
   const displayStatus = getDrawProductDisplayStatus(
     product.status,
     product.availableInventoryCount,
   );
+  const remainingPurchaseQuantity = Math.max(
+    0,
+    Math.min(product.salesLimit - product.soldCount, product.availableInventoryCount),
+  );
+  const canAddToCart =
+    isAuthenticated && product.status === 'active' && remainingPurchaseQuantity > 0;
+
+  const addCartMutation = useMutation({
+    mutationFn: () =>
+      addCartItem({
+        userId: user?.id ?? '',
+        drawProductId: product.id,
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['cart-items', user?.id] });
+    },
+  });
+
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      void signInWithGoogle();
+      return;
+    }
+
+    addCartMutation.mutate();
+  };
+
+  const ctaLabel = !isAuthenticated
+    ? '로그인하고 장바구니 담기'
+    : product.status !== 'active'
+      ? '신규 구매 불가'
+      : remainingPurchaseQuantity < 1
+        ? '남은 수량 없음'
+        : addCartMutation.isPending
+          ? '담는 중'
+          : '장바구니 담기';
 
   return (
     <section className="gacha-detail-page">
@@ -58,10 +98,29 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
         <aside className="purchase-summary-card">
           <span className="summary-label">테스트 가격</span>
           <strong>{formatPrice(product.price)}</strong>
-          <button className="disabled-cta" type="button" disabled>
-            장바구니 담기 준비중
+          <button
+            className={canAddToCart || !isAuthenticated ? 'primary-cta' : 'disabled-cta'}
+            type="button"
+            disabled={isAuthenticated && (!canAddToCart || addCartMutation.isPending)}
+            onClick={handleAddToCart}
+          >
+            {ctaLabel}
           </button>
-          <p>다음 단계에서 구매 기능이 연결됩니다.</p>
+          <p>
+            {isAuthenticated
+              ? `남은 구매 가능 수량 ${remainingPurchaseQuantity}개`
+              : '로그인 후 가챠 이용권을 장바구니에 담을 수 있습니다.'}
+          </p>
+          {addCartMutation.isSuccess ? (
+            <p className="success-message">장바구니에 담았습니다.</p>
+          ) : null}
+          {addCartMutation.isError ? (
+            <p className="error-message">
+              {addCartMutation.error instanceof Error
+                ? addCartMutation.error.message
+                : '장바구니에 담지 못했습니다.'}
+            </p>
+          ) : null}
         </aside>
       </div>
 
@@ -137,10 +196,17 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
       <section className="sticky-cta-card">
         <div>
           <strong>{product.title}</strong>
-          <span>{formatPrice(product.price)}</span>
+          <span>
+            {formatPrice(product.price)} · 남은 구매 가능 {remainingPurchaseQuantity}개
+          </span>
         </div>
-        <button className="disabled-cta" type="button" disabled>
-          장바구니 담기 준비중
+        <button
+          className={canAddToCart || !isAuthenticated ? 'primary-cta' : 'disabled-cta'}
+          type="button"
+          disabled={isAuthenticated && (!canAddToCart || addCartMutation.isPending)}
+          onClick={handleAddToCart}
+        >
+          {ctaLabel}
         </button>
       </section>
     </section>

@@ -219,6 +219,48 @@ a {
   box-shadow: 0 10px 22px rgb(37 99 235 / 0.18);
 }
 
+.primary-cta,
+.primary-link-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  padding: 0 18px;
+  text-align: center;
+  box-shadow: 0 10px 22px rgb(37 99 235 / 0.18);
+}
+
+.primary-cta:disabled {
+  background: #dbe3ef;
+  color: #637083;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.text-button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: #f2f6fb;
+  color: #526172;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 0 14px;
+}
+
+.text-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .helper-text {
   color: #7b8794;
   font-size: 14px;
@@ -514,6 +556,16 @@ a {
   line-height: 1.5;
 }
 
+.purchase-summary-card .success-message {
+  color: #047857;
+  font-weight: 800;
+}
+
+.purchase-summary-card .error-message {
+  color: #be123c;
+  font-weight: 800;
+}
+
 .summary-label {
   color: #7b8794;
   font-size: 13px;
@@ -738,6 +790,196 @@ a {
   color: #526172;
 }
 
+.cart-page {
+  display: grid;
+  gap: 24px;
+}
+
+.page-heading {
+  display: grid;
+  gap: 10px;
+}
+
+.page-heading h1 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(34px, 6vw, 56px);
+  line-height: 1.12;
+}
+
+.page-heading p {
+  margin: 0;
+  color: #526172;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.cart-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.cart-list {
+  display: grid;
+  gap: 14px;
+}
+
+.cart-item-card,
+.cart-summary-card,
+.empty-cart-card {
+  border: 1px solid #e4e9f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(31 41 55 / 0.07);
+}
+
+.cart-item-card {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+}
+
+.cart-item-main {
+  display: grid;
+  gap: 16px;
+}
+
+.cart-item-main h2 {
+  margin: 12px 0 6px;
+  color: #111827;
+  font-size: 22px;
+  line-height: 1.28;
+}
+
+.cart-item-main p {
+  margin: 0;
+  color: #526172;
+}
+
+.cart-item-main strong {
+  color: #111827;
+  font-size: 24px;
+}
+
+.cart-item-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cart-item-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.cart-item-meta div {
+  border-radius: 8px;
+  background: #f6f8fb;
+  padding: 12px;
+}
+
+.cart-item-meta dt,
+.cart-summary-card dt {
+  color: #7b8794;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cart-item-meta dd,
+.cart-summary-card dd {
+  margin: 6px 0 0;
+  color: #111827;
+  font-weight: 850;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quantity-control {
+  display: inline-grid;
+  grid-template-columns: 42px 54px 42px;
+  overflow: hidden;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.quantity-control button,
+.quantity-control span {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-control button {
+  border: 0;
+  background: #f6f8fb;
+  color: #111827;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+}
+
+.quantity-control button:disabled {
+  color: #a5b0bd;
+  cursor: not-allowed;
+}
+
+.quantity-control span {
+  color: #111827;
+  font-weight: 850;
+}
+
+.cart-summary-card,
+.empty-cart-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.cart-summary-card {
+  align-self: start;
+}
+
+.cart-summary-card dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.cart-summary-card dl div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cart-summary-card dd {
+  font-size: 20px;
+}
+
+.cart-summary-card p,
+.empty-cart-card p {
+  margin: 0;
+  color: #526172;
+  line-height: 1.6;
+}
+
+.empty-cart-card h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  line-height: 1.24;
+}
+
 .admin-shell {
   display: grid;
   min-height: 100vh;
@@ -827,6 +1069,16 @@ a {
   .sticky-cta-card {
     align-items: center;
     grid-template-columns: 1fr auto;
+  }
+
+  .cart-layout {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+
+  .cart-item-main {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }
 
