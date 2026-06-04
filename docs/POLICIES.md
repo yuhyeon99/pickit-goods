@@ -258,7 +258,10 @@ A draw result can only be included in one claim request.
 Implementation requirements:
 
 - claim_request_items.draw_result_id must be unique.
-- Creating claim_request_items and updating draw_results.status to claimed must happen in the same transaction.
+- Creating claim_requests and claim_request_items must happen in the same transaction.
+- draw_results.status remains completed while a claim is pending.
+- Pending claim state is determined by the existence of claim_request_items.
+- draw_results.status changes to claimed only when admin completes the claim.
 
 ## 10. Admin Result Modification Policy
 

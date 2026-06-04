@@ -16,7 +16,10 @@ function formatDate(value: string) {
 }
 
 function ItemCard({ item }: { item: MyDrawResult }) {
-  const status = getDrawResultStatusLabel(item.status);
+  const status = getDrawResultStatusLabel(item.status, item.isClaimRequested);
+  const actionHelpText = item.isClaimRequested
+    ? '이미 수령 요청이 접수되었습니다.'
+    : '보관중인 상품은 수령 요청을 만들 수 있습니다.';
 
   return (
     <article className="won-item-card">
@@ -65,7 +68,7 @@ function ItemCard({ item }: { item: MyDrawResult }) {
             {status.claimLabel}
           </button>
         )}
-        <span>수령 요청 생성은 다음 단계에서 연결됩니다.</span>
+        <span>{actionHelpText}</span>
       </div>
     </article>
   );

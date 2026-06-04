@@ -7,7 +7,19 @@ export type DrawResultStatusView = {
   tone: 'success' | 'muted' | 'danger' | 'warning';
 };
 
-export function getDrawResultStatusLabel(status: DrawResultStatus): DrawResultStatusView {
+export function getDrawResultStatusLabel(
+  status: DrawResultStatus,
+  isClaimRequested = false,
+): DrawResultStatusView {
+  if (status === 'completed' && isClaimRequested) {
+    return {
+      label: '수령 요청됨',
+      claimLabel: '수령 요청됨',
+      canRequestClaim: false,
+      tone: 'warning',
+    };
+  }
+
   switch (status) {
     case 'completed':
       return {

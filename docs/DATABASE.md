@@ -347,6 +347,7 @@ Stores delivery or on-site pickup requests.
 | postal_code | text | nullable |
 | address1 | text | nullable |
 | address2 | text | nullable |
+| delivery_note | text | nullable |
 | pickup_qr_code | text | nullable |
 | tracking_number | text | nullable |
 | courier_name | text | nullable |
@@ -381,7 +382,10 @@ Rules:
 - A draw result can be claimed only once.
 - draw_result_id must be unique.
 - Multiple draw results can be bundled into one delivery claim.
-- Creating claim_request_items and updating draw_results.status to claimed must happen in the same transaction.
+- Creating claim_requests and claim_request_items must happen in the same transaction.
+- In the current schema, draw_results.status remains completed while a request is pending.
+- Request state is derived from claim_request_items existence.
+- draw_results.status changes to claimed only when admin completes the claim.
 
 ## 17. refund_requests
 

@@ -1217,6 +1217,121 @@ a {
   color: var(--color-warning);
 }
 
+.claim-page {
+  display: grid;
+  gap: 24px;
+}
+
+.claim-section-card,
+.claim-history-card {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+  padding: 20px;
+}
+
+.claim-section-card h2,
+.claim-history-card h2 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.claim-section-card p,
+.claim-history-card p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.claim-item-grid,
+.claim-method-grid,
+.claim-form-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.claim-select-card,
+.claim-method-card {
+  display: grid;
+  min-height: 124px;
+  gap: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+  padding: 16px;
+  text-align: left;
+}
+
+.claim-select-card:hover,
+.claim-method-card:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-soft);
+}
+
+.claim-select-card-active,
+.claim-method-card-active {
+  border-color: color-mix(in srgb, var(--color-primary) 62%, var(--color-border));
+  background: var(--color-primary-soft);
+}
+
+.claim-select-card strong,
+.claim-method-card strong {
+  color: var(--color-text-strong);
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.claim-select-card small,
+.claim-method-card span {
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.claim-form-grid label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.claim-form-grid input,
+.claim-form-grid textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+  font: inherit;
+  min-height: 48px;
+  padding: 0 14px;
+}
+
+.claim-form-grid textarea {
+  min-height: 96px;
+  padding: 14px;
+  resize: vertical;
+}
+
+.claim-form-grid input:focus,
+.claim-form-grid textarea:focus {
+  border-color: var(--color-primary);
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.claim-form-grid input::placeholder,
+.claim-form-grid textarea::placeholder {
+  color: var(--color-muted);
+}
+
 .gacha-play-page {
   display: grid;
   gap: 24px;
@@ -1837,6 +1952,17 @@ a {
   .won-item-main {
     align-items: start;
     grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .claim-item-grid,
+  .claim-method-grid,
+  .claim-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .claim-form-grid label:nth-child(4),
+  .claim-form-grid label:nth-child(6) {
+    grid-column: 1 / -1;
   }
 }
 

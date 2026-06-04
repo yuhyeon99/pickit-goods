@@ -22,6 +22,14 @@ type DrawResultRow = {
   };
 };
 
+type ClaimRequestItemRow = {
+  draw_result_id: string;
+  claim_request_id: string;
+  claim_requests: {
+    status: MyDrawResult['claimStatus'];
+  };
+};
+
 export async function getMyDrawResults(userId: string): Promise<MyDrawResult[]> {
   const { data, error } = await supabase
     .from('draw_results')
@@ -54,7 +62,43 @@ export async function getMyDrawResults(userId: string): Promise<MyDrawResult[]> 
     throw error;
   }
 
+  const resultIds = (data ?? []).map((result) => result.id);
+  const claimMap = new Map<string, { claimRequestId: string; claimStatus: MyDrawResult['claimStatus'] }>();
+
+  if (resultIds.length > 0) {
+    const { data: claimItems, error: claimError } = await supabase
+      .from('claim_request_items')
+      .select(
+        `
+          draw_result_id,
+          claim_request_id,
+          claim_requests(status)
+        `,
+      )
+      .in('draw_result_id', resultIds)
+      .returns<ClaimRequestItemRow[]>();
+
+    if (claimError) {
+      throw claimError;
+    }
+
+    for (const claimItem of claimItems ?? []) {
+      claimMap.set(claimItem.draw_result_id, {
+        claimRequestId: claimItem.claim_request_id,
+        claimStatus: claimItem.claim_requests.status,
+      });
+    }
+  }
+
   return (data ?? []).map((result) => ({
+    ...(() => {
+      const claim = claimMap.get(result.id);
+      return {
+        claimRequestId: claim?.claimRequestId ?? null,
+        claimStatus: claim?.claimStatus ?? null,
+        isClaimRequested: Boolean(claim),
+      };
+    })(),
     id: result.id,
     drawProductId: result.draw_product_id,
     drawProductTitle: result.draw_products.title,

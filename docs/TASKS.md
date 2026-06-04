@@ -423,7 +423,10 @@ Requirements:
 - Claim request creation
 - Claim status display
 - claim_request_items.draw_result_id must be unique.
-- claim_request_items creation and draw_results.status update must be transactional.
+- claim_requests and claim_request_items creation must be transactional.
+- draw_results.status remains completed while a claim is pending.
+- Pending claim state is derived from claim_request_items existence.
+- draw_results.status changes to claimed only when admin completes the claim.
 - The first MVP does not store QR image files.
 - claim_requests.pickup_qr_code stores a verifiable text code such as PICKUP-CLAIM-000001 or PICKUP-{claim_request_id}.
 - The UI can later render pickup_qr_code as a QR code.
