@@ -1,5 +1,5 @@
 import type { RewardGrade } from '../../gacha/model/types';
-import type { InventoryStatus } from '../model/rewardItemTypes';
+import type { AdminRewardItem, InventoryStatus } from '../model/rewardItemTypes';
 
 export const rewardGradeLabels: Record<RewardGrade, string> = {
   S: 'S',
@@ -9,11 +9,17 @@ export const rewardGradeLabels: Record<RewardGrade, string> = {
 };
 
 export const inventoryStatusLabels: Record<InventoryStatus, string> = {
-  available: 'available',
-  reserved: 'reserved',
-  drawn: 'drawn',
-  claimed: 'claimed',
-  void: 'void',
+  available: '사용 가능',
+  reserved: '예약됨',
+  drawn: '추첨됨',
+  claimed: '수령 완료',
+  void: '제외됨',
+};
+
+export const rewardItemStatusLabels: Record<AdminRewardItem['status'], string> = {
+  active: '사용 중',
+  hidden: '숨김',
+  archived: '보관됨',
 };
 
 export const inventoryStatusOrder: InventoryStatus[] = [

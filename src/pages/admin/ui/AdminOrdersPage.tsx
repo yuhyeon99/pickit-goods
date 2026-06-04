@@ -94,7 +94,7 @@ function AdminOrderCard({ order }: { order: AdminOrder }) {
               <div>
                 <strong>{item.drawProductTitle}</strong>
                 <small>
-                  수량 {item.quantity}개 · 단가 {formatCurrency(item.unitPrice)} · credit_amount{' '}
+                  수량 {item.quantity}개 · 단가 {formatCurrency(item.unitPrice)} · 발급 기준 수량{' '}
                   {item.creditAmount}
                 </small>
               </div>
@@ -154,7 +154,7 @@ export function AdminOrdersPage() {
   return (
     <section className="admin-orders-page">
       <div className="page-heading">
-        <p className="section-label">Admin Orders</p>
+        <p className="section-label">관리자 · 주문 내역</p>
         <h1>주문/결제 내역</h1>
         <p>테스트 결제로 생성된 주문과 발급된 가챠권 수량을 조회합니다. 주문 수정은 지원하지 않습니다.</p>
       </div>
@@ -167,7 +167,7 @@ export function AdminOrdersPage() {
             onChange={(event) =>
               setFilters((current) => ({ ...current, search: event.target.value }))
             }
-            placeholder="주문 ID, 사용자명, user id"
+            placeholder="주문 ID, 사용자명, 사용자 ID"
           />
         </label>
         <label>

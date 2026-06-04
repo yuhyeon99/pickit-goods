@@ -192,6 +192,8 @@ UI completion checklist:
 - Confirm primary CTA readability.
 - Confirm card and badge color contrast.
 - Confirm icon-only buttons include `aria-label`.
+- Confirm user-facing copy is written primarily in natural Korean.
+- Confirm DB enum/status values are mapped to Korean labels before display.
 
 Pages:
 
@@ -246,6 +248,9 @@ Admin UI completion checklist:
 - Confirm navigation remains usable on small screens.
 - Confirm the admin topbar exposes service home, theme toggle, current user, and logout actions.
 - Confirm read-only/admin state badges remain readable.
+- Confirm admin-facing copy is written primarily in natural Korean.
+- Confirm status badges, loading states, error states, and empty states use Korean labels.
+- Confirm raw DB enum/status values are not exposed directly in administrator screens.
 
 Pages:
 

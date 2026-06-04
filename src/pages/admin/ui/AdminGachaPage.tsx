@@ -48,7 +48,7 @@ function AdminGachaCard({ product }: { product: AdminGachaProduct }) {
         <div>
           <div className="cart-item-title-row">
             <span className={`status-badge status-badge-${status.tone}`}>{status.label}</span>
-            <span className="soft-badge">{status.rawLabel}</span>
+            <span className="soft-badge">원본 상태: {status.rawLabel}</span>
             <span className="soft-badge">{product.scope === 'random' ? '랜덤' : '테마'}</span>
           </div>
           <h2>{product.title}</h2>
@@ -179,7 +179,7 @@ export function AdminGachaPage() {
   return (
     <section className="admin-gacha-page">
       <div className="page-heading">
-        <p className="section-label">Admin Gacha</p>
+        <p className="section-label">관리자 · 가챠 상품</p>
         <h1>가챠 상품/재고 조회</h1>
         <p>판매된 가챠권, 신규 구매 가능 수량, 미추첨 재고, 등급별 확률과 구성 상품을 구분해서 조회합니다. 상품 수정은 지원하지 않습니다.</p>
       </div>
@@ -241,8 +241,8 @@ export function AdminGachaPage() {
             }
           >
             <option value="all">전체</option>
-            <option value="has_available">available 있음</option>
-            <option value="no_available">available 없음</option>
+            <option value="has_available">미추첨 재고 있음</option>
+            <option value="no_available">미추첨 재고 없음</option>
           </select>
         </label>
         <span className="soft-badge">

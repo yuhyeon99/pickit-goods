@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAdminUsers } from '../api/getAdminUsers';
+import { drawResultStatusLabels } from '../lib/drawLogStatus';
 import { formatCurrency, orderStatusLabels } from '../lib/orderStatus';
-import { getUserRoleTone, userRoleLabels } from '../lib/userRole';
+import { creditStatusLabels, getUserRoleTone, userRoleLabels } from '../lib/userRole';
 import type { AdminUser, AdminUserFilters } from '../model/userTypes';
 import type { UserRole } from '../../../shared/model/auth/types';
 
@@ -109,23 +110,23 @@ function AdminUserCard({ user }: { user: AdminUser }) {
               <dd>{user.creditSummary.total}</dd>
             </div>
             <div>
-              <dt>unused</dt>
+              <dt>{creditStatusLabels.unused}</dt>
               <dd>{user.creditSummary.unused}</dd>
             </div>
             <div>
-              <dt>used</dt>
+              <dt>{creditStatusLabels.used}</dt>
               <dd>{user.creditSummary.used}</dd>
             </div>
             <div>
-              <dt>expired</dt>
+              <dt>{creditStatusLabels.expired}</dt>
               <dd>{user.creditSummary.expired}</dd>
             </div>
             <div>
-              <dt>refunded</dt>
+              <dt>{creditStatusLabels.refunded}</dt>
               <dd>{user.creditSummary.refunded}</dd>
             </div>
             <div>
-              <dt>failed</dt>
+              <dt>{creditStatusLabels.failed}</dt>
               <dd>{user.creditSummary.failed}</dd>
             </div>
           </dl>
@@ -162,7 +163,8 @@ function AdminUserCard({ user }: { user: AdminUser }) {
                     {result.grade} · {result.rewardName}
                   </strong>
                   <span>
-                    {result.drawProductTitle} · {result.status} · {formatDate(result.createdAt)}
+                    {result.drawProductTitle} · {drawResultStatusLabels[result.status]} ·{' '}
+                    {formatDate(result.createdAt)}
                   </span>
                 </div>
               ))}
@@ -209,7 +211,7 @@ export function AdminUsersPage() {
   return (
     <section className="admin-users-page">
       <div className="page-heading">
-        <p className="section-label">Admin Users</p>
+        <p className="section-label">관리자 · 사용자</p>
         <h1>사용자/가챠권 조회</h1>
         <p>사용자별 주문, 가챠권, 당첨 결과, 수령 요청 수치를 조회합니다. 권한 변경과 수동 지급은 지원하지 않습니다.</p>
       </div>
@@ -222,11 +224,11 @@ export function AdminUsersPage() {
             onChange={(event) =>
               setFilters((current) => ({ ...current, search: event.target.value }))
             }
-            placeholder="사용자명, user id"
+            placeholder="사용자명, 사용자 ID"
           />
         </label>
         <label>
-          role
+          권한
           <select
             value={filters.role}
             onChange={(event) =>
@@ -238,7 +240,7 @@ export function AdminUsersPage() {
           >
             {roleOptions.map((role) => (
               <option key={role} value={role}>
-                {role === 'all' ? '전체 role' : userRoleLabels[role]}
+                {role === 'all' ? '전체 권한' : userRoleLabels[role]}
               </option>
             ))}
           </select>
@@ -268,7 +270,7 @@ export function AdminUsersPage() {
         <section className="empty-cart-card">
           <span className="soft-badge">사용자 없음</span>
           <h2>조건에 맞는 사용자가 없습니다.</h2>
-          <p>Google OAuth 로그인 후 profile이 생성되면 이곳에 표시됩니다.</p>
+          <p>Google 로그인 후 사용자 프로필이 생성되면 이곳에 표시됩니다.</p>
         </section>
       ) : (
         <div className="admin-user-list">

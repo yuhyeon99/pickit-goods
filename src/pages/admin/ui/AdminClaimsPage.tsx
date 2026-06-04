@@ -133,7 +133,7 @@ function AdminClaimCard({
               <input
                 value={trackingNumber}
                 onChange={(event) => setTrackingNumber(event.target.value)}
-                placeholder="배송중 변경 시 필수"
+                placeholder="배송 중 변경 시 필수"
               />
             </label>
           ) : null}
@@ -216,7 +216,7 @@ export function AdminClaimsPage() {
   return (
     <section className="admin-claims-page">
       <div className="page-heading">
-        <p className="section-label">Admin Claims</p>
+        <p className="section-label">관리자 · 수령 요청</p>
         <h1>수령 요청 처리</h1>
         <p>사용자 수령 요청을 확인하고 배송/현장 수령 흐름에 맞춰 상태를 변경합니다.</p>
       </div>

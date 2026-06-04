@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAdminDrawLogs } from '../api/getAdminDrawLogs';
 import {
   drawLogEventLabels,
+  drawResultStatusLabels,
   formatShortId,
   getDrawLogEventTone,
   summarizePayload,
@@ -89,7 +90,7 @@ function AdminDrawLogCard({ log }: { log: AdminDrawLog }) {
         </div>
         <div>
           <dt>결과 상태</dt>
-          <dd>{log.resultStatus ?? '-'}</dd>
+          <dd>{log.resultStatus ? drawResultStatusLabels[log.resultStatus] : '-'}</dd>
         </div>
         <div>
           <dt>검증 코드</dt>
@@ -104,7 +105,7 @@ function AdminDrawLogCard({ log }: { log: AdminDrawLog }) {
           <dd>{formatShortId(log.requestId, 12)}</dd>
         </div>
         <div>
-          <dt>Seed Hash</dt>
+          <dt>시드 해시</dt>
           <dd>{formatShortId(log.randomSeedHash, 12)}</dd>
         </div>
         <div>
@@ -114,7 +115,7 @@ function AdminDrawLogCard({ log }: { log: AdminDrawLog }) {
       </dl>
 
       <section className="admin-log-payload">
-        <strong>Payload 요약</strong>
+        <strong>로그 데이터 요약</strong>
         <p>{summarizePayload(log.payload)}</p>
         {log.errorMessage ? <p className="admin-log-error">{log.errorMessage}</p> : null}
       </section>
@@ -157,7 +158,7 @@ export function AdminDrawLogsPage() {
   return (
     <section className="admin-draw-logs-page">
       <div className="page-heading">
-        <p className="section-label">Admin Draw Logs</p>
+        <p className="section-label">관리자 · 추첨 로그</p>
         <h1>추첨 로그 조회</h1>
         <p>서버에서 기록된 추첨 감사 로그를 조회합니다. 로그와 결과는 이 화면에서 수정할 수 없습니다.</p>
       </div>
@@ -171,7 +172,7 @@ export function AdminDrawLogsPage() {
               onChange={(event) =>
                 setFilters((current) => ({ ...current, search: event.target.value }))
               }
-              placeholder="가챠명, 사용자, 상품명, request id"
+              placeholder="가챠명, 사용자, 상품명, 요청 ID"
             />
           </label>
         </div>

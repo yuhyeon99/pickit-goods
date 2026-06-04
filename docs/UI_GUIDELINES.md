@@ -116,7 +116,17 @@ Badges:
 - Use calm state colors.
 - State badges must be readable in both light and dark mode.
 
-## 10. Admin UI
+## 10. Korean-First UI Direction
+
+This MVP targets Korean users first.
+
+- User-facing and admin-facing UI copy should be written in Korean by default.
+- Do not mix English labels unless they are technical terms that are widely understood.
+- DB enum values may remain English, but displayed labels should be mapped to Korean.
+- Navigation, buttons, empty states, loading states, status badges, and helper texts should use natural Korean.
+- Avoid direct machine-like translation. Prefer operationally clear Korean terms.
+
+## 11. Admin UI
 
 Admin pages should remain quieter and denser than user pages.
 
@@ -126,8 +136,9 @@ Admin pages should remain quieter and denser than user pages.
 - Keep admin topbar actions compact and usable on mobile.
 - Make read-only areas visually distinct.
 - Never expose UI for editing confirmed winning results.
+- Keep administrator labels operationally clear in Korean, especially status badges and filters.
 
-## 11. UI Review Checklist
+## 12. UI Review Checklist
 
 Before finishing UI work:
 
@@ -139,8 +150,10 @@ Before finishing UI work:
 - Confirm card and badge contrast.
 - Confirm icon-only buttons have accessible labels.
 - Confirm there is no horizontal scrolling on mobile.
+- Confirm user-facing and admin-facing copy is written in natural Korean.
+- Confirm DB enum/status values are not exposed directly to users or operators.
 
-## 12. MVP Rule
+## 13. MVP Rule
 
 For MVP, clarity is more important than visual richness.
 

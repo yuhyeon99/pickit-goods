@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAdminPools } from '../api/getAdminPools';
 import { getAdminGachaStatus, rawGachaStatusLabels } from '../lib/gachaStatus';
 import { formatCurrency } from '../lib/orderStatus';
-import { inventoryStatusOrder } from '../lib/rewardGrade';
+import { inventoryStatusLabels, inventoryStatusOrder } from '../lib/rewardGrade';
 import type { AdminPool, AdminPoolFilters } from '../model/poolTypes';
 import type { DrawProductStatus, RewardGrade } from '../../gacha/model/types';
 
@@ -56,7 +56,7 @@ function AdminPoolCard({ pool }: { pool: AdminPool }) {
         <div>
           <div className="cart-item-title-row">
             <span className={`status-badge status-badge-${status.tone}`}>{status.rawLabel}</span>
-            <span className="soft-badge">{pool.type}</span>
+            <span className="soft-badge">{pool.type === 'gacha' ? '가챠' : pool.type}</span>
             <span className="soft-badge">{pool.scope === 'random' ? '랜덤' : '테마'}</span>
             <span className={pool.hasMismatch ? 'item-status-badge item-status-warning' : 'item-status-badge item-status-success'}>
               {pool.hasMismatch ? '재고 확인 필요' : '구성 일치'}
@@ -109,7 +109,7 @@ function AdminPoolCard({ pool }: { pool: AdminPool }) {
                   <dd>{grade.compositionRate}%</dd>
                 </div>
                 <div>
-                  <dt>available 확률</dt>
+                  <dt>현재 확률</dt>
                   <dd>{grade.availableProbability}%</dd>
                 </div>
               </dl>
@@ -149,7 +149,7 @@ function AdminPoolCard({ pool }: { pool: AdminPool }) {
                   </div>
                   {inventoryStatusOrder.map((statusKey) => (
                     <div key={statusKey}>
-                      <dt>{statusKey}</dt>
+                      <dt>{inventoryStatusLabels[statusKey]}</dt>
                       <dd>{item.inventoryCounts[statusKey]}</dd>
                     </div>
                   ))}
@@ -204,9 +204,9 @@ export function AdminPoolsPage() {
   return (
     <section className="admin-pools-page">
       <div className="page-heading">
-        <p className="section-label">Admin Pools</p>
+        <p className="section-label">관리자 · 상품 풀</p>
         <h1>상품 풀/재고 구성 조회</h1>
-        <p>가챠별 상품 풀 설정 수량, 신규 구매 가능 수량, 미추첨 재고와 실제 inventory_units 상태 분포를 비교합니다. 수정 기능은 지원하지 않습니다.</p>
+        <p>가챠별 상품 풀 설정 수량, 신규 구매 가능 수량, 미추첨 재고와 실제 재고 단위의 상태 분포를 비교합니다. 수정 기능은 지원하지 않습니다.</p>
       </div>
 
       <section className="admin-pool-filter-card">
@@ -217,7 +217,7 @@ export function AdminPoolsPage() {
             onChange={(event) =>
               setFilters((current) => ({ ...current, search: event.target.value }))
             }
-            placeholder="가챠명, 상품명, draw/reward id"
+            placeholder="가챠명, 상품명, 가챠/상품 ID"
           />
         </label>
         <label>
@@ -281,7 +281,7 @@ export function AdminPoolsPage() {
         <section className="empty-cart-card">
           <span className="soft-badge">상품 풀 없음</span>
           <h2>조건에 맞는 상품 풀이 없습니다.</h2>
-          <p>draw_product_items와 inventory_units가 구성되면 이곳에 표시됩니다.</p>
+          <p>상품 풀과 재고 단위가 구성되면 이곳에 표시됩니다.</p>
         </section>
       ) : (
         <div className="admin-pool-list">

@@ -1,12 +1,19 @@
 import type { AdminDrawLog, DrawLogEventType } from '../model/drawLogTypes';
 
 export const drawLogEventLabels: Record<DrawLogEventType, string> = {
-  started: '시작',
-  reserved: '예약',
+  started: '시작됨',
+  reserved: '재고 예약',
   completed: '완료',
   failed: '실패',
   recovered: '복구',
 };
+
+export const drawResultStatusLabels = {
+  completed: '보관중',
+  recoverable: '확인 필요',
+  failed: '처리 실패',
+  claimed: '수령 완료',
+} as const;
 
 export function getDrawLogEventTone(eventType: DrawLogEventType) {
   switch (eventType) {

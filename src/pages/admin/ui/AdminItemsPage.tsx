@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAdminRewardItems } from '../api/getAdminRewardItems';
 import { getAdminGachaStatus } from '../lib/gachaStatus';
 import { formatCurrency } from '../lib/orderStatus';
-import { inventoryStatusLabels, inventoryStatusOrder } from '../lib/rewardGrade';
+import { inventoryStatusLabels, inventoryStatusOrder, rewardItemStatusLabels } from '../lib/rewardGrade';
 import type { AdminRewardItem, AdminRewardItemFilters } from '../model/rewardItemTypes';
 import type { RewardGrade } from '../../gacha/model/types';
 
@@ -58,7 +58,7 @@ function AdminRewardItemCard({ item }: { item: AdminRewardItem }) {
         <div>
           <div className="cart-item-title-row">
             <span className="grade-badge">{item.grade}</span>
-            <span className="soft-badge">{item.status}</span>
+            <span className="soft-badge">{rewardItemStatusLabels[item.status]}</span>
             <span className="soft-badge">조회 전용</span>
           </div>
           <h2>{item.name}</h2>
@@ -178,7 +178,7 @@ export function AdminItemsPage() {
   return (
     <section className="admin-reward-page">
       <div className="page-heading">
-        <p className="section-label">Admin Reward Items</p>
+        <p className="section-label">관리자 · 실물 상품</p>
         <h1>실물 상품 조회</h1>
         <p>당첨 대상 상품의 등급, 테마, 포함된 가챠 상품 풀, 재고 상태별 수량을 조회합니다. 상품 수정은 지원하지 않습니다.</p>
       </div>
@@ -263,7 +263,7 @@ export function AdminItemsPage() {
         <section className="empty-cart-card">
           <span className="soft-badge">상품 없음</span>
           <h2>조건에 맞는 실물 상품이 없습니다.</h2>
-          <p>reward_items가 생성되면 이곳에 최신순으로 표시됩니다.</p>
+          <p>실물 상품이 생성되면 이곳에 최신순으로 표시됩니다.</p>
         </section>
       ) : (
         <div className="admin-reward-list">

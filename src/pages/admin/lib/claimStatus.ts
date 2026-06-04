@@ -2,9 +2,9 @@ import type { ClaimMethod, ClaimRequestStatus } from '../../my/model/types';
 
 export const adminClaimStatusLabels: Record<ClaimRequestStatus, string> = {
   requested: '요청됨',
-  preparing: '준비중',
+  preparing: '준비 중',
   ready_for_pickup: '수령 가능',
-  shipping: '배송중',
+  shipping: '배송 중',
   completed: '완료',
   canceled: '취소됨',
 };
@@ -36,9 +36,9 @@ export function getNextClaimStatus(
 export function getAdminClaimActionLabel(status: ClaimRequestStatus) {
   switch (status) {
     case 'preparing':
-      return '준비중으로 변경';
+      return '준비 중으로 변경';
     case 'shipping':
-      return '배송중으로 변경';
+      return '배송 중으로 변경';
     case 'ready_for_pickup':
       return '수령 가능으로 변경';
     case 'completed':
