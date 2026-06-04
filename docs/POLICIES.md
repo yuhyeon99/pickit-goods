@@ -262,6 +262,8 @@ Implementation requirements:
 - draw_results.status remains completed while a claim is pending.
 - Pending claim state is determined by the existence of claim_request_items.
 - draw_results.status changes to claimed only when admin completes the claim.
+- Admin claim status changes must be performed through a server-side RPC with an admin role check.
+- When a claim is completed, linked inventory_units.status changes to claimed.
 
 ## 10. Admin Result Modification Policy
 

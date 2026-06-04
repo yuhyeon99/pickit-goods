@@ -351,6 +351,7 @@ Stores delivery or on-site pickup requests.
 | pickup_qr_code | text | nullable |
 | tracking_number | text | nullable |
 | courier_name | text | nullable |
+| admin_note | text | nullable |
 | created_at | timestamptz | default now() |
 | updated_at | timestamptz | default now() |
 | completed_at | timestamptz | nullable |
@@ -365,6 +366,8 @@ Rules:
 - pickup_qr_code stores a verifiable text code such as PICKUP-CLAIM-000001 or PICKUP-{claim_request_id}.
 - The UI can later render pickup_qr_code as a QR code.
 - Advanced QR verification is deferred.
+- Admin status updates must use a server-side RPC that validates admin role and allowed status transitions.
+- When a claim is completed, linked draw_results.status changes to claimed and linked inventory_units.status changes to claimed.
 
 ## 16. claim_request_items
 
