@@ -270,6 +270,31 @@ Requirements:
 - Role-based route protection
 - Admin route protection
 
+## Task 8.5. Vercel Deployment Setup
+
+Goal:
+
+Connect the deployed Vercel frontend to Supabase Cloud and Google OAuth.
+
+Before deployment work, read:
+
+- docs/AUTH.md, "Vercel Deployment"
+- docs/DATABASE.md, "Supabase Cloud Migration"
+
+Checklist:
+
+- Push committed code to GitHub.
+- Create or connect Vercel project.
+- Set `VITE_SUPABASE_URL` in Vercel environment variables.
+- Set `VITE_SUPABASE_ANON_KEY` in Vercel environment variables.
+- Redeploy after environment variable changes.
+- Set Supabase Cloud Site URL to the production Vercel domain.
+- Add Vercel production domain to Supabase Redirect URLs.
+- Keep local development redirect URLs if local testing is still used.
+- Add Vercel production domain to Google Authorized JavaScript origins.
+- Confirm Google Authorized redirect URIs include the Supabase Cloud callback URL.
+- Test Google login, profile creation, `/gacha`, and `/gacha/:id` on the deployed site.
+
 ## Task 9. Cart and Test Checkout
 
 Goal:

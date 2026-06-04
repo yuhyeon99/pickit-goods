@@ -127,7 +127,99 @@ npm run dev -- --host 127.0.0.1
 
 Then open `http://127.0.0.1:5173`.
 
-### 3.3 Local Supabase
+### 3.3 Vercel Deployment
+
+Vercel must use the Supabase Cloud project, not the local Supabase CLI URL.
+
+Add these environment variables in Vercel:
+
+```txt
+Project
+  -> Settings
+  -> Environment Variables
+```
+
+```env
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-cloud-anon-key
+```
+
+Apply them to the required environments:
+
+- Production
+- Preview
+- Development, if Vercel CLI is used
+
+Redeploy after changing environment variables.
+
+Configure Supabase Cloud URL settings:
+
+```txt
+Authentication
+  -> URL Configuration
+```
+
+Recommended production values:
+
+```txt
+Site URL:
+https://your-vercel-production-domain
+
+Redirect URLs:
+https://your-vercel-production-domain/**
+http://127.0.0.1:5173/**
+http://localhost:5173/**
+```
+
+If OAuth must be tested on Vercel Preview deployments, add a preview redirect pattern:
+
+```txt
+https://*.vercel.app/**
+```
+
+For production, prefer exact redirect URLs over broad wildcards.
+
+Configure Google Cloud Console:
+
+```txt
+APIs & Services
+  -> Credentials
+  -> OAuth 2.0 Client IDs
+```
+
+Add the Vercel production domain to Authorized JavaScript origins:
+
+```txt
+https://your-vercel-production-domain
+```
+
+Authorized redirect URIs must include the Supabase Cloud callback URL:
+
+```txt
+https://your-project-ref.supabase.co/auth/v1/callback
+```
+
+Do not add the Vercel app URL as the Google authorized redirect URI for this Supabase OAuth flow. Google redirects to Supabase Auth first, then Supabase redirects back to the frontend through `redirectTo`.
+
+The frontend login flow already redirects to the current deployment origin:
+
+```ts
+redirectTo: window.location.origin
+```
+
+Deployment verification checklist:
+
+- Vercel environment variables are set.
+- Latest deployment was redeployed after env changes.
+- Supabase Cloud Site URL points to the production frontend domain.
+- Supabase Cloud Redirect URLs include local and deployed frontend URLs.
+- Google Authorized JavaScript origins include the deployed frontend domain.
+- Google Authorized redirect URIs include the Supabase Cloud callback URL.
+- Google login returns to the Vercel site.
+- `profiles` row is created or loaded.
+- `/gacha` and `/gacha/:id` read seed data from Supabase Cloud.
+
+### 3.4 Local Supabase
 
 Local Google OAuth is configured in `supabase/config.toml`:
 
