@@ -1092,7 +1092,17 @@ a {
   gap: 24px;
 }
 
+.my-items-page {
+  display: grid;
+  gap: 24px;
+}
+
 .draw-credit-list {
+  display: grid;
+  gap: 14px;
+}
+
+.won-item-grid {
   display: grid;
   gap: 14px;
 }
@@ -1103,6 +1113,21 @@ a {
   padding: 20px;
 }
 
+.won-item-card {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+  padding: 20px;
+}
+
+.won-item-main {
+  display: grid;
+  gap: 16px;
+}
+
 .draw-credit-card h2 {
   margin: 12px 0 6px;
   color: #111827;
@@ -1110,9 +1135,86 @@ a {
   line-height: 1.28;
 }
 
+.won-item-card h2 {
+  margin: 12px 0 6px;
+  color: var(--color-text-strong);
+  font-size: 22px;
+  line-height: 1.28;
+}
+
 .draw-credit-card p {
   margin: 0;
   color: #526172;
+}
+
+.won-item-card p,
+.won-item-actions span {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.won-item-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.won-item-meta div {
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.won-item-meta dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.won-item-meta dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+}
+
+.won-item-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.item-status-badge {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1;
+  padding: 0 10px;
+}
+
+.item-status-success {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.item-status-muted {
+  background: var(--color-surface-soft);
+  color: var(--color-muted-strong);
+}
+
+.item-status-danger {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.item-status-warning {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 .gacha-play-page {
@@ -1616,7 +1718,8 @@ a {
   .cart-item-meta,
   .reward-item-meta,
   .gacha-meta-grid,
-  .draw-result-meta {
+  .draw-result-meta,
+  .won-item-meta {
     grid-template-columns: 1fr;
   }
 
@@ -1725,6 +1828,15 @@ a {
 
   .draw-result-actions {
     grid-template-columns: repeat(2, minmax(0, max-content));
+  }
+
+  .won-item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .won-item-main {
+    align-items: start;
+    grid-template-columns: auto minmax(0, 1fr);
   }
 }
 
