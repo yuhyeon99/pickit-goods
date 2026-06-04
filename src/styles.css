@@ -2091,6 +2091,147 @@ a {
   line-height: 1.5;
 }
 
+.admin-reward-page,
+.admin-reward-list {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-reward-filter-card,
+.admin-reward-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+}
+
+.admin-reward-filter-card {
+  display: grid;
+  align-items: end;
+  gap: 12px;
+  padding: 16px;
+}
+
+.admin-reward-filter-card label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-reward-filter-card input,
+.admin-reward-filter-card select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+  font: inherit;
+  padding: 0 12px;
+}
+
+.admin-reward-filter-card input:focus,
+.admin-reward-filter-card select:focus {
+  border-color: var(--color-primary);
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.admin-reward-card {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+}
+
+.admin-reward-header {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-reward-header h2 {
+  margin: 12px 0 6px;
+  color: var(--color-text-strong);
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.admin-reward-header p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.admin-reward-summary,
+.admin-reward-inventory-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.admin-reward-summary div,
+.admin-reward-inventory-grid div,
+.admin-reward-pool-list > div {
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.admin-reward-summary dt,
+.admin-reward-inventory-grid dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.admin-reward-summary dd,
+.admin-reward-inventory-grid dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+}
+
+.admin-reward-section {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+}
+
+.admin-reward-section h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 16px;
+}
+
+.admin-reward-section p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.admin-reward-pool-list {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-reward-pool-list > div {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-reward-pool-list strong {
+  display: block;
+  color: var(--color-text-strong);
+  line-height: 1.4;
+}
+
+.admin-reward-pool-list small {
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
 .gacha-play-page {
   display: grid;
   gap: 24px;
@@ -2807,6 +2948,28 @@ a {
 
   .admin-gacha-grade-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .admin-reward-filter-card {
+    grid-template-columns: minmax(220px, 1fr) minmax(200px, 0.8fr) 130px 190px 150px auto;
+  }
+
+  .admin-reward-header {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .admin-reward-summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .admin-reward-inventory-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .admin-reward-pool-list > div {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }
 
