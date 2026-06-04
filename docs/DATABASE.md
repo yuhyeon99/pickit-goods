@@ -511,3 +511,33 @@ Seed data must not create:
 - draw_logs
 
 Admin account setup should be handled separately after OAuth login by updating the logged-in profile role manually in local development.
+
+## 22. Supabase Cloud Migration
+
+Local Supabase remains the default development target, and `supabase/config.toml` is kept for local CLI development.
+
+To apply migrations to Supabase Cloud:
+
+```bash
+npx supabase login
+npx supabase link --project-ref <PROJECT_REF>
+npx supabase db push --dry-run
+npx supabase db push
+```
+
+Rules:
+
+- Do not commit Project URL, anon key, service_role key, database password, or Google Client Secret.
+- Use `.env.local` for the frontend Project URL and anon key.
+- Never put the service_role key in Vite frontend environment variables.
+- Confirm `db push --dry-run` output before applying remote migrations.
+- Avoid `npx supabase db reset --linked` unless intentionally resetting the linked Cloud database.
+
+After remote migrations are applied, configure Supabase Cloud Auth separately in the Dashboard:
+
+```txt
+Authentication -> Providers -> Google
+Authentication -> URL Configuration
+```
+
+Seed data can be applied to the linked project only when the remote environment is intended for test data.

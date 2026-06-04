@@ -95,6 +95,10 @@ Goal:
 
 Create Supabase migration SQL based on docs/DATABASE.md.
 
+Before applying migrations to Supabase Cloud, read:
+
+- docs/DATABASE.md, "Supabase Cloud Migration"
+
 Requirements:
 
 - Tables

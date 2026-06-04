@@ -54,15 +54,80 @@ http://127.0.0.1:54321/auth/v1/callback
 
 If the OAuth consent screen is in Testing mode, add your Google account as a test user.
 
-For hosted Supabase:
+### 3.2 Supabase Cloud
 
-1. Open Supabase Dashboard.
-2. Go to Authentication → Providers.
-3. Enable Google.
-4. Add Google OAuth client ID and secret.
-5. Configure allowed redirect URLs for the deployed app and local dev URL.
+Supabase Cloud uses Dashboard settings instead of `supabase/config.toml`.
 
-### 3.2 Local Supabase
+1. Create a Supabase project.
+2. Open Project Settings -> API.
+3. Copy the Project URL and anon public key.
+4. Put them in local `.env.local`:
+
+```env
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-cloud-anon-key
+```
+
+Do not store the service_role key in frontend env files.
+
+Enable Google provider:
+
+1. Open Authentication -> Providers.
+2. Enable Google.
+3. Paste the Google OAuth Client ID.
+4. Paste the Google OAuth Client Secret in the Supabase Dashboard only.
+5. Save the provider settings.
+
+Find the Supabase Cloud callback URL in the Google provider screen. It usually has this shape:
+
+```txt
+https://your-project-ref.supabase.co/auth/v1/callback
+```
+
+Add that Cloud callback URL to Google Cloud Console:
+
+```txt
+APIs & Services
+  -> Credentials
+  -> OAuth 2.0 Client IDs
+  -> Authorized redirect URIs
+```
+
+Keep the local callback URL too if local Supabase testing is still needed:
+
+```txt
+http://127.0.0.1:54321/auth/v1/callback
+```
+
+Configure Supabase Cloud redirect URLs:
+
+```txt
+Authentication
+  -> URL Configuration
+```
+
+Recommended MVP values:
+
+```txt
+Site URL:
+http://127.0.0.1:5173
+
+Redirect URLs:
+http://127.0.0.1:5173/**
+http://localhost:5173/**
+https://your-vercel-domain.vercel.app/**
+https://your-production-domain/**
+```
+
+When testing against Supabase Cloud from local Vite, run:
+
+```bash
+npm run dev -- --host 127.0.0.1
+```
+
+Then open `http://127.0.0.1:5173`.
+
+### 3.3 Local Supabase
 
 Local Google OAuth is configured in `supabase/config.toml`:
 
@@ -110,23 +175,25 @@ npm run dev -- --host 127.0.0.1
 
 Then open `http://127.0.0.1:5173`.
 
+`supabase/config.toml` is local-development configuration. Do not use it as the source of truth for Supabase Cloud Auth provider settings.
+
 ## 4. Admin Setup
 
 Admin users are not created by seed data.
 
-Local admin setup:
+Admin setup:
 
 ```txt
 Google OAuth login once
   ↓
 profiles row is created with role = user
   ↓
-Open Supabase Studio
+Open Supabase Studio or Cloud Table Editor
   ↓
 Update that profile role to admin
 ```
 
-Example local SQL after login:
+Example SQL after login:
 
 ```sql
 update public.profiles
