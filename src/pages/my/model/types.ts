@@ -38,3 +38,15 @@ export type MyClaimRequest = {
   pickupQrCode: string | null;
   createdAt: string;
 };
+
+export type MySummary = {
+  unusedCreditCount: number;
+  usedCreditCount: number;
+  drawResultCount: number;
+  claimRequestCount: number;
+  cartItemCount: number;
+  cartQuantity: number;
+  recentCreditTitle: string | null;
+  recentResultName: string | null;
+  recentClaimStatus: ClaimRequestStatus | null;
+};
