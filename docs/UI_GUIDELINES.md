@@ -87,6 +87,7 @@ Behavior:
 - Reloading the page must preserve the selected theme.
 - Header includes an icon-only theme toggle button.
 - The toggle button must include an accessible label, such as `aria-label="테마 변경"`.
+- Keep the main Header focused on primary routes; route detailed policy pages through `/guide` and contextual CTAs.
 
 Implementation rules:
 

@@ -193,6 +193,26 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
         </p>
       </section>
 
+      <section className="info-card policy-link-card">
+        <span className="soft-badge">구매 전 확인</span>
+        <h2>확률, 환불, 수령 기준을 확인해주세요</h2>
+        <p>
+          가챠권은 30일간 사용할 수 있고, 실제 상품은 추첨 시점에 확정됩니다.
+          구매 전 공정성, 환불, 배송/수령 안내를 확인할 수 있습니다.
+        </p>
+        <div className="guide-actions">
+          <Link className="text-link-inline" to="/fairness">
+            공정성 안내
+          </Link>
+          <Link className="text-link-inline" to="/policy/refund">
+            환불 정책
+          </Link>
+          <Link className="text-link-inline" to="/policy/shipping">
+            배송/수령 안내
+          </Link>
+        </div>
+      </section>
+
       <section className="sticky-cta-card">
         <div>
           <strong>{product.title}</strong>

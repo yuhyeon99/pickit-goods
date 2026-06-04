@@ -1,4 +1,15 @@
-const faqs = [
+import { Link } from 'react-router-dom';
+
+type FaqItem = {
+  question: string;
+  answer: string;
+  links?: Array<{
+    to: string;
+    label: string;
+  }>;
+};
+
+const faqs: FaqItem[] = [
   {
     question: '가챠와 티켓은 무엇이 다른가요?',
     answer:
@@ -8,11 +19,13 @@ const faqs = [
     question: '확률은 어떻게 계산되나요?',
     answer:
       '확률은 현재 남아 있는 뽑기 재고 기준으로 계산됩니다. 누군가 상품을 뽑으면 남은 재고가 바뀌고, 등급별 확률도 다시 계산될 수 있습니다.',
+    links: [{ to: '/fairness', label: '공정성 안내 보기' }],
   },
   {
     question: '가챠권을 사면 바로 상품이 정해지나요?',
     answer:
       '아니요. 구매 시점에는 가챠권만 발급됩니다. 실제 상품은 가챠권을 사용해 추첨하는 순간 서버에서 확정됩니다.',
+    links: [{ to: '/fairness', label: '추첨 방식 확인하기' }],
   },
   {
     question: '구매 가능 수량과 남은 뽑기 재고는 왜 다른가요?',
@@ -28,16 +41,19 @@ const faqs = [
     question: '미사용 가챠권은 환불할 수 있나요?',
     answer:
       'MVP 정책상 미사용 가챠권은 유효기간 내 환불 요청 가능 대상으로 봅니다. 다만 환불 기능과 정식 환불 문구는 아직 구현/확정 전입니다.',
+    links: [{ to: '/policy/refund', label: '환불 정책 보기' }],
   },
   {
     question: '당첨 상품은 어떻게 수령하나요?',
     answer:
       '당첨 상품은 보관함에서 확인한 뒤 /claim에서 배송 또는 현장 수령을 요청할 수 있습니다. 여러 상품을 묶어서 요청할 수 있습니다.',
+    links: [{ to: '/policy/shipping', label: '배송/수령 안내 보기' }],
   },
   {
     question: '현장 수령 QR은 제공되나요?',
     answer:
       '현재 MVP에서는 실제 QR 이미지를 저장하거나 렌더링하지 않습니다. 대신 pickup code 문자열을 생성해 수령 확인에 사용할 수 있도록 설계되어 있습니다.',
+    links: [{ to: '/policy/shipping', label: '현장 수령 안내 보기' }],
   },
 ];
 
@@ -58,6 +74,15 @@ export function FaqPage() {
           <article className="faq-card" key={faq.question}>
             <h2>{faq.question}</h2>
             <p>{faq.answer}</p>
+            {faq.links ? (
+              <div className="guide-actions">
+                {faq.links.map((link) => (
+                  <Link className="text-link-inline" key={link.to} to={link.to}>
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
           </article>
         ))}
       </div>

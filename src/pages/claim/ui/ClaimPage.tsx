@@ -188,6 +188,12 @@ export function ClaimPage() {
                 <h2>수령 방식</h2>
               </div>
             </div>
+            <div className="policy-inline-note">
+              <p>배송과 현장 수령 기준을 먼저 확인하고 싶다면 안내 페이지를 참고해주세요.</p>
+              <Link className="text-link-inline" to="/policy/shipping">
+                배송/수령 안내 보기
+              </Link>
+            </div>
             <div className="claim-method-grid">
               <button
                 className={`claim-method-card ${claimMethod === 'delivery' ? 'claim-method-card-active' : ''}`}

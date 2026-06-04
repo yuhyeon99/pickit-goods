@@ -4,13 +4,11 @@ import { useAuth } from '../../shared/model/auth/useAuth';
 import { useTheme } from '../../shared/model/theme/useTheme';
 
 const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/draw', label: 'Draw Guide' },
-  { to: '/gacha', label: 'Gacha' },
-  { to: '/ticket', label: 'Ticket' },
-  { to: '/faq', label: 'FAQ' },
-  { to: '/my', label: 'My Page' },
-  { to: '/cart', label: 'Cart' },
+  { to: '/', label: '홈' },
+  { to: '/gacha', label: '가챠' },
+  { to: '/ticket', label: '티켓' },
+  { to: '/guide', label: '이용안내' },
+  { to: '/my', label: '마이페이지' },
 ];
 
 export function Header() {

@@ -29,6 +29,33 @@ const quantityPolicies = [
   '실제 실물 재고는 추첨이 실행되는 순간 drawn 상태로 변경됩니다.',
 ];
 
+const guideLinks = [
+  {
+    title: '공정성 안내',
+    description: '추첨 결과가 어떻게 결정되고 기록되는지 확인할 수 있어요.',
+    to: '/fairness',
+    label: '공정성 안내 보기',
+  },
+  {
+    title: '환불 정책',
+    description: '미사용 가챠권 환불 기준과 제한 사항을 확인할 수 있어요.',
+    to: '/policy/refund',
+    label: '환불 정책 보기',
+  },
+  {
+    title: '배송/수령 안내',
+    description: '당첨 상품 배송과 현장 수령 방식을 확인할 수 있어요.',
+    to: '/policy/shipping',
+    label: '배송/수령 안내 보기',
+  },
+  {
+    title: '자주 묻는 질문',
+    description: '이용 중 자주 나오는 질문을 확인할 수 있어요.',
+    to: '/faq',
+    label: 'FAQ 보기',
+  },
+];
+
 export function GuidePage() {
   return (
     <section className="guide-page">
@@ -58,6 +85,25 @@ export function GuidePage() {
             <li key={policy}>{policy}</li>
           ))}
         </ul>
+      </section>
+
+      <section className="guide-card">
+        <span className="soft-badge">더 알아보기</span>
+        <h2>필요한 정책을 바로 확인하세요</h2>
+        <p>
+          구매 전, 추첨 전, 수령 전 확인하면 좋은 안내를 한곳에 모았습니다.
+        </p>
+        <div className="guide-card-grid">
+          {guideLinks.map((link) => (
+            <article className="guide-link-card" key={link.to}>
+              <h3>{link.title}</h3>
+              <p>{link.description}</p>
+              <Link className="text-link-inline" to={link.to}>
+                {link.label}
+              </Link>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="guide-card policy-note-card">

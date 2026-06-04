@@ -253,6 +253,21 @@ export function CartPage() {
             <p>
               실제 PG 결제 없이 주문을 결제 완료로 만들고, 구매 수량만큼 가챠권을 발급합니다.
             </p>
+            <section className="cart-policy-note" aria-label="결제 전 정책 안내">
+              <strong>결제 전 안내</strong>
+              <p>
+                미사용 가챠권은 유효기간 내 환불 요청이 가능하며, 당첨 상품은 보관함에서
+                수령 요청할 수 있습니다.
+              </p>
+              <div className="guide-actions">
+                <Link className="text-link-inline" to="/policy/refund">
+                  환불 정책 보기
+                </Link>
+                <Link className="text-link-inline" to="/policy/shipping">
+                  배송/수령 안내 보기
+                </Link>
+              </div>
+            </section>
           </aside>
         </div>
       )}

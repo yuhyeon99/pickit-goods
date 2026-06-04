@@ -66,6 +66,20 @@ export function DrawIntroPage() {
           </Link>
         </div>
       </section>
+
+      <section className="guide-card policy-note-card">
+        <span className="soft-badge">추첨 방식</span>
+        <h2>추첨 방식이 궁금하신가요?</h2>
+        <p>
+          Pickit Goods는 클라이언트가 결과를 만들지 않고, 서버에서 결과를 확정한 뒤 로그를
+          보관합니다. 자세한 흐름은 공정성 안내에서 확인할 수 있습니다.
+        </p>
+        <div className="guide-actions">
+          <Link className="primary-link-button" to="/fairness">
+            공정성 안내 보기
+          </Link>
+        </div>
+      </section>
     </section>
   );
 }

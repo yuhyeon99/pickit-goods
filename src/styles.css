@@ -906,6 +906,33 @@ a {
   padding: 22px;
 }
 
+.guide-link-card,
+.cart-policy-note,
+.policy-inline-note {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-surface-strong) 72%, var(--color-surface));
+  padding: 16px;
+}
+
+.guide-link-card h3,
+.cart-policy-note strong {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.guide-link-card p,
+.cart-policy-note p,
+.policy-inline-note p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
 .guide-card h2,
 .faq-card h2 {
   margin: 0;
@@ -948,6 +975,10 @@ a {
 .policy-note-card {
   border-color: color-mix(in srgb, var(--color-primary) 32%, var(--color-border));
   background: color-mix(in srgb, var(--color-primary-soft) 38%, var(--color-surface));
+}
+
+.policy-link-card {
+  border-color: color-mix(in srgb, var(--color-primary) 24%, var(--color-border));
 }
 
 .cart-layout {
