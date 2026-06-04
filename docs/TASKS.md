@@ -359,6 +359,12 @@ Requirements:
 - Prevent duplicate usage
 - Handle failure recovery
 
+Expiration requirement after policy migration:
+
+- Block draw execution for expired credits.
+- Show clear user messaging when a credit is expired.
+- Do not restore draw_products.sold_count when a credit expires.
+
 ## Task 11. Ticket Draw Function
 
 Goal:
@@ -524,6 +530,41 @@ Requirements:
 - Show existing result if already completed
 - Allow retry only if safe
 - Never create duplicate result
+
+## Task 18.1 Draw Credit Expiration Policy
+
+Goal:
+
+Implement the 30-day draw credit validity policy.
+
+Policy:
+
+- Draw credits are valid for 30 days after paid checkout.
+- Unused credits may request refund within the valid period.
+- Used credits cannot be refunded.
+- Expired credits cannot be used for drawing.
+- Expiration does not restore draw_products.sold_count.
+- inventory_units remain deducted only at draw execution time.
+
+Planned database work:
+
+- Add `user_draw_credits.expires_at`.
+- Backfill existing unused credits based on created_at or paid_at.
+- Add indexes or admin filters if needed for expiration review.
+
+Planned app work:
+
+- `/my/draws` displays issued date, expiration date, remaining days, and usable/expired state.
+- Draw play blocks expired credits.
+- Admin/user views distinguish unused, used, expired, and refunded credits.
+- Refund request flow checks unused status and validity period.
+
+Excluded from first pass unless explicitly scheduled:
+
+- Automatic notification before expiration.
+- Automatic expiration cron job.
+- sold_count restoration on expiration.
+- Automatic resale of remaining physical inventory.
 
 ## Task 19. Final Review
 

@@ -158,6 +158,43 @@ User-facing product availability labels:
 - sold_out + no available inventory: 품절
 - hidden: not shown on user-facing screens
 
+### 6.1 Draw Credit Expiration Policy
+
+MVP draw credits should be managed with an expiration policy instead of deducting inventory at purchase time.
+
+Policy decision:
+
+- Draw credits are valid for 30 days after paid checkout.
+- Unused draw credits may request refund within the valid period.
+- Used draw credits cannot be refunded.
+- Expired draw credits cannot be used for drawing.
+- Expiration does not automatically restore draw_products.sold_count.
+- Physical inventory that remains after credit expiration is handled later by admin policy, such as a separate resale event, campaign, or disposal.
+
+Reasoning:
+
+```txt
+Purchase
+→ user_draw_credits are issued
+→ draw_products.sold_count increases
+→ new purchase availability decreases
+
+Draw execution
+→ one inventory_units row is selected
+→ inventory_units.status changes to drawn
+```
+
+At purchase time the winning reward is not determined, so a specific inventory unit must not be deducted. sold_count represents issued sales rights, while inventory_units represents physical stock that is only consumed at draw execution.
+
+For the first MVP, sold_count remains a cumulative issued credit count. It should not be decreased when a credit expires, because restoring sold_count would require additional accounting fields and reconciliation rules.
+
+Planned implementation impact:
+
+- Add `user_draw_credits.expires_at`.
+- Show issued date, expiration date, remaining days, and usable/expired state on `/my/draws`.
+- Block draw execution for expired credits.
+- Keep refund eligibility limited to unused credits, with legal/policy review before public launch.
+
 ## 7. Theme Policy
 
 Random products and theme-specific products must use separate inventory pools.

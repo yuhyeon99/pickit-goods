@@ -118,6 +118,15 @@ refund_requests.status values:
 
 The MVP uses manual admin processing for refunds.
 
+Draw credit expiration and refunds:
+
+- Draw credits are valid for 30 days after paid checkout.
+- Unused draw credits may request refund within the valid period.
+- Used draw credits cannot be refunded.
+- Expired draw credits cannot be used for drawing.
+- Expiration does not automatically restore draw_products.sold_count.
+- Public refund/expiration wording must be reviewed before production launch because it can involve consumer protection requirements.
+
 ## 5. Exchange Policy
 
 Exchange is allowed only for product issues after reward confirmation.
@@ -235,7 +244,60 @@ Important rules:
 - If sold_out, available inventory remains, and the user has an unused matching credit, draw is allowed.
 - If available inventory is 0, draw is not allowed.
 
-## 9. Claim Request Policy
+Inventory and credit expiration rules:
+
+- inventory_units are deducted only when a draw is executed.
+- Purchasing a draw credit increases sold_count but does not select or deduct a specific inventory unit.
+- A credit that expires does not reduce sold_count.
+- For the MVP, sold_count remains the issued credit count after paid checkout, not the currently active credit count.
+- Any physical inventory left after credit expiration is handled by a later operational policy, such as separate resale, event use, or disposal.
+
+User-facing quantity wording:
+
+- Purchase screens should prioritize "구매 가능 수량".
+- Draw/play screens may show "남은 뽑기 재고".
+- Admin screens should distinguish sold_count, remaining purchase quantity, available inventory count, and total inventory count.
+
+## 9. Draw Credit Expiration Policy
+
+MVP policy:
+
+```txt
+paid checkout
+  ↓
+user_draw_credits issued
+  ↓
+expires 30 days after checkout
+  ↓
+unused credit can be used or refunded within the valid period
+  ↓
+expired credit cannot be used
+```
+
+Rules:
+
+- Validity period: 30 days from paid checkout.
+- Unused credits may request refund within the valid period.
+- Used credits are not refundable.
+- Expired credits are not drawable.
+- Expiration does not automatically restore sales capacity.
+- sold_count is not decremented on expiration.
+- The MVP does not include automatic expiration jobs or notifications unless implemented in a later task.
+
+Planned UI requirements for `/my/draws`:
+
+- Show credit issue date.
+- Show expiration date.
+- Show remaining days.
+- Show whether the credit is usable or expired.
+- Hide or disable "뽑기하러 가기" for expired credits.
+
+Planned schema impact:
+
+- Add `user_draw_credits.expires_at`.
+- Keep user_draw_credits.status values: unused, used, expired, refunded, failed.
+
+## 10. Claim Request Policy
 
 Won items are first stored in the user's item box.
 
@@ -265,7 +327,7 @@ Implementation requirements:
 - Admin claim status changes must be performed through a server-side RPC with an admin role check.
 - When a claim is completed, linked inventory_units.status changes to claimed.
 
-## 10. Admin Result Modification Policy
+## 11. Admin Result Modification Policy
 
 Admins cannot modify confirmed winning results.
 
@@ -294,7 +356,7 @@ Admins cannot:
 - Update result-related inventory fields after inventory_units.status becomes drawn
 - Delete normal draw logs
 
-## 11. Failure Recovery Policy
+## 12. Failure Recovery Policy
 
 If a draw request fails, recovery must prioritize preventing duplicate results.
 
@@ -307,7 +369,7 @@ Priority order:
 
 Admin review must not allow changing confirmed winning results.
 
-## 12. FAQ Topics
+## 13. FAQ Topics
 
 Recommended FAQ categories:
 

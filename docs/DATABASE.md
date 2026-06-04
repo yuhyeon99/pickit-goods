@@ -143,6 +143,8 @@ Rules:
 - New purchases must stop if available inventory count is 0.
 - New purchases must stop if sold_count reaches sales_limit.
 - Existing unused credits can still be drawn against a sold_out product if available inventory remains.
+- sold_count is not automatically restored when a credit expires.
+- For the MVP, sold_count is a cumulative issued credit count after paid checkout, not an active unexpired credit count.
 
 ## 6. draw_product_items
 
@@ -267,12 +269,25 @@ Stores user's usable draw credits.
 | status | text | unused, used, expired, refunded, failed |
 | used_at | timestamptz | nullable |
 | refunded_at | timestamptz | nullable |
+| expires_at | timestamptz | planned, nullable until expiration policy migration |
 | created_at | timestamptz | default now() |
 
 Rules:
 
 - Refund is allowed only when status is unused.
 - A used credit cannot be refunded.
+- Draw credits are valid for 30 days after paid checkout.
+- Expired credits cannot be used for drawing.
+- Expiration changes credit usability but does not decrement draw_products.sold_count.
+- The first implementation should add and backfill expires_at through a future migration.
+- `/my/draws` should show issue date, expiration date, remaining days, and usable/expired state.
+
+Expiration design notes:
+
+- A paid checkout issues draw credits but does not select inventory_units.
+- inventory_units are selected and changed to drawn only during server-side draw execution.
+- If a credit expires unused, the physical inventory unit remains available until a future draw, resale, event, or admin policy handles it.
+- The MVP should not infer available purchase quantity from inventory_units alone. Use `min(sales_limit - sold_count, available_inventory_count)`.
 
 ## 13. draw_results
 
