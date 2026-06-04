@@ -244,6 +244,7 @@ Admin UI completion checklist:
 - Check light mode.
 - Check dark mode.
 - Confirm navigation remains usable on small screens.
+- Confirm the admin topbar exposes service home, theme toggle, current user, and logout actions.
 - Confirm read-only/admin state badges remain readable.
 
 Pages:

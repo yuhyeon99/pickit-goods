@@ -2853,14 +2853,93 @@ a {
 .admin-shell {
   display: grid;
   min-height: 100vh;
+  grid-template-areas:
+    'topbar'
+    'sidebar'
+    'main';
   grid-template-columns: 1fr;
   background: #f5f7fa;
 }
 
 .admin-sidebar {
+  grid-area: sidebar;
   border-bottom: 1px solid #e6eaf0;
   background: #ffffff;
   padding: 20px;
+}
+
+.admin-topbar {
+  display: grid;
+  grid-area: topbar;
+  gap: 14px;
+  border-bottom: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-bg-elevated) 90%, transparent);
+  padding: 16px 20px;
+  backdrop-filter: blur(12px);
+}
+
+.admin-topbar-title {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.admin-topbar-title span {
+  color: var(--color-text-strong);
+  font-size: 16px;
+  font-weight: 850;
+}
+
+.admin-topbar-title small {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.admin-topbar-actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-topbar-link {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0 12px;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.admin-topbar-link:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-soft);
+}
+
+.admin-topbar-user {
+  display: inline-flex;
+  min-height: 40px;
+  max-width: min(220px, 100%);
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-muted-strong);
+  font-size: 13px;
+  font-weight: 800;
+  padding: 0 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .admin-nav {
@@ -2874,6 +2953,7 @@ a {
 }
 
 .admin-main {
+  grid-area: main;
   padding: 24px 20px 56px;
 }
 
@@ -3474,11 +3554,14 @@ a {
 
 @media (min-width: 960px) {
   .admin-shell {
+    grid-template-areas:
+      'sidebar topbar'
+      'sidebar main';
     grid-template-columns: 248px 1fr;
   }
 
   .admin-sidebar {
-    border-right: 1px solid #e6eaf0;
+    border-right: 1px solid var(--color-border);
     border-bottom: 0;
     padding: 28px 18px;
   }
@@ -3486,6 +3569,17 @@ a {
   .admin-nav {
     flex-direction: column;
     margin-top: 28px;
+  }
+
+  .admin-topbar {
+    min-height: 72px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 16px 48px;
+  }
+
+  .admin-topbar-actions {
+    justify-content: flex-end;
   }
 
   .admin-main {

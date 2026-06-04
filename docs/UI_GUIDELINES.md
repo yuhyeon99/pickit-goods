@@ -121,6 +121,8 @@ Admin pages should remain quieter and denser than user pages.
 
 - Prioritize scanability.
 - Use restrained cards and lists.
+- Include a common admin topbar with service-home navigation, theme toggle, current user context, and logout.
+- Keep admin topbar actions compact and usable on mobile.
 - Make read-only areas visually distinct.
 - Never expose UI for editing confirmed winning results.
 
