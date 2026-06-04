@@ -8,6 +8,7 @@ const navItems = [
   { to: '/gacha', label: '가챠' },
   { to: '/ticket', label: '티켓' },
   { to: '/guide', label: '이용안내' },
+  { to: '/cart', label: '장바구니' },
   { to: '/my', label: '마이페이지' },
 ];
 
