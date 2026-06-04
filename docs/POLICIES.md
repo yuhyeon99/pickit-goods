@@ -118,6 +118,8 @@ refund_requests.status values:
 
 The MVP uses manual admin processing for refunds.
 
+Public-facing policy wording in the MVP is temporary guidance. Refund, expiration, delivery, and pickup wording must be reviewed and finalized before production launch.
+
 Draw credit expiration and refunds:
 
 - Draw credits are valid for 30 days after paid checkout.

@@ -8,302 +8,302 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 
 ### Authentication
 
-- [ ] Google OAuth login completes successfully.
-- [ ] After login, the Header shows the user's display name or email.
-- [ ] Logout clears the user state and updates the Header.
-- [ ] A first-time OAuth user gets a matching `profiles` row.
+- [x] Google OAuth login completes successfully.
+- [x] After login, the Header shows the user's display name or email.
+- [x] Logout clears the user state and updates the Header.
+- [x] A first-time OAuth user gets a matching `profiles` row.
 
 ### Gacha Browse And Purchase
 
-- [ ] `/gacha` shows active gacha products from Supabase.
-- [ ] `/gacha` product cards show title, description, price, status, sold count, purchase quantity, and grade counts.
-- [ ] `/gacha` prioritizes `구매 가능 수량`.
-- [ ] `/gacha` does not show hidden products.
-- [ ] `/gacha/:id` shows the selected gacha detail.
-- [ ] `/gacha/:id` distinguishes `구매 가능 수량` and `남은 뽑기 재고`.
-- [ ] `/gacha/:id` shows grade probabilities based on available inventory units.
-- [ ] `/gacha/:id` shows included reward items.
-- [ ] Non-logged-in users see a login action before adding to cart.
-- [ ] Logged-in users can add an active gacha product to the cart.
-- [ ] A sold_out or hidden product cannot be newly added to cart.
+- [x] `/gacha` shows active gacha products from Supabase.
+- [x] `/gacha` product cards show title, description, price, status, sold count, purchase quantity, and grade counts.
+- [x] `/gacha` prioritizes `구매 가능 수량`.
+- [x] `/gacha` does not show hidden products.
+- [x] `/gacha/:id` shows the selected gacha detail.
+- [x] `/gacha/:id` distinguishes `구매 가능 수량` and `남은 뽑기 재고`.
+- [x] `/gacha/:id` shows grade probabilities based on available inventory units.
+- [x] `/gacha/:id` shows included reward items.
+- [x] Non-logged-in users see a login action before adding to cart.
+- [x] Logged-in users can add an active gacha product to the cart.
+- [x] A sold_out or hidden product cannot be newly added to cart.
 
 ### Cart And Test Checkout
 
-- [ ] `/cart` shows the current user's cart items only.
-- [ ] Cart item quantity can be increased.
-- [ ] Cart item quantity can be decreased.
-- [ ] Cart item can be removed.
-- [ ] Quantity cannot exceed `remaining_purchase_quantity`.
-- [ ] Cart summary shows total quantity and total amount.
-- [ ] Test checkout is blocked when the cart is empty.
-- [ ] Test checkout creates `orders`.
-- [ ] Test checkout creates `order_items`.
-- [ ] Test checkout creates `user_draw_credits`.
-- [ ] Test checkout creates `credit_issuances`.
-- [ ] Test checkout increases `draw_products.sold_count` by issued credit quantity.
-- [ ] Test checkout does not decrement `inventory_units.available`.
-- [ ] Checkout complete UI links to `/my/draws`.
+- [x] `/cart` shows the current user's cart items only.
+- [x] Cart item quantity can be increased.
+- [x] Cart item quantity can be decreased.
+- [x] Cart item can be removed.
+- [x] Quantity cannot exceed `remaining_purchase_quantity`.
+- [x] Cart summary shows total quantity and total amount.
+- [x] Test checkout is blocked when the cart is empty.
+- [x] Test checkout creates `orders`.
+- [x] Test checkout creates `order_items`.
+- [x] Test checkout creates `user_draw_credits`.
+- [x] Test checkout creates `credit_issuances`.
+- [x] Test checkout increases `draw_products.sold_count` by issued credit quantity.
+- [x] Test checkout does not decrement `inventory_units.available`.
+- [x] Checkout complete UI links to `/my/draws`.
 
 ### My Page And Credits
 
-- [ ] `/my` shows profile information.
-- [ ] `/my` shows activity summary cards.
-- [ ] `/my` links to `/my/draws`.
-- [ ] `/my` links to `/my/items`.
-- [ ] `/my` links to `/my/claims`.
-- [ ] `/my` links to `/cart`.
-- [ ] `/my/draws` shows owned draw credits.
-- [ ] `/my/draws` shows credit issue date.
-- [ ] `/my/draws` shows credit expiration date.
-- [ ] `/my/draws` shows remaining days.
-- [ ] `/my/draws` shows usable, used, expired, refunded, and failed states correctly.
-- [ ] `/my/draws` only shows `뽑기하러 가기` for usable credits.
+- [x] `/my` shows profile information.
+- [x] `/my` shows activity summary cards.
+- [x] `/my` links to `/my/draws`.
+- [x] `/my` links to `/my/items`.
+- [x] `/my` links to `/my/claims`.
+- [x] `/my` links to `/cart`.
+- [x] `/my/draws` shows owned draw credits.
+- [x] `/my/draws` shows credit issue date.
+- [x] `/my/draws` shows credit expiration date.
+- [x] `/my/draws` shows remaining days.
+- [x] `/my/draws` shows usable, used, expired, refunded, and failed states correctly.
+- [x] `/my/draws` only shows `뽑기하러 가기` for usable credits.
 
 ### Gacha Draw
 
-- [ ] `/gacha/:id/play` is protected for logged-in users.
-- [ ] `/gacha/:id/play` shows usable credit count.
-- [ ] `/gacha/:id/play` excludes expired credits from usable credit count.
-- [ ] `/gacha/:id/play` shows an expired-credit guide if expired unused credits exist.
-- [ ] `/gacha/:id/play` shows remaining draw inventory.
-- [ ] Draw button is disabled when no usable credit exists.
-- [ ] Draw button is disabled when no available inventory remains.
-- [ ] Draw execution calls the server RPC.
-- [ ] Draw execution does not generate results on the client.
-- [ ] Successful draw changes `user_draw_credits.status` to `used`.
-- [ ] Successful draw changes one `inventory_units.status` to `drawn`.
-- [ ] Successful draw creates `draw_results`.
-- [ ] Successful draw creates `draw_logs`.
-- [ ] Result reveal UI shows reward name, grade, theme, draw time, and verification code.
-- [ ] After draw, `/my/draws` shows the credit as used.
+- [x] `/gacha/:id/play` is protected for logged-in users.
+- [x] `/gacha/:id/play` shows usable credit count.
+- [x] `/gacha/:id/play` excludes expired credits from usable credit count.
+- [x] `/gacha/:id/play` shows an expired-credit guide if expired unused credits exist.
+- [x] `/gacha/:id/play` shows remaining draw inventory.
+- [x] Draw button is disabled when no usable credit exists.
+- [x] Draw button is disabled when no available inventory remains.
+- [x] Draw execution calls the server RPC.
+- [x] Draw execution does not generate results on the client.
+- [x] Successful draw changes `user_draw_credits.status` to `used`.
+- [x] Successful draw changes one `inventory_units.status` to `drawn`.
+- [x] Successful draw creates `draw_results`.
+- [x] Successful draw creates `draw_logs`.
+- [x] Result reveal UI shows reward name, grade, theme, draw time, and verification code.
+- [x] After draw, `/my/draws` shows the credit as used.
 
 ### Won Item Box And Claim
 
-- [ ] `/my/items` shows the current user's draw results.
-- [ ] `/my/items` shows reward name, grade, theme, gacha name, draw date, status, and verification code.
-- [ ] `/my/items` shows claim status derived from claim linkage.
-- [ ] `/claim` shows claimable stored items.
-- [ ] `/claim` excludes or disables already requested items.
-- [ ] `/claim` allows selecting at least one item.
-- [ ] `/claim` supports delivery method.
-- [ ] `/claim` supports pickup method.
-- [ ] Delivery claim requires recipient name, phone, postal code, address, and detailed address.
-- [ ] Pickup claim explains pickup code usage.
-- [ ] Claim creation creates `claim_requests`.
-- [ ] Claim creation creates `claim_request_items`.
-- [ ] One draw result cannot be claimed twice.
-- [ ] `/my/claims` shows the user's claim requests.
-- [ ] `/my/claims` shows request method, status, request date, and item count.
+- [x] `/my/items` shows the current user's draw results.
+- [x] `/my/items` shows reward name, grade, theme, gacha name, draw date, status, and verification code.
+- [x] `/my/items` shows claim status derived from claim linkage.
+- [x] `/claim` shows claimable stored items.
+- [x] `/claim` excludes or disables already requested items.
+- [x] `/claim` allows selecting at least one item.
+- [x] `/claim` supports delivery method.
+- [x] `/claim` supports pickup method.
+- [x] Delivery claim requires recipient name, phone, postal code, address, and detailed address.
+- [x] Pickup claim explains pickup code usage.
+- [x] Claim creation creates `claim_requests`.
+- [x] Claim creation creates `claim_request_items`.
+- [x] One draw result cannot be claimed twice.
+- [x] `/my/claims` shows the user's claim requests.
+- [x] `/my/claims` shows request method, status, request date, and item count.
 
 ## 2. Admin Flow QA
 
 ### `/admin/users`
 
-- [ ] Admin can open `/admin/users`.
-- [ ] User list shows profile ID, display name, avatar, role, created date, and updated date.
-- [ ] User summary shows order count.
-- [ ] User summary shows unused credit count.
-- [ ] User summary shows used credit count.
-- [ ] User summary shows draw result count.
-- [ ] User summary shows claim request count.
-- [ ] Search by user name works.
-- [ ] Search by user ID works.
-- [ ] Role filter works.
-- [ ] Credit presence filter works.
+- [x] Admin can open `/admin/users`.
+- [x] User list shows profile ID, display name, avatar, role, created date, and updated date.
+- [x] User summary shows order count.
+- [x] User summary shows unused credit count.
+- [x] User summary shows used credit count.
+- [x] User summary shows draw result count.
+- [x] User summary shows claim request count.
+- [x] Search by user name works.
+- [x] Search by user ID works.
+- [x] Role filter works.
+- [x] Credit presence filter works.
 
 ### `/admin/orders`
 
-- [ ] Admin can open `/admin/orders`.
-- [ ] Orders list shows order ID, user, status, total amount, created date, and paid date.
-- [ ] Order cards show order item list.
-- [ ] Order cards show gacha name, quantity, unit price, line total, and credit amount.
-- [ ] Credit issuance quantity is shown.
-- [ ] Order search by order ID works.
-- [ ] Order search by user works.
-- [ ] Order status filter works.
-- [ ] No order update/delete UI exists.
+- [x] Admin can open `/admin/orders`.
+- [x] Orders list shows order ID, user, status, total amount, created date, and paid date.
+- [x] Order cards show order item list.
+- [x] Order cards show gacha name, quantity, unit price, line total, and credit amount.
+- [x] Credit issuance quantity is shown.
+- [x] Order search by order ID works.
+- [x] Order search by user works.
+- [x] Order status filter works.
+- [x] No order update/delete UI exists.
 
 ### `/admin/gacha`
 
-- [ ] Admin can open `/admin/gacha`.
-- [ ] Gacha list includes hidden and non-active products.
-- [ ] Each card shows raw status and user-facing status.
-- [ ] Each card shows `sales_limit`.
-- [ ] Each card shows `sold_count`.
-- [ ] Each card shows `신규 구매 가능 수량`.
-- [ ] Each card shows `미추첨 재고`.
-- [ ] Each card shows `전체 재고`.
-- [ ] Grade counts and probabilities are shown.
-- [ ] Included reward item list is shown.
-- [ ] Search and filters work.
-- [ ] No gacha create/update/delete UI exists.
+- [x] Admin can open `/admin/gacha`.
+- [x] Gacha list includes hidden and non-active products.
+- [x] Each card shows raw status and user-facing status.
+- [x] Each card shows `sales_limit`.
+- [x] Each card shows `sold_count`.
+- [x] Each card shows `신규 구매 가능 수량`.
+- [x] Each card shows `미추첨 재고`.
+- [x] Each card shows `전체 재고`.
+- [x] Grade counts and probabilities are shown.
+- [x] Included reward item list is shown.
+- [x] Search and filters work.
+- [x] No gacha create/update/delete UI exists.
 
 ### `/admin/items`
 
-- [ ] Admin can open `/admin/items`.
-- [ ] Reward item list shows item ID, name, description, grade, theme, created date, and updated date.
-- [ ] Included gacha pool information is shown.
-- [ ] Inventory status counts are shown.
-- [ ] Search by item name works.
-- [ ] Search by description works.
-- [ ] Grade filter works.
-- [ ] Theme filter works.
-- [ ] Inventory presence filter works.
-- [ ] No reward item create/update/delete UI exists.
+- [x] Admin can open `/admin/items`.
+- [x] Reward item list shows item ID, name, description, grade, theme, created date, and updated date.
+- [x] Included gacha pool information is shown.
+- [x] Inventory status counts are shown.
+- [x] Search by item name works.
+- [x] Search by description works.
+- [x] Grade filter works.
+- [x] Theme filter works.
+- [x] Inventory presence filter works.
+- [x] No reward item create/update/delete UI exists.
 
 ### `/admin/pools`
 
-- [ ] Admin can open `/admin/pools`.
-- [ ] Pool list shows draw product ID, name, type, status, price, theme, sales limit, and sold count.
-- [ ] Pool list shows `신규 구매 가능 수량`.
-- [ ] Pool list shows available and total inventory counts.
-- [ ] Pool item list shows configured quantity.
-- [ ] Pool item list shows actual inventory quantity.
-- [ ] Pool item list shows inventory counts by status.
-- [ ] Quantity mismatch warning appears when configured quantity and actual inventory differ.
-- [ ] Grade composition rate is shown.
-- [ ] Available probability is shown.
-- [ ] Search and filters work.
-- [ ] No pool or inventory mutation UI exists.
+- [x] Admin can open `/admin/pools`.
+- [x] Pool list shows draw product ID, name, type, status, price, theme, sales limit, and sold count.
+- [x] Pool list shows `신규 구매 가능 수량`.
+- [x] Pool list shows available and total inventory counts.
+- [x] Pool item list shows configured quantity.
+- [x] Pool item list shows actual inventory quantity.
+- [x] Pool item list shows inventory counts by status.
+- [x] Quantity mismatch warning appears when configured quantity and actual inventory differ.
+- [x] Grade composition rate is shown.
+- [x] Available probability is shown.
+- [x] Search and filters work.
+- [x] No pool or inventory mutation UI exists.
 
 ### `/admin/draw-logs`
 
-- [ ] Admin can open `/admin/draw-logs`.
-- [ ] Draw log list shows log ID, result ID, user, gacha, reward, grade, status, inventory ID, request ID, and created date.
-- [ ] Verification-related IDs are shortened.
-- [ ] Payload is summarized and not overexposed.
-- [ ] Search by gacha works.
-- [ ] Search by user works.
-- [ ] Grade filter works.
-- [ ] Status filter works.
-- [ ] No draw log update/delete UI exists.
-- [ ] No draw result update/delete UI exists.
+- [x] Admin can open `/admin/draw-logs`.
+- [x] Draw log list shows log ID, result ID, user, gacha, reward, grade, status, inventory ID, request ID, and created date.
+- [x] Verification-related IDs are shortened.
+- [x] Payload is summarized and not overexposed.
+- [x] Search by gacha works.
+- [x] Search by user works.
+- [x] Grade filter works.
+- [x] Status filter works.
+- [x] No draw log update/delete UI exists.
+- [x] No draw result update/delete UI exists.
 
 ### `/admin/claims`
 
-- [ ] Admin can open `/admin/claims`.
-- [ ] Claim requests show request ID, user, method, status, created date, item count, and item list.
-- [ ] Delivery claims show recipient and address information.
-- [ ] Delivery claims can transition `requested → preparing`.
-- [ ] Delivery claims can transition `preparing → shipping`.
-- [ ] Delivery claims can transition `shipping → completed`.
-- [ ] Shipping transition can store tracking number if provided.
-- [ ] Pickup claims show `pickup_qr_code`.
-- [ ] Pickup claims can transition `requested → preparing`.
-- [ ] Pickup claims can transition `preparing → ready_for_pickup`.
-- [ ] Pickup claims can transition `ready_for_pickup → completed`.
-- [ ] Completed claim updates `claim_requests.status = completed`.
-- [ ] Completed claim updates linked `draw_results.status = claimed`.
-- [ ] Completed claim updates linked `inventory_units.status = claimed`.
-- [ ] User `/my/items` shows claimed state after completion.
-- [ ] User `/my/claims` shows completed state after completion.
+- [x] Admin can open `/admin/claims`.
+- [x] Claim requests show request ID, user, method, status, created date, item count, and item list.
+- [x] Delivery claims show recipient and address information.
+- [x] Delivery claims can transition `requested → preparing`.
+- [x] Delivery claims can transition `preparing → shipping`.
+- [x] Delivery claims can transition `shipping → completed`.
+- [x] Shipping transition can store tracking number if provided.
+- [x] Pickup claims show `pickup_qr_code`.
+- [x] Pickup claims can transition `requested → preparing`.
+- [x] Pickup claims can transition `preparing → ready_for_pickup`.
+- [x] Pickup claims can transition `ready_for_pickup → completed`.
+- [x] Completed claim updates `claim_requests.status = completed`.
+- [x] Completed claim updates linked `draw_results.status = claimed`.
+- [x] Completed claim updates linked `inventory_units.status = claimed`.
+- [x] User `/my/items` shows claimed state after completion.
+- [x] User `/my/claims` shows completed state after completion.
 
 ## 3. Permission And RLS QA
 
-- [ ] Non-logged-in users cannot access `/cart`.
-- [ ] Non-logged-in users cannot access `/my`.
-- [ ] Non-logged-in users cannot access `/my/draws`.
-- [ ] Non-logged-in users cannot access `/my/items`.
-- [ ] Non-logged-in users cannot access `/my/claims`.
-- [ ] Non-logged-in users cannot access `/claim`.
-- [ ] Non-logged-in users cannot access `/gacha/:id/play`.
-- [ ] Normal users cannot access `/admin/*`.
-- [ ] Normal users cannot read another user's cart.
-- [ ] Normal users cannot read another user's orders.
-- [ ] Normal users cannot read another user's credits.
-- [ ] Normal users cannot read another user's draw results.
-- [ ] Normal users cannot read another user's claim requests.
-- [ ] Admin users can read operational admin screens.
-- [ ] Users cannot directly update `draw_results`.
-- [ ] Users cannot directly update `draw_logs`.
-- [ ] Admins cannot update or delete `draw_logs`.
-- [ ] Admins cannot arbitrarily modify winning results in `draw_results`.
-- [ ] Admins cannot modify result-related `inventory_units` fields after draw.
-- [ ] Claim status changes are performed through admin RPC.
-- [ ] Claim status RPC rejects non-admin users.
-- [ ] Draw RPC validates `auth.uid()`.
-- [ ] Checkout RPC validates `auth.uid()`.
+- [x] Non-logged-in users cannot access `/cart`.
+- [x] Non-logged-in users cannot access `/my`.
+- [x] Non-logged-in users cannot access `/my/draws`.
+- [x] Non-logged-in users cannot access `/my/items`.
+- [x] Non-logged-in users cannot access `/my/claims`.
+- [x] Non-logged-in users cannot access `/claim`.
+- [x] Non-logged-in users cannot access `/gacha/:id/play`.
+- [x] Normal users cannot access `/admin/*`.
+- [x] Normal users cannot read another user's cart.
+- [x] Normal users cannot read another user's orders.
+- [x] Normal users cannot read another user's credits.
+- [x] Normal users cannot read another user's draw results.
+- [x] Normal users cannot read another user's claim requests.
+- [x] Admin users can read operational admin screens.
+- [x] Users cannot directly update `draw_results`.
+- [x] Users cannot directly update `draw_logs`.
+- [x] Admins cannot update or delete `draw_logs`.
+- [x] Admins cannot arbitrarily modify winning results in `draw_results`.
+- [x] Admins cannot modify result-related `inventory_units` fields after draw.
+- [x] Claim status changes are performed through admin RPC.
+- [x] Claim status RPC rejects non-admin users.
+- [x] Draw RPC validates `auth.uid()`.
+- [x] Checkout RPC validates `auth.uid()`.
 
 ## 4. Stock And Purchase Quantity QA
 
-- [ ] Purchase quantity uses `min(sales_limit - sold_count, available_inventory_count)`.
-- [ ] Buying one gacha credit increases `sold_count` by 1.
-- [ ] Buying multiple gacha credits increases `sold_count` by issued credit quantity.
-- [ ] Buying credits does not immediately decrement `inventory_units.available`.
-- [ ] Drawing changes one `inventory_units.status` from `available` to `drawn`.
-- [ ] User screens prioritize `구매 가능 수량`.
-- [ ] User screens use `남은 뽑기 재고` only as draw inventory context.
-- [ ] Cart quantity cannot exceed purchase quantity.
-- [ ] Checkout revalidates purchase quantity inside RPC.
-- [ ] `sold_out` blocks new purchases.
-- [ ] Existing usable credits can draw a sold_out product if inventory remains.
-- [ ] Draw is blocked when available inventory is 0.
-- [ ] Admin screens distinguish `판매된 가챠권`, `신규 구매 가능 수량`, `미추첨 재고`, and `전체 재고`.
+- [x] Purchase quantity uses `min(sales_limit - sold_count, available_inventory_count)`.
+- [x] Buying one gacha credit increases `sold_count` by 1.
+- [x] Buying multiple gacha credits increases `sold_count` by issued credit quantity.
+- [x] Buying credits does not immediately decrement `inventory_units.available`.
+- [x] Drawing changes one `inventory_units.status` from `available` to `drawn`.
+- [x] User screens prioritize `구매 가능 수량`.
+- [x] User screens use `남은 뽑기 재고` only as draw inventory context.
+- [x] Cart quantity cannot exceed purchase quantity.
+- [x] Checkout revalidates purchase quantity inside RPC.
+- [x] `sold_out` blocks new purchases.
+- [x] Existing usable credits can draw a sold_out product if inventory remains.
+- [x] Draw is blocked when available inventory is 0.
+- [x] Admin screens distinguish `판매된 가챠권`, `신규 구매 가능 수량`, `미추첨 재고`, and `전체 재고`.
 
 ## 5. Draw Credit Expiration QA
 
-- [ ] Test checkout creates `user_draw_credits.expires_at`.
-- [ ] Newly issued `expires_at` is 30 days after checkout.
-- [ ] Existing credits are backfilled with `created_at + 30 days`.
-- [ ] `/my/draws` shows issue date.
-- [ ] `/my/draws` shows expiration date.
-- [ ] `/my/draws` shows remaining days.
-- [ ] `unused + expires_at > now()` is shown as usable.
-- [ ] `unused + expires_at <= now()` is shown as expired.
-- [ ] Used credits remain shown as used.
-- [ ] Refunded credits remain shown as refunded.
-- [ ] Failed credits remain shown as failed.
-- [ ] Expired credits do not show the draw CTA.
-- [ ] Expired credits are excluded from `/gacha/:id/play` usable credit count.
-- [ ] `/gacha/:id/play` shows an expired-credit guide if relevant.
-- [ ] `draw_gacha()` does not select expired credits.
-- [ ] If only expired unused credits exist, draw RPC returns a clear error.
-- [ ] Expiration does not decrement `draw_products.sold_count`.
-- [ ] Automatic `unused → expired` batch/cron is not implemented.
-- [ ] Refund feature is not implemented.
+- [x] Test checkout creates `user_draw_credits.expires_at`.
+- [x] Newly issued `expires_at` is 30 days after checkout.
+- [x] Existing credits are backfilled with `created_at + 30 days`.
+- [x] `/my/draws` shows issue date.
+- [x] `/my/draws` shows expiration date.
+- [x] `/my/draws` shows remaining days.
+- [x] `unused + expires_at > now()` is shown as usable.
+- [x] `unused + expires_at <= now()` is shown as expired.
+- [x] Used credits remain shown as used.
+- [x] Refunded credits remain shown as refunded.
+- [x] Failed credits remain shown as failed.
+- [x] Expired credits do not show the draw CTA.
+- [x] Expired credits are excluded from `/gacha/:id/play` usable credit count.
+- [x] `/gacha/:id/play` shows an expired-credit guide if relevant.
+- [x] `draw_gacha()` does not select expired credits.
+- [x] If only expired unused credits exist, draw RPC returns a clear error.
+- [x] Expiration does not decrement `draw_products.sold_count`.
+- [x] Automatic `unused → expired` batch/cron is not implemented.
+- [x] Refund feature is not implemented.
 
 ## 6. UI, Responsive, And Theme QA
 
-- [ ] Dark theme is applied by default.
-- [ ] Light/dark theme toggle works.
-- [ ] Theme choice persists after refresh.
-- [ ] Header does not wrap awkwardly on mobile.
-- [ ] Mobile menu opens and closes correctly.
-- [ ] `/gacha` card layout is readable on mobile.
-- [ ] `/gacha` card layout uses available width on desktop.
-- [ ] `/gacha/:id` detail layout is readable on mobile.
-- [ ] `/gacha/:id/play` result UI is readable on mobile.
-- [ ] `/cart` quantity controls are touch-friendly.
-- [ ] `/my` dashboard cards stack cleanly on mobile.
-- [ ] `/my/draws` expiration metadata fits on mobile.
-- [ ] `/my/items` cards are readable on mobile.
-- [ ] `/claim` item selection is touch-friendly.
-- [ ] `/claim` delivery form does not overflow on mobile.
-- [ ] Admin cards are usable on mobile.
-- [ ] CTA buttons have sufficient contrast in dark theme.
-- [ ] Status badges have sufficient contrast in both themes.
+- [x] Dark theme is applied by default.
+- [x] Light/dark theme toggle works.
+- [x] Theme choice persists after refresh.
+- [x] Header does not wrap awkwardly on mobile.
+- [x] Mobile menu opens and closes correctly.
+- [x] `/gacha` card layout is readable on mobile.
+- [x] `/gacha` card layout uses available width on desktop.
+- [x] `/gacha/:id` detail layout is readable on mobile.
+- [x] `/gacha/:id/play` result UI is readable on mobile.
+- [x] `/cart` quantity controls are touch-friendly.
+- [x] `/my` dashboard cards stack cleanly on mobile.
+- [x] `/my/draws` expiration metadata fits on mobile.
+- [x] `/my/items` cards are readable on mobile.
+- [x] `/claim` item selection is touch-friendly.
+- [x] `/claim` delivery form does not overflow on mobile.
+- [x] Admin cards are usable on mobile.
+- [x] CTA buttons have sufficient contrast in dark theme.
+- [x] Status badges have sufficient contrast in both themes.
 
 ## 7. Vercel And Supabase Cloud QA
 
-- [ ] Vercel has `VITE_SUPABASE_URL`.
-- [ ] Vercel has `VITE_SUPABASE_ANON_KEY`.
-- [ ] No service role key is exposed to Vite.
-- [ ] Google OAuth returns to the Vercel production domain.
-- [ ] Supabase Cloud URL configuration includes Vercel domain.
-- [ ] Google Cloud Authorized JavaScript origins include Vercel domain.
-- [ ] Google Cloud Authorized redirect URIs include Supabase Cloud callback URL.
-- [ ] OAuth creates profiles in Supabase Cloud.
-- [ ] Cloud DB creates orders after test checkout.
-- [ ] Cloud DB creates order_items after test checkout.
-- [ ] Cloud DB creates user_draw_credits after test checkout.
-- [ ] Cloud DB creates user_draw_credits.expires_at.
-- [ ] Cloud DB creates credit_issuances after test checkout.
-- [ ] Cloud DB creates draw_results after draw.
-- [ ] Cloud DB creates draw_logs after draw.
-- [ ] Cloud DB creates claim_requests after claim submission.
-- [ ] Cloud DB creates claim_request_items after claim submission.
-- [ ] Admin screens can read Cloud data.
-- [ ] Vercel refresh on nested routes does not show 404.
+- [x] Vercel has `VITE_SUPABASE_URL`.
+- [x] Vercel has `VITE_SUPABASE_ANON_KEY`.
+- [x] No service role key is exposed to Vite.
+- [x] Google OAuth returns to the Vercel production domain.
+- [x] Supabase Cloud URL configuration includes Vercel domain.
+- [x] Google Cloud Authorized JavaScript origins include Vercel domain.
+- [x] Google Cloud Authorized redirect URIs include Supabase Cloud callback URL.
+- [x] OAuth creates profiles in Supabase Cloud.
+- [x] Cloud DB creates orders after test checkout.
+- [x] Cloud DB creates order_items after test checkout.
+- [x] Cloud DB creates user_draw_credits after test checkout.
+- [x] Cloud DB creates user_draw_credits.expires_at.
+- [x] Cloud DB creates credit_issuances after test checkout.
+- [x] Cloud DB creates draw_results after draw.
+- [x] Cloud DB creates draw_logs after draw.
+- [x] Cloud DB creates claim_requests after claim submission.
+- [x] Cloud DB creates claim_request_items after claim submission.
+- [x] Admin screens can read Cloud data.
+- [x] Vercel refresh on nested routes does not show 404.
 
 ## 8. Known Risks
 
@@ -316,11 +316,47 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [ ] Real QR image rendering is not implemented.
 - [ ] Notification before credit expiration is not implemented.
 - [ ] Legal wording for expiration/refund policy still needs review before production.
-- [ ] Manual browser QA is still required for OAuth/Vercel flows.
 
 ## 9. Current Verification Log
 
 Update this section after each QA pass.
+
+### 2026-06-04 Manual MVP QA
+
+- [x] User flow QA completed.
+- [x] Admin flow QA completed.
+- [x] Vercel production environment checked.
+- [x] Supabase Cloud data flow checked.
+- [x] Mobile responsive layout checked.
+- [x] Dark/light theme behavior checked.
+- [x] QA issue found during draw result flow: remaining credit button showed `남은 가챠권 없음` after one draw from two credits.
+- [x] QA issue fixed in commit `da39927 fix: 추첨 결과 화면 남은 가챠권 표시 수정`.
+
+Remaining risks:
+
+- Real PG payment integration is not implemented.
+- Ticket draw execution is still placeholder.
+- Refund request flow is not implemented.
+- Automatic credit expiration batch/cron is not implemented.
+- Most admin create/update/delete CMS features are not implemented.
+- Real QR image rendering is not implemented.
+- Legal wording for expiration/refund policy still needs review before production.
+
+Next recommended work:
+
+1. Reconfirm guide, policy, fairness, refund, shipping, and FAQ content after deployment.
+2. Reconfirm Vercel deployment after content changes.
+3. Decide next feature: order/claim detail, refund request, admin CMS, or ticket phase 2.
+
+### 2026-06-04 Guide/Policy Content Pass
+
+- [x] `/draw` content updated for gacha/ticket differences.
+- [x] `/guide` content updated for MVP usage flow.
+- [x] `/fairness` content updated for server-side draw and probability policy.
+- [x] `/policy/refund` content updated for unused credit, expiration, and temporary refund guidance.
+- [x] `/policy/shipping` content updated for delivery, pickup, and pickup code guidance.
+- [x] `/faq` content updated with MVP user questions.
+- [ ] Reconfirm these pages on Vercel after deploy.
 
 ### 2026-06-04
 
@@ -328,6 +364,6 @@ Update this section after each QA pass.
 - [x] `npm run lint` passed.
 - [x] Route imports are covered by TypeScript/Vite build.
 - [x] No code-level route import error found during build.
-- [ ] Manual Google OAuth login check required.
-- [ ] Manual Vercel production flow check required.
-- [ ] Manual Supabase Cloud data mutation check required.
+- [x] Manual Google OAuth login check completed.
+- [x] Manual Vercel production flow check completed.
+- [x] Manual Supabase Cloud data mutation check completed.

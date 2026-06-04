@@ -474,6 +474,8 @@ First MVP notes:
 
 - FAQ admin editing is excluded.
 - Full policy/FAQ CMS is excluded.
+- User-facing guide, fairness, refund, shipping, and FAQ pages have MVP policy content.
+- Public policy wording remains temporary guidance until operational/legal review is complete.
 - Database schema still includes policies.slug, policies.status, policies.sort_order, faq_items.category, faq_items.status, and faq_items.sort_order for future admin management.
 - faq_items uses status only for visibility.
 
