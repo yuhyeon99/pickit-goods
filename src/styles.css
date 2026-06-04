@@ -2232,6 +2232,193 @@ a {
   line-height: 1.5;
 }
 
+.admin-pools-page,
+.admin-pool-list {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-pool-filter-card,
+.admin-pool-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+}
+
+.admin-pool-filter-card {
+  display: grid;
+  align-items: end;
+  gap: 12px;
+  padding: 16px;
+}
+
+.admin-pool-filter-card label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-pool-filter-card input,
+.admin-pool-filter-card select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+  font: inherit;
+  padding: 0 12px;
+}
+
+.admin-pool-filter-card input:focus,
+.admin-pool-filter-card select:focus {
+  border-color: var(--color-primary);
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.admin-pool-card {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+}
+
+.admin-pool-header h2 {
+  margin: 12px 0 6px;
+  color: var(--color-text-strong);
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.admin-pool-header p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.admin-pool-summary,
+.admin-pool-grade-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.admin-pool-summary div,
+.admin-pool-grade-grid > div,
+.admin-pool-item-list > div {
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.admin-pool-summary dt,
+.admin-pool-grade-grid dt,
+.admin-pool-item-list dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.admin-pool-summary dd,
+.admin-pool-grade-grid dd,
+.admin-pool-item-list dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+}
+
+.admin-pool-section {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+}
+
+.admin-pool-section h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 16px;
+}
+
+.admin-pool-section p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.admin-pool-grade-grid > div {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-pool-grade-grid > div > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-pool-grade-grid strong {
+  color: var(--color-text-strong);
+}
+
+.admin-pool-grade-grid dl,
+.admin-pool-item-list dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.admin-pool-grade-meter {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-surface-soft);
+}
+
+.admin-pool-grade-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-primary);
+}
+
+.admin-pool-item-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-pool-item-list > div {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-pool-item-warning {
+  border: 1px solid color-mix(in srgb, var(--color-warning) 50%, var(--color-border));
+}
+
+.admin-pool-item-heading {
+  display: grid;
+  align-items: start;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+}
+
+.admin-pool-item-heading strong {
+  display: block;
+  color: var(--color-text-strong);
+  line-height: 1.4;
+}
+
+.admin-pool-item-heading small {
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
 .gacha-play-page {
   display: grid;
   gap: 24px;
@@ -2970,6 +3157,26 @@ a {
   .admin-reward-pool-list > div {
     align-items: center;
     grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .admin-pool-filter-card {
+    grid-template-columns: minmax(260px, 1fr) 150px 130px 170px auto;
+  }
+
+  .admin-pool-summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .admin-pool-grade-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .admin-pool-grade-grid dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-pool-item-list dl {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
 
