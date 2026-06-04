@@ -939,7 +939,8 @@ a {
 }
 
 .cart-summary-card,
-.empty-cart-card {
+.empty-cart-card,
+.checkout-complete-card {
   display: grid;
   gap: 16px;
   padding: 22px;
@@ -967,17 +968,112 @@ a {
 }
 
 .cart-summary-card p,
-.empty-cart-card p {
+.empty-cart-card p,
+.checkout-complete-card p {
   margin: 0;
   color: #526172;
   line-height: 1.6;
 }
 
-.empty-cart-card h2 {
+.empty-cart-card h2,
+.checkout-complete-card h2 {
   margin: 0;
   color: #111827;
   font-size: 28px;
   line-height: 1.24;
+}
+
+.checkout-complete-card,
+.draw-credit-card {
+  border: 1px solid #d7f0e4;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(31 41 55 / 0.07);
+}
+
+.checkout-complete-card dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.checkout-complete-card dl div {
+  border-radius: 8px;
+  background: #f6f8fb;
+  padding: 12px;
+}
+
+.checkout-complete-card dt {
+  color: #7b8794;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.checkout-complete-card dd {
+  margin: 6px 0 0;
+  color: #111827;
+  font-weight: 850;
+}
+
+.checkout-complete-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.my-draws-page {
+  display: grid;
+  gap: 24px;
+}
+
+.draw-credit-list {
+  display: grid;
+  gap: 14px;
+}
+
+.draw-credit-card {
+  display: grid;
+  gap: 18px;
+  padding: 20px;
+}
+
+.draw-credit-card h2 {
+  margin: 12px 0 6px;
+  color: #111827;
+  font-size: 22px;
+  line-height: 1.28;
+}
+
+.draw-credit-card p {
+  margin: 0;
+  color: #526172;
+}
+
+.credit-status-badge {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1;
+  padding: 0 10px;
+}
+
+.credit-status-unused {
+  background: #eef8f3;
+  color: #047857;
+}
+
+.credit-status-used,
+.credit-status-expired,
+.credit-status-refunded,
+.credit-status-failed {
+  background: #f2f4f7;
+  color: #526172;
 }
 
 .admin-shell {

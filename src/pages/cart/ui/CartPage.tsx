@@ -1,11 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getDrawProductDisplayStatus } from '../../gacha/lib/getDrawProductDisplayStatus';
 import { useAuth } from '../../../shared/model/auth/useAuth';
 import { calculateCartSummary } from '../lib/calculateCartSummary';
+import { checkoutCart } from '../api/checkoutCart';
 import { getCartItems } from '../api/getCartItems';
 import { removeCartItem } from '../api/removeCartItem';
 import { updateCartItemQuantity } from '../api/updateCartItemQuantity';
+import type { CheckoutCartResult } from '../api/checkoutCart';
 import type { CartItem } from '../model/types';
 
 const formatPrice = (price: number) =>
@@ -102,6 +105,7 @@ export function CartPage() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const queryKey = ['cart-items', user?.id];
+  const [checkoutResult, setCheckoutResult] = useState<CheckoutCartResult | null>(null);
 
   const {
     data: items = [],
@@ -124,15 +128,28 @@ export function CartPage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey }),
   });
 
+  const checkoutMutation = useMutation({
+    mutationFn: checkoutCart,
+    onSuccess: (result) => {
+      setCheckoutResult(result);
+      void queryClient.invalidateQueries({ queryKey });
+      void queryClient.invalidateQueries({ queryKey: ['my-draw-credits', user?.id] });
+    },
+  });
+
   const mutationError =
     updateQuantityMutation.error instanceof Error
       ? updateQuantityMutation.error.message
       : removeMutation.error instanceof Error
         ? removeMutation.error.message
-        : null;
+        : checkoutMutation.error instanceof Error
+          ? checkoutMutation.error.message
+          : null;
 
   const summary = calculateCartSummary(items);
-  const isPending = updateQuantityMutation.isPending || removeMutation.isPending;
+  const isPending =
+    updateQuantityMutation.isPending || removeMutation.isPending || checkoutMutation.isPending;
+  const canCheckout = items.length > 0 && !isPending;
 
   if (isLoading) {
     return <section className="state-card">장바구니를 불러오는 중입니다.</section>;
@@ -157,12 +174,38 @@ export function CartPage() {
 
       {mutationError ? (
         <section className="state-card state-card-error">
-          <strong>장바구니를 변경하지 못했습니다.</strong>
+          <strong>요청을 처리하지 못했습니다.</strong>
           <span>{mutationError}</span>
         </section>
       ) : null}
 
-      {items.length === 0 ? (
+      {checkoutResult ? (
+        <section className="checkout-complete-card">
+          <span className="soft-badge">테스트 결제 완료</span>
+          <h2>가챠권 {checkoutResult.issuedCreditCount}장이 발급되었습니다.</h2>
+          <p>
+            주문이 결제 완료 상태로 생성되었고, 보유 가챠권에서 바로 확인할 수 있습니다.
+          </p>
+          <dl>
+            <div>
+              <dt>주문 번호</dt>
+              <dd>{checkoutResult.orderId.slice(0, 8)}</dd>
+            </div>
+            <div>
+              <dt>결제 금액</dt>
+              <dd>{formatPrice(checkoutResult.totalAmount)}</dd>
+            </div>
+          </dl>
+          <div className="checkout-complete-actions">
+            <Link className="primary-link-button" to="/my/draws">
+              보유 가챠권 보기
+            </Link>
+            <Link className="text-link-inline" to="/gacha">
+              가챠 더 보기
+            </Link>
+          </div>
+        </section>
+      ) : items.length === 0 ? (
         <section className="empty-cart-card">
           <span className="soft-badge">비어 있음</span>
           <h2>아직 담긴 가챠가 없습니다.</h2>
@@ -199,10 +242,17 @@ export function CartPage() {
                 <dd>{formatPrice(summary.totalAmount)}</dd>
               </div>
             </dl>
-            <button className="disabled-cta" type="button" disabled>
-              테스트 결제 연결 예정
+            <button
+              className="primary-cta"
+              type="button"
+              disabled={!canCheckout}
+              onClick={() => checkoutMutation.mutate()}
+            >
+              {checkoutMutation.isPending ? '결제 처리 중' : '테스트 결제 완료'}
             </button>
-            <p>다음 단계에서 주문 생성과 가챠권 발급이 연결됩니다.</p>
+            <p>
+              실제 PG 결제 없이 주문을 결제 완료로 만들고, 구매 수량만큼 가챠권을 발급합니다.
+            </p>
           </aside>
         </div>
       )}
