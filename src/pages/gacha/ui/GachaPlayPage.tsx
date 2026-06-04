@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../../../shared/model/auth/useAuth';
 import { getPlayableGacha } from '../api/getPlayableGacha';
@@ -115,6 +116,7 @@ export function GachaPlayPage() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const queryKey = ['playable-gacha', id, user?.id];
+  const [remainingCreditsAfterResult, setRemainingCreditsAfterResult] = useState<number | null>(null);
 
   const {
     data: product,
@@ -129,8 +131,21 @@ export function GachaPlayPage() {
 
   const drawMutation = useMutation({
     mutationFn: () => performGachaDraw(id ?? ''),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey });
+    onMutate: () => {
+      setRemainingCreditsAfterResult(null);
+    },
+    onSuccess: async () => {
+      const freshProduct =
+        id && user?.id ? await getPlayableGacha(id, user.id) : null;
+
+      if (freshProduct) {
+        queryClient.setQueryData(queryKey, freshProduct);
+        setRemainingCreditsAfterResult(freshProduct.unusedCreditCount);
+      } else {
+        setRemainingCreditsAfterResult(0);
+        void queryClient.invalidateQueries({ queryKey });
+      }
+
       void queryClient.invalidateQueries({ queryKey: ['my-draw-credits', user?.id] });
       void queryClient.invalidateQueries({ queryKey: ['gacha-product-detail', id] });
       void queryClient.invalidateQueries({ queryKey: ['gacha-products'] });
@@ -173,8 +188,8 @@ export function GachaPlayPage() {
   const hasCredits = product.unusedCreditCount > 0;
   const canDraw = hasCredits && product.availableInventoryCount > 0 && !drawMutation.isPending;
   const result = drawMutation.data;
-  const remainingCreditsAfterResult = result
-    ? Math.max(0, product.unusedCreditCount - 1)
+  const resultRemainingCreditCount = result
+    ? remainingCreditsAfterResult ?? 0
     : product.unusedCreditCount;
 
   return (
@@ -236,7 +251,7 @@ export function GachaPlayPage() {
       {result ? (
         <DrawResultCard
           result={result}
-          hasMoreCredits={remainingCreditsAfterResult > 0}
+          hasMoreCredits={resultRemainingCreditCount > 0}
           isPending={drawMutation.isPending}
           onDrawAgain={() => drawMutation.mutate()}
         />
