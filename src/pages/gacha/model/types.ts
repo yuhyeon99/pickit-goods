@@ -39,3 +39,23 @@ export type GachaProductDetail = GachaProduct & {
   rewardItems: GachaRewardItem[];
   gradeProbabilities: GradeProbability[];
 };
+
+export type GachaPlayable = GachaProductDetail & {
+  unusedCreditCount: number;
+};
+
+export type GachaDrawResult = {
+  drawResultId: string;
+  drawCreditId: string;
+  drawProductId: string;
+  inventoryUnitId: string;
+  rewardItemId: string;
+  rewardName: string;
+  rewardDescription: string | null;
+  rewardGrade: RewardGrade;
+  rewardCategory: string;
+  themeName: string | null;
+  publicVerifyCode: string;
+  requestId: string;
+  createdAt: string;
+};

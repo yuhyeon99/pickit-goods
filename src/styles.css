@@ -1115,6 +1115,145 @@ a {
   color: #526172;
 }
 
+.gacha-play-page {
+  display: grid;
+  gap: 24px;
+}
+
+.play-status-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.play-status-card,
+.draw-loading-card,
+.draw-result-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+}
+
+.play-status-card {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+
+.play-status-card strong {
+  color: var(--color-text-strong);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.draw-loading-card {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 28px;
+  text-align: center;
+}
+
+.draw-loading-card h2,
+.draw-result-card h2 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 28px;
+  line-height: 1.24;
+}
+
+.draw-loading-card p,
+.draw-result-card p,
+.draw-verify-text {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.capsule-orbit {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-strong);
+}
+
+.capsule-orbit span {
+  position: absolute;
+  top: 12px;
+  left: 30px;
+  width: 22px;
+  height: 38px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-primary), var(--color-success));
+  animation: capsule-roll 900ms linear infinite;
+  transform-origin: 11px 29px;
+}
+
+@keyframes capsule-roll {
+  from {
+    transform: rotate(0deg) translateY(-4px);
+  }
+
+  to {
+    transform: rotate(360deg) translateY(-4px);
+  }
+}
+
+.draw-result-card {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+}
+
+.draw-result-grade {
+  display: grid;
+  width: 92px;
+  height: 92px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.draw-result-content {
+  display: grid;
+  gap: 12px;
+}
+
+.draw-result-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.draw-result-meta div {
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.draw-result-meta dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.draw-result-meta dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+}
+
+.draw-result-actions {
+  display: grid;
+  gap: 10px;
+}
+
 .credit-status-badge {
   display: inline-flex;
   width: fit-content;
@@ -1476,7 +1615,8 @@ a {
 
   .cart-item-meta,
   .reward-item-meta,
-  .gacha-meta-grid {
+  .gacha-meta-grid,
+  .draw-result-meta {
     grid-template-columns: 1fr;
   }
 
@@ -1566,6 +1706,25 @@ a {
   .cart-item-main {
     align-items: start;
     grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .play-status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .draw-result-card {
+    align-items: start;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .draw-result-meta,
+  .draw-verify-text,
+  .draw-result-actions {
+    grid-column: 1 / -1;
+  }
+
+  .draw-result-actions {
+    grid-template-columns: repeat(2, minmax(0, max-content));
   }
 }
 
