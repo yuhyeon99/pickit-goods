@@ -1,8 +1,29 @@
 @import 'tailwindcss';
 
 :root {
-  color: #171f2a;
-  background: #f5f7fa;
+  --color-bg: #0b111b;
+  --color-bg-elevated: #101827;
+  --color-surface: #121b2a;
+  --color-surface-strong: #172235;
+  --color-surface-soft: #1c2940;
+  --color-text: #eef4ff;
+  --color-text-strong: #ffffff;
+  --color-muted: #9aa8bc;
+  --color-muted-strong: #c5d0df;
+  --color-border: #26354d;
+  --color-border-strong: #344761;
+  --color-primary: #4f8cff;
+  --color-primary-strong: #2f6df6;
+  --color-primary-soft: #172b52;
+  --color-success: #47d18c;
+  --color-success-soft: #123826;
+  --color-warning: #f2aa4c;
+  --color-warning-soft: #3d2a12;
+  --color-danger: #fb7185;
+  --color-danger-soft: #3a1720;
+  --color-shadow: rgb(0 0 0 / 0.28);
+  color: var(--color-text);
+  background: var(--color-bg);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
@@ -10,6 +31,30 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme='light'] {
+  --color-bg: #f5f7fa;
+  --color-bg-elevated: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-strong: #f6f8fb;
+  --color-surface-soft: #eef2f7;
+  --color-text: #171f2a;
+  --color-text-strong: #111827;
+  --color-muted: #526172;
+  --color-muted-strong: #334155;
+  --color-border: #e4e9f0;
+  --color-border-strong: #dbe3ef;
+  --color-primary: #2563eb;
+  --color-primary-strong: #1d4ed8;
+  --color-primary-soft: #eef4ff;
+  --color-success: #047857;
+  --color-success-soft: #eef8f3;
+  --color-warning: #c2410c;
+  --color-warning-soft: #fff7ed;
+  --color-danger: #be123c;
+  --color-danger-soft: #fff7f8;
+  --color-shadow: rgb(31 41 55 / 0.07);
 }
 
 * {
@@ -21,8 +66,10 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(180deg, #ffffff 0, #f5f7fa 280px),
-    #f5f7fa;
+    radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary) 18%, transparent), transparent 320px),
+    linear-gradient(180deg, var(--color-bg-elevated) 0, var(--color-bg) 340px),
+    var(--color-bg);
+  color: var(--color-text);
 }
 
 a {
@@ -1110,6 +1157,289 @@ a {
   padding: 24px;
 }
 
+.site-header {
+  border-color: var(--color-border);
+  background: color-mix(in srgb, var(--color-bg-elevated) 88%, transparent);
+}
+
+.brand,
+.admin-brand,
+.page-panel h1,
+.gacha-hero h1,
+.gacha-card h2,
+.gacha-price,
+.grade-pill strong,
+.auth-required-card h1,
+.detail-hero-content h1,
+.purchase-summary-card strong,
+.info-card h2,
+.fairness-card h2,
+.detail-info-list dd,
+.probability-row strong,
+.reward-item-heading h3,
+.reward-item-meta dd,
+.sticky-cta-card strong,
+.page-heading h1,
+.cart-item-main h2,
+.cart-item-main strong,
+.cart-item-meta dd,
+.cart-summary-card dd,
+.empty-cart-card h2,
+.checkout-complete-card h2,
+.checkout-complete-card dd,
+.draw-credit-card h2,
+.quantity-control span {
+  color: var(--color-text-strong);
+}
+
+.site-footer,
+.page-description,
+.helper-text,
+.gacha-hero p,
+.gacha-description,
+.state-card,
+.auth-required-card p,
+.purchase-summary-card p,
+.section-help,
+.fairness-card p,
+.reward-item-heading p,
+.reward-item-description,
+.sticky-cta-card span,
+.page-heading p,
+.cart-item-main p,
+.cart-summary-card p,
+.empty-cart-card p,
+.checkout-complete-card p,
+.draw-credit-card p,
+.auth-status-text {
+  color: var(--color-muted);
+}
+
+.nav-link,
+.admin-nav-link,
+.auth-button-secondary,
+.auth-user-link,
+.text-button,
+.soft-badge,
+.grade-pill,
+.detail-info-list dt,
+.reward-item-meta dt,
+.cart-item-meta dt,
+.cart-summary-card dt,
+.checkout-complete-card dt,
+.summary-label {
+  color: var(--color-muted-strong);
+}
+
+.page-panel,
+.gacha-card,
+.state-card,
+.auth-required-card,
+.detail-hero-card,
+.info-card,
+.fairness-card,
+.sticky-cta-card,
+.reward-item-card,
+.cart-item-card,
+.cart-summary-card,
+.empty-cart-card,
+.checkout-complete-card,
+.draw-credit-card {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+}
+
+.purchase-summary-card,
+.gacha-meta-grid div,
+.detail-info-list div,
+.reward-item-meta div,
+.cart-item-meta div,
+.checkout-complete-card dl div,
+.auth-user-link,
+.auth-button-secondary,
+.text-button,
+.soft-badge,
+.grade-pill,
+.quantity-control button {
+  background: var(--color-surface-strong);
+}
+
+.primary-button,
+.primary-cta,
+.primary-link-button,
+.detail-button,
+.auth-button {
+  background: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--color-primary) 28%, transparent);
+}
+
+.primary-cta:hover,
+.primary-link-button:hover,
+.detail-button:hover,
+.auth-button:hover {
+  background: var(--color-primary-strong);
+}
+
+.disabled-cta,
+.primary-cta:disabled {
+  background: var(--color-surface-soft);
+  color: var(--color-muted);
+}
+
+.nav-link.active,
+.admin-nav-link.active,
+.grade-badge {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.nav-link:hover,
+.admin-nav-link:hover {
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+}
+
+.section-label,
+.text-link,
+.text-link-inline,
+.probability-row em {
+  color: var(--color-primary);
+}
+
+.status-badge,
+.status-badge-active,
+.credit-status-unused {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.status-badge-limited {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+}
+
+.status-badge-soldOut,
+.credit-status-used,
+.credit-status-expired,
+.credit-status-refunded,
+.credit-status-failed {
+  background: var(--color-surface-soft);
+  color: var(--color-muted-strong);
+}
+
+.status-badge-hidden {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.state-card-error,
+.auth-error-text {
+  border-color: color-mix(in srgb, var(--color-danger) 45%, var(--color-border));
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.purchase-summary-card .success-message {
+  color: var(--color-success);
+}
+
+.purchase-summary-card .error-message {
+  color: var(--color-danger);
+}
+
+.probability-meter {
+  background: var(--color-surface-soft);
+}
+
+.probability-meter span {
+  background: var(--color-primary);
+}
+
+.quantity-control {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface);
+}
+
+.quantity-control button {
+  color: var(--color-text-strong);
+}
+
+.quantity-control button:disabled {
+  color: var(--color-muted);
+}
+
+.site-footer,
+.admin-sidebar {
+  border-color: var(--color-border);
+  background: var(--color-bg-elevated);
+}
+
+.admin-shell {
+  background: var(--color-bg);
+}
+
+.theme-toggle-button {
+  display: inline-flex;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+  cursor: pointer;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 850;
+}
+
+.theme-toggle-button:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-soft);
+}
+
+@media (max-width: 520px) {
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .auth-header-area {
+    width: 100%;
+  }
+
+  .auth-button,
+  .auth-user-link {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .primary-cta,
+  .primary-link-button,
+  .detail-button,
+  .disabled-cta {
+    width: 100%;
+  }
+
+  .cart-item-meta,
+  .reward-item-meta,
+  .gacha-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .probability-row {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .probability-row em {
+    grid-column: 2 / -1;
+  }
+}
+
 @media (min-width: 760px) {
   .site-header {
     align-items: center;
@@ -1196,5 +1526,11 @@ a {
 
   .admin-main {
     padding: 48px;
+  }
+}
+
+@media (min-width: 1120px) {
+  .gacha-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

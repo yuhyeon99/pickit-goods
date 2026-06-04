@@ -182,6 +182,16 @@ Before UI work, read:
 
 - docs/UI_GUIDELINES.md
 
+UI completion checklist:
+
+- Check mobile layout first.
+- Check light mode.
+- Check dark mode.
+- Confirm Header does not wrap or overlap awkwardly.
+- Confirm primary CTA readability.
+- Confirm card and badge color contrast.
+- Confirm icon-only buttons include `aria-label`.
+
 Pages:
 
 - Main
@@ -226,6 +236,14 @@ Implement minimal admin-facing static UI using mock data.
 Before admin UI work, read:
 
 - docs/UI_GUIDELINES.md
+
+Admin UI completion checklist:
+
+- Check mobile layout first.
+- Check light mode.
+- Check dark mode.
+- Confirm navigation remains usable on small screens.
+- Confirm read-only/admin state badges remain readable.
 
 Pages:
 

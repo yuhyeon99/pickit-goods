@@ -42,6 +42,10 @@ Do not copy Toss UI exactly. Instead, use it only as a reference for product cla
 - Flows where the user's next action is easy to understand
 - Friendly but trustworthy financial/product-service tone
 - Smooth micro-interactions where they help user understanding
+- Dark-friendly visual direction by default, with light/dark theme support
+- Avoid hardcoded one-off colors in UI work; prefer shared CSS variables and common UI styles
+- Mobile-first responsive implementation for all user-facing screens
+- Reuse common card, button, badge, spacing, and layout styles before adding new variants
 
 Before implementing or modifying user-facing pages, check `docs/UI_GUIDELINES.md`.
 
