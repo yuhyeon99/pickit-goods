@@ -84,15 +84,27 @@ a {
 }
 
 .site-header {
-  display: flex;
+  display: grid;
   min-height: 72px;
-  align-items: flex-start;
-  justify-content: space-between;
   gap: 18px;
   border-bottom: 1px solid #e6eaf0;
   background: rgb(255 255 255 / 0.9);
   padding: 18px 20px;
   backdrop-filter: blur(12px);
+}
+
+.header-top-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.header-icon-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .brand,
@@ -110,14 +122,19 @@ a {
 }
 
 .header-right {
-  display: grid;
+  display: none;
   gap: 14px;
   width: 100%;
 }
 
+.header-right-open {
+  display: grid;
+}
+
 .site-nav {
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .nav-link,
@@ -133,7 +150,8 @@ a {
 }
 
 .nav-link {
-  padding: 9px 11px;
+  min-height: 42px;
+  padding: 11px 12px;
 }
 
 .nav-link.active,
@@ -1402,9 +1420,40 @@ a {
   background: var(--color-surface-soft);
 }
 
+.menu-toggle-button {
+  display: inline-flex;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  cursor: pointer;
+}
+
+.menu-toggle-button span {
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-text-strong);
+}
+
+.menu-toggle-button:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-soft);
+}
+
+.gacha-meta-grid dd {
+  color: var(--color-text-strong);
+  text-shadow: 0 0 1px color-mix(in srgb, var(--color-bg) 40%, transparent);
+}
+
 @media (max-width: 520px) {
   .site-header {
-    display: grid;
     grid-template-columns: 1fr;
   }
 
@@ -1443,7 +1492,17 @@ a {
 @media (min-width: 760px) {
   .site-header {
     align-items: center;
+    display: flex;
+    justify-content: space-between;
     padding: 0 32px;
+  }
+
+  .header-top-row {
+    flex: 0 0 auto;
+  }
+
+  .menu-toggle-button {
+    display: none;
   }
 
   .header-right {
@@ -1454,6 +1513,8 @@ a {
   }
 
   .site-nav {
+    display: flex;
+    flex-wrap: nowrap;
     justify-content: flex-end;
   }
 
@@ -1531,6 +1592,6 @@ a {
 
 @media (min-width: 1120px) {
   .gacha-card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
   }
 }

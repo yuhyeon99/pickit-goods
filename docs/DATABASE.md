@@ -495,7 +495,7 @@ Seed data includes:
 
 - 2 MVP mock themes
 - theme-based reward_items with S/A/B/C grades
-- 2 active gacha draw_products
+- 3 active gacha draw_products: 1 random gacha and 2 theme gachas
 - 1 hidden ticket placeholder draw_product
 - draw_product_items pool configuration
 - 100 available inventory_units per active gacha product
