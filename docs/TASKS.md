@@ -165,6 +165,7 @@ Seed rules:
 - Do not create draw_results.
 - Do not create draw_logs.
 - Admin profile role setup is handled separately after OAuth login.
+- The first admin bootstrap must follow `docs/AUTH.md`; normal role updates are blocked by the role-escalation trigger.
 
 Seed verification:
 
@@ -287,6 +288,7 @@ Requirements:
 - Create or load profile after login
 - Role-based route protection
 - Admin route protection
+- Document first admin bootstrap procedure in `docs/AUTH.md`
 
 ## Task 8.5. Vercel Deployment Setup
 

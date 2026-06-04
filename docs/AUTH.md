@@ -273,24 +273,74 @@ Then open `http://127.0.0.1:5173`.
 
 Admin users are not created by seed data.
 
-Admin setup:
+Admin setup starts after the target user signs in once with Google OAuth:
 
 ```txt
 Google OAuth login once
   ↓
 profiles row is created with role = user
   ↓
-Open Supabase Studio or Cloud Table Editor
+Open Supabase SQL Editor
   ↓
-Update that profile role to admin
+Bootstrap the first admin profile
 ```
 
-Example SQL after login:
+`profiles.role` is protected by the `prevent_profile_role_escalation` trigger. A normal update from a non-admin session fails with:
+
+```txt
+only admins can update profile role
+```
+
+This is expected. The first admin must be bootstrapped with database owner privileges in Supabase SQL Editor.
+
+Find the target profile id:
 
 ```sql
+select id, display_name, role, created_at
+from public.profiles
+order by created_at desc;
+```
+
+Confirm the trigger name:
+
+```sql
+select
+  tgname as trigger_name,
+  tgrelid::regclass as table_name
+from pg_trigger
+where tgrelid = 'public.profiles'::regclass
+  and not tgisinternal;
+```
+
+Bootstrap the first admin:
+
+```sql
+begin;
+
+alter table public.profiles
+disable trigger prevent_profile_role_escalation;
+
 update public.profiles
-set role = 'admin'
-where id = '<logged-in-auth-user-id>';
+set role = 'admin',
+    updated_at = now()
+where id = '<logged-in-profile-id>';
+
+alter table public.profiles
+enable trigger prevent_profile_role_escalation;
+
+commit;
+```
+
+Verify the result:
+
+```sql
+select id, display_name, role, updated_at
+from public.profiles
+where id = '<logged-in-profile-id>';
 ```
 
 Do not seed `auth.users` or admin profiles directly in the MVP.
+
+Use this trigger-disable flow only for the first admin bootstrap. After that, admin role changes should be handled by a dedicated admin feature or a tightly scoped RPC with explicit admin checks.
+
+After changing role, sign out and sign in again so the frontend reloads `profiles.role`.

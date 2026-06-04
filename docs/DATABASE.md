@@ -517,7 +517,7 @@ Seed data must not create:
 - draw_results
 - draw_logs
 
-Admin account setup should be handled separately after OAuth login by updating the logged-in profile role manually in local development.
+Admin account setup should be handled separately after OAuth login. The first admin must be bootstrapped in Supabase SQL Editor by temporarily disabling the `prevent_profile_role_escalation` trigger, updating the target `profiles.role` to `admin`, and immediately re-enabling the trigger. See `docs/AUTH.md`.
 
 ## 22. Supabase Cloud Migration
 
