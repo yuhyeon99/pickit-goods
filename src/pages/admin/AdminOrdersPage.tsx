@@ -1,5 +1,1 @@
-import { PlaceholderPage } from '../../shared/ui/PlaceholderPage';
-
-export function AdminOrdersPage() {
-  return <PlaceholderPage title="Admin Orders" description="Order management placeholder." />;
-}
+export { AdminOrdersPage } from './ui/AdminOrdersPage';

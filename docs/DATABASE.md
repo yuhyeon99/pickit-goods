@@ -464,8 +464,8 @@ Stores policy content.
 | draw_products | read active | full management |
 | inventory_units | no direct user update | create/read, restricted update |
 | cart_items | manage own | read all |
-| orders | read own | read/manage all |
-| order_items | read own through order | read/manage all |
+| orders | read own | read all |
+| order_items | read own through order | read all |
 | credit_issuances | read own | read all |
 | user_draw_credits | read own | read all |
 | draw_results | read own | read all, no winning result modification |
