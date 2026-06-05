@@ -35,6 +35,7 @@ function formatDate(value: string | null) {
 
 function ClaimCard({ claim }: { claim: MyClaimRequest }) {
   const isDelivery = claim.claimMethod === 'delivery';
+  const canShowPickupQr = !isDelivery && claim.status === 'ready_for_pickup';
 
   return (
     <article className="claim-history-card">
@@ -56,6 +57,27 @@ function ClaimCard({ claim }: { claim: MyClaimRequest }) {
           <dd>{claim.pickupQrCode?.slice(0, 20) ?? '-'}</dd>
         </div>
       </dl>
+      {!isDelivery ? (
+        canShowPickupQr ? (
+          <section className="pickup-ready-card">
+            <div>
+              <span className="soft-badge">현장 수령 가능</span>
+              <h3>QR 코드를 제시해주세요.</h3>
+              <p>현장 수령 준비가 완료되었습니다. 아래 QR 코드 또는 수령 코드를 제시하면 됩니다.</p>
+            </div>
+            <PickupQrCode code={claim.pickupQrCode} />
+          </section>
+        ) : (
+          <section className="pickup-waiting-note">
+            <span className="soft-badge">현장 수령</span>
+            <p>
+              {claim.status === 'completed'
+                ? '현장 수령이 완료되었습니다.'
+                : '운영자가 수령 가능 상태로 변경하면 이 카드에 QR 코드가 바로 표시됩니다.'}
+            </p>
+          </section>
+        )
+      ) : null}
       <details className="claim-detail-panel">
         <summary>상세 보기</summary>
         <section>
