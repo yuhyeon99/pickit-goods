@@ -97,6 +97,8 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] One draw result cannot be claimed twice.
 - [x] `/my/claims` shows the user's claim requests.
 - [x] `/my/claims` shows request method, status, request date, and item count.
+- [ ] `/my/claims` shows a QR code and pickup code text for pickup claims.
+- [ ] Pickup QR value opens `/admin/claims?pickupCode=...`.
 
 ## 2. Admin Flow QA
 
@@ -195,6 +197,10 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] Delivery claims can transition `shipping → completed`.
 - [x] Shipping transition can store tracking number if provided.
 - [x] Pickup claims show `pickup_qr_code`.
+- [ ] Pickup claims show QR code rendering in the admin detail view.
+- [ ] `/admin/claims?pickupCode=...` filters the list to the matching pickup request.
+- [ ] Admin can clear the pickup code filter.
+- [ ] QR scan does not automatically complete pickup.
 - [x] Pickup claims can transition `requested → preparing`.
 - [x] Pickup claims can transition `preparing → ready_for_pickup`.
 - [x] Pickup claims can transition `ready_for_pickup → completed`.
@@ -348,7 +354,6 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [ ] Refund request flow is MVP status management only; actual PG refund is not implemented.
 - [ ] Server-side pagination is not implemented for admin lists.
 - [ ] Most admin create/update/delete CMS features are not implemented.
-- [ ] Real QR image rendering is not implemented.
 - [ ] Notification before credit expiration is not implemented.
 - [ ] Legal wording for expiration/refund policy still needs review before production.
 
@@ -374,7 +379,6 @@ Remaining risks:
 - Refund request flow is MVP status management only; actual PG refund is not implemented.
 - Automatic credit expiration batch/cron is not implemented.
 - Most admin create/update/delete CMS features are not implemented.
-- Real QR image rendering is not implemented.
 - Legal wording for expiration/refund policy still needs review before production.
 
 Next recommended work:

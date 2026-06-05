@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { PickupQrCode } from '../../../shared/ui/PickupQrCode';
 import { getAdminClaimRequests } from '../api/getAdminClaimRequests';
 import { updateAdminClaimStatus } from '../api/updateAdminClaimStatus';
 import {
@@ -157,6 +159,7 @@ function AdminClaimCard({
       ) : (
         <section className="admin-claim-section">
           <h3>현장 수령 정보</h3>
+          <PickupQrCode code={claim.pickupQrCode} />
           <dl className="admin-claim-meta">
             <div>
               <dt>수령 코드</dt>
@@ -226,6 +229,8 @@ function AdminClaimCard({
 
 export function AdminClaimsPage() {
   const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pickupCodeFilter = searchParams.get('pickupCode')?.trim() ?? '';
   const {
     data: claims = [],
     error,
@@ -235,6 +240,10 @@ export function AdminClaimsPage() {
     queryKey: ['admin-claim-requests'],
     queryFn: getAdminClaimRequests,
   });
+
+  const filteredClaims = pickupCodeFilter
+    ? claims.filter((claim) => claim.pickupQrCode === pickupCodeFilter)
+    : claims;
 
   const mutation = useMutation({
     mutationFn: updateAdminClaimStatus,
@@ -277,15 +286,45 @@ export function AdminClaimsPage() {
         </section>
       ) : null}
 
-      {claims.length === 0 ? (
+      {pickupCodeFilter ? (
+        <section className="admin-pickup-filter-card">
+          <div>
+            <span className="soft-badge">수령 코드 필터</span>
+            <p>수령 코드 {pickupCodeFilter} 로 필터링 중입니다.</p>
+          </div>
+          <button
+            className="text-button"
+            type="button"
+            onClick={() => {
+              setSearchParams((current) => {
+                const next = new URLSearchParams(current);
+                next.delete('pickupCode');
+                return next;
+              });
+            }}
+          >
+            필터 해제
+          </button>
+        </section>
+      ) : null}
+
+      {filteredClaims.length === 0 ? (
         <section className="empty-cart-card">
-          <span className="soft-badge">요청 없음</span>
-          <h2>아직 접수된 수령 요청이 없습니다.</h2>
-          <p>사용자가 보관함에서 수령 요청을 만들면 이곳에 표시됩니다.</p>
+          <span className="soft-badge">{pickupCodeFilter ? '검색 결과 없음' : '요청 없음'}</span>
+          <h2>
+            {pickupCodeFilter
+              ? '해당 수령 코드의 요청이 없습니다.'
+              : '아직 접수된 수령 요청이 없습니다.'}
+          </h2>
+          <p>
+            {pickupCodeFilter
+              ? '수령 코드를 다시 확인하거나 필터를 해제해 전체 요청을 확인해주세요.'
+              : '사용자가 보관함에서 수령 요청을 만들면 이곳에 표시됩니다.'}
+          </p>
         </section>
       ) : (
         <div className="admin-claim-list">
-          {claims.map((claim) => (
+          {filteredClaims.map((claim) => (
             <AdminClaimCard
               key={claim.id}
               claim={claim}

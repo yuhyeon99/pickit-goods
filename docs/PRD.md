@@ -288,7 +288,7 @@ Future OAuth expansion candidates:
 - Won item box
 - Minimal claim request
 - Delivery claim
-- On-site pickup claim with basic QR placeholder
+- On-site pickup claim with pickup code and QR rendering
 - FAQ
 - Fairness guide
 - Refund policy
@@ -382,7 +382,7 @@ Delivery must support bundled shipping.
 
 On-site pickup must generate a pickup verification code.
 
-For the first MVP, the service does not store QR image files. claim_requests.pickup_qr_code stores a verifiable text code such as PICKUP-CLAIM-000001 or PICKUP-{claim_request_id}. The UI can later render this string as a QR code.
+For the first MVP, the service does not store QR image files. claim_requests.pickup_qr_code stores a verifiable text code such as PICKUP-CLAIM-000001 or PICKUP-{claim_request_id}. The UI renders a QR code that opens `/admin/claims?pickupCode=...` for admin verification while keeping the text code visible for manual verification. Scanning the QR must not automatically complete pickup; an admin must review the request and complete it manually.
 
 ## 18. Failure Recovery Requirement
 

@@ -387,7 +387,8 @@ Rules:
 - Admins can update claim status.
 - First MVP does not store QR image files.
 - pickup_qr_code stores a verifiable text code such as PICKUP-CLAIM-000001 or PICKUP-{claim_request_id}.
-- The UI can later render pickup_qr_code as a QR code.
+- The UI renders a QR code that opens `/admin/claims?pickupCode=...` and also displays the text code.
+- QR scanning does not automatically complete pickup; admin completion remains manual.
 - Advanced QR verification is deferred.
 - Admin status updates must use a server-side RPC that validates admin role and allowed status transitions.
 - When a claim is completed, linked draw_results.status changes to claimed and linked inventory_units.status changes to claimed.

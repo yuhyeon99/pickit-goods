@@ -1713,6 +1713,74 @@ a {
   line-height: 1.5;
 }
 
+.pickup-qr-card {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 16px;
+  text-align: center;
+}
+
+.pickup-qr-card strong {
+  color: var(--color-text-strong);
+  font-size: 16px;
+}
+
+.pickup-qr-frame {
+  display: grid;
+  place-items: center;
+  width: min(100%, 216px);
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 20px;
+}
+
+.pickup-qr-frame svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pickup-qr-card dl {
+  width: 100%;
+  margin: 0;
+}
+
+.pickup-qr-card dl div {
+  border-radius: 8px;
+  background: var(--color-surface);
+  padding: 12px;
+}
+
+.pickup-qr-card dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pickup-qr-card dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.pickup-qr-card p {
+  max-width: 320px;
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.pickup-qr-card-empty {
+  justify-items: start;
+  text-align: left;
+}
+
 .claim-item-grid,
 .claim-method-grid,
 .claim-form-grid {
@@ -1801,6 +1869,25 @@ a {
 .admin-claim-list {
   display: grid;
   gap: 18px;
+}
+
+.admin-pickup-filter-card {
+  display: grid;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 44px var(--color-shadow);
+  padding: 16px;
+}
+
+.admin-pickup-filter-card p {
+  margin: 8px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 800;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .admin-claim-card {
@@ -3741,6 +3828,10 @@ a {
 
   .admin-claim-header {
     align-items: start;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .admin-pickup-filter-card {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 

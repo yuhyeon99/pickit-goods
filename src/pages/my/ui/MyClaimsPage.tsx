@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../shared/model/auth/useAuth';
+import { PickupQrCode } from '../../../shared/ui/PickupQrCode';
 import { getMyClaimRequests } from '../api/getMyClaimRequests';
 import type { ClaimRequestStatus, MyClaimRequest } from '../model/types';
 
@@ -117,6 +118,7 @@ function ClaimCard({ claim }: { claim: MyClaimRequest }) {
         ) : (
           <section>
             <h3>현장 수령 정보</h3>
+            <PickupQrCode code={claim.pickupQrCode} />
             <dl className="claim-detail-meta">
               <div>
                 <dt>수령 코드</dt>

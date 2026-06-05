@@ -443,7 +443,7 @@ Requirements:
 - draw_results.status changes to claimed only when admin completes the claim.
 - The first MVP does not store QR image files.
 - claim_requests.pickup_qr_code stores a verifiable text code such as PICKUP-CLAIM-000001 or PICKUP-{claim_request_id}.
-- The UI can later render pickup_qr_code as a QR code.
+- The UI renders a QR code that opens `/admin/claims?pickupCode=...` for admin verification and keeps the text code visible.
 
 ## Task 14. Admin Claim Processing
 
@@ -460,6 +460,14 @@ Requirements:
 - Complete pickup
 - Tracking number management is excluded from first MVP.
 - Advanced QR verification is excluded from first MVP.
+
+Implemented app work:
+
+- `/my/claims` renders pickup_qr_code as a QR code for pickup claims.
+- `/admin/claims` renders the same pickup_qr_code as a QR code for operator verification.
+- `/admin/claims?pickupCode=...` filters the claim list to the matching pickup request.
+- The pickup code text remains visible for manual fallback.
+- QR scanning does not automatically complete pickup; admins must complete pickup manually after checking request details.
 
 ## Task 15. Policy and FAQ Management
 

@@ -202,8 +202,10 @@ Requirements:
 - The first MVP does not store QR image files.
 - claim_requests.pickup_qr_code stores a verifiable text code.
 - Example codes: PICKUP-CLAIM-000001, PICKUP-{claim_request_id}.
-- The UI can later render the pickup_qr_code string as a QR code.
-- Admin checks the pickup code during pickup.
+- The UI renders a QR code that opens `/admin/claims?pickupCode=...` for admin verification.
+- The pickup code text remains visible for manual verification.
+- QR scanning does not automatically complete pickup.
+- Admin checks the pickup code and request details during pickup.
 - Pickup status changes to completed after handover.
 
 Pickup flow:
