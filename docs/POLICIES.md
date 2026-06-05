@@ -97,16 +97,17 @@ User requests refund
   ↓
 System creates refund_requests row
   ↓
-System checks unused credits
+System checks unused and unexpired draw credit
   ↓
 Admin reviews request
   ↓
-Credit status changes to refunded
+Admin marks request as processed
   ↓
-Order status changes to refunded
+Credit status changes to refunded
 ```
 
 Actual payment refund automation is excluded from MVP.
+The MVP does not automatically cancel the original payment, change the order status, or restore `draw_products.sold_count`.
 
 refund_requests.status values:
 
@@ -117,6 +118,16 @@ refund_requests.status values:
 - processed: actual refund processing is complete.
 
 The MVP uses manual admin processing for refunds.
+
+Implemented MVP refund request rules:
+
+- Users can create a refund request for `unused` credits only while `expires_at > now()`.
+- Refund requests are created in `refund_requests` and the credit remains `unused` until admin processing is completed.
+- Active duplicate requests are blocked for the same credit while the request is `requested`, `approved`, or `processed`.
+- Rejected or canceled requests may be requested again while the credit is still unused and unexpired.
+- Admin processing uses `/admin/refunds` and the `update_refund_request_status` RPC.
+- When a request becomes `processed`, the linked `user_draw_credits.status` changes to `refunded` and `refunded_at` is set.
+- `draw_products.sold_count`, `inventory_units`, `draw_results`, and `draw_logs` are not changed by refund processing.
 
 Public-facing policy wording in the MVP is temporary guidance. Refund, expiration, delivery, and pickup wording must be reviewed and finalized before production launch.
 

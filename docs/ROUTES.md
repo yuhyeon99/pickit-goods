@@ -106,6 +106,9 @@ Draw result log view
 /admin/claims
 Claim request management
 
+/admin/refunds
+Refund request management
+
 /admin/users
 User management
 

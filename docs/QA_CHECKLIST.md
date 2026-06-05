@@ -260,7 +260,30 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] If only expired unused credits exist, draw RPC returns a clear error.
 - [x] Expiration does not decrement `draw_products.sold_count`.
 - [x] Automatic `unused → expired` batch/cron is not implemented.
-- [x] Refund feature is not implemented.
+- [x] Refund request feature is MVP manual status management only, not PG refund automation.
+
+## 5.1 Refund Request QA
+
+- [ ] `/my/draws` shows refund request CTA only for `unused + expires_at > now()` credits.
+- [ ] `/my/draws` does not show refund request CTA for used credits.
+- [ ] `/my/draws` does not show refund request CTA for expired credits.
+- [ ] `/my/draws` does not show refund request CTA for refunded credits.
+- [ ] User can enter refund reason and create a refund request.
+- [ ] Refund request creation keeps `user_draw_credits.status = unused`.
+- [ ] Active refund request is shown as `환불 요청 중` or `환불 승인됨`.
+- [ ] Credit with active refund request is excluded from `/gacha/:id/play` usable credit count.
+- [ ] `draw_gacha()` does not select credits with active refund requests.
+- [ ] Duplicate active refund requests are blocked for the same credit.
+- [ ] User can cancel only their own `requested` refund request.
+- [ ] Admin can open `/admin/refunds`.
+- [ ] `/admin/refunds` shows requester, gacha, credit, reason, status, requested date, and processed date.
+- [ ] Admin can change `requested → approved`.
+- [ ] Admin can change `requested → rejected`.
+- [ ] Admin can change `approved → processed`.
+- [ ] Admin can change `approved → rejected`.
+- [ ] `processed` changes linked `user_draw_credits.status = refunded`.
+- [ ] Refund processing does not change `draw_products.sold_count`.
+- [ ] Refund processing does not change `inventory_units`.
 
 ## 6. UI, Responsive, And Theme QA
 
@@ -310,7 +333,7 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [ ] Real PG payment integration is not implemented.
 - [ ] Ticket draw execution is still placeholder.
 - [ ] Automatic credit expiration batch/cron is not implemented.
-- [ ] Refund request flow is not implemented.
+- [ ] Refund request flow is MVP status management only; actual PG refund is not implemented.
 - [ ] Server-side pagination is not implemented for admin lists.
 - [ ] Most admin create/update/delete CMS features are not implemented.
 - [ ] Real QR image rendering is not implemented.
@@ -336,7 +359,7 @@ Remaining risks:
 
 - Real PG payment integration is not implemented.
 - Ticket draw execution is still placeholder.
-- Refund request flow is not implemented.
+- Refund request flow is MVP status management only; actual PG refund is not implemented.
 - Automatic credit expiration batch/cron is not implemented.
 - Most admin create/update/delete CMS features are not implemented.
 - Real QR image rendering is not implemented.

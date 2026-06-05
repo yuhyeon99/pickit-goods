@@ -416,25 +416,32 @@ Stores refund requests for manual admin review.
 | Column | Type | Notes |
 |---|---|---|
 | id | uuid | primary key |
-| order_id | uuid | references orders |
+| order_id | uuid | nullable, references orders |
 | user_id | uuid | references profiles |
+| user_draw_credit_id | uuid | references user_draw_credits |
 | reason | text | required |
 | status | text | requested, approved, rejected, canceled, processed |
 | admin_note | text | nullable |
 | requested_at | timestamptz | default now() |
 | processed_at | timestamptz | nullable |
+| created_at | timestamptz | default now() |
+| updated_at | timestamptz | default now() |
 
 Rules:
 
-- Refund automation is excluded from the first MVP.
-- Refunds are allowed only for unused credits.
-- Admin review may update refund_requests.status and admin_note.
+- Refund automation and actual PG refund are excluded from the first MVP.
+- Refunds may be requested only for unused credits with `expires_at > now()`.
+- A credit cannot have duplicate active refund requests in `requested`, `approved`, or `processed` states.
+- Rejected or canceled requests may be requested again while the credit is still eligible.
+- Admin review updates refund_requests.status and admin_note through `update_refund_request_status`.
 - requested: user requested a refund.
 - approved: admin approved the refund.
 - rejected: admin rejected the refund.
 - canceled: user canceled the refund request.
 - processed: actual refund processing is complete.
 - In the MVP, refunds are designed around manual admin processing.
+- When status becomes `processed`, the linked user_draw_credits row changes to `refunded`.
+- Refund processing does not restore draw_products.sold_count and does not modify inventory_units, draw_results, or draw_logs.
 
 ## 18. faq_items
 
@@ -490,7 +497,7 @@ Stores policy content.
 | draw_results | read own | read all, no winning result modification |
 | draw_logs | no user access | read all |
 | claim_requests | manage own requests | manage all |
-| refund_requests | manage own requests | manage all |
+| refund_requests | read own, create/cancel through RPC | read all, status change through admin RPC |
 | faq_items | read published | manage all |
 | policies | read published | manage all |
 

@@ -8,6 +8,7 @@ import { AdminItemsPage } from '../../pages/admin/AdminItemsPage';
 import { AdminOrdersPage } from '../../pages/admin/AdminOrdersPage';
 import { AdminPoliciesPage } from '../../pages/admin/AdminPoliciesPage';
 import { AdminPoolsPage } from '../../pages/admin/AdminPoolsPage';
+import { AdminRefundsPage } from '../../pages/admin/AdminRefundsPage';
 import { AdminThemesPage } from '../../pages/admin/AdminThemesPage';
 import { AdminTicketsPage } from '../../pages/admin/AdminTicketsPage';
 import { AdminUsersPage } from '../../pages/admin/AdminUsersPage';
@@ -133,6 +134,7 @@ export const router = createBrowserRouter([
       { path: 'orders', element: <AdminOrdersPage /> },
       { path: 'draw-logs', element: <AdminDrawLogsPage /> },
       { path: 'claims', element: <AdminClaimsPage /> },
+      { path: 'refunds', element: <AdminRefundsPage /> },
       { path: 'users', element: <AdminUsersPage /> },
       { path: 'policies', element: <AdminPoliciesPage /> },
     ],

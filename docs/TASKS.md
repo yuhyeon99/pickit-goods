@@ -571,7 +571,37 @@ Implemented app work:
 Remaining work:
 
 - Admin/user views can further distinguish raw unused credits from usable unexpired credits.
-- Refund request flow should check unused status and validity period when implemented.
+
+## Task 18.2 Draw Credit Refund Requests
+
+Goal:
+
+Implement MVP manual refund request handling for unused, unexpired draw credits.
+
+Implemented database/RPC work:
+
+- `refund_requests` supports credit-level requests through `user_draw_credit_id`.
+- `create_refund_request()` validates owner, `unused` status, `expires_at > now()`, and duplicate active requests.
+- `cancel_refund_request()` allows users to cancel only their own `requested` requests.
+- `update_refund_request_status()` allows admins to transition `requested → approved/rejected` and `approved → processed/rejected`.
+- `processed` refund requests change the linked credit to `refunded`.
+
+Implemented app work:
+
+- `/my/draws` shows refund request actions and request status for eligible credits.
+- `/gacha/:id/play` excludes credits with active refund requests from usable credit count.
+- `/admin/refunds` lets admins review and process refund requests.
+
+Policy constraints:
+
+- Actual PG refund is not implemented.
+- `draw_products.sold_count` is not restored after refund processing.
+- `inventory_units`, `draw_results`, and `draw_logs` are not modified by refunds.
+
+Remaining work:
+
+- Formal refund policy wording needs legal/operations review before production.
+- Actual payment provider refund integration remains out of scope.
 
 Excluded from first pass unless explicitly scheduled:
 

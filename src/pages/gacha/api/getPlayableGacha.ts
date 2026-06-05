@@ -6,6 +6,10 @@ type CreditRow = {
   id: string;
 };
 
+type RefundRequestRow = {
+  user_draw_credit_id: string;
+};
+
 export async function getPlayableGacha(productId: string, userId: string): Promise<GachaPlayable | null> {
   const product = await getGachaProductDetail(productId);
 
@@ -45,9 +49,31 @@ export async function getPlayableGacha(productId: string, userId: string): Promi
     throw expiredError;
   }
 
+  const creditIds = (credits ?? []).map((credit) => credit.id);
+  let activeRefundCreditIds = new Set<string>();
+
+  if (creditIds.length > 0) {
+    const { data: refundRequests, error: refundError } = await supabase
+      .from('refund_requests')
+      .select('user_draw_credit_id')
+      .eq('user_id', userId)
+      .in('user_draw_credit_id', creditIds)
+      .in('status', ['requested', 'approved', 'processed'])
+      .returns<RefundRequestRow[]>();
+
+    if (refundError) {
+      throw refundError;
+    }
+
+    activeRefundCreditIds = new Set(
+      (refundRequests ?? []).map((request) => request.user_draw_credit_id),
+    );
+  }
+
   return {
     ...product,
-    unusedCreditCount: credits?.length ?? 0,
+    unusedCreditCount:
+      credits?.filter((credit) => !activeRefundCreditIds.has(credit.id)).length ?? 0,
     expiredCreditCount: expiredCredits?.length ?? 0,
   };
 }

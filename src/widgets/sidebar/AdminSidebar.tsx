@@ -10,6 +10,7 @@ const adminNavItems = [
   { to: '/admin/orders', label: '주문 내역' },
   { to: '/admin/draw-logs', label: '추첨 로그' },
   { to: '/admin/claims', label: '수령 요청' },
+  { to: '/admin/refunds', label: '환불 요청' },
   { to: '/admin/users', label: '사용자 관리' },
   { to: '/admin/policies', label: '정책/FAQ' },
 ];
