@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { expireUnusedDrawCredits } from '../api/expireUnusedDrawCredits';
 import { getAdminUsers } from '../api/getAdminUsers';
 import { drawResultStatusLabels } from '../lib/drawLogStatus';
 import { formatCurrency, orderStatusLabels } from '../lib/orderStatus';
@@ -177,6 +178,7 @@ function AdminUserCard({ user }: { user: AdminUser }) {
 }
 
 export function AdminUsersPage() {
+  const queryClient = useQueryClient();
   const [filters, setFilters] = useState<AdminUserFilters>({
     search: '',
     role: 'all',
@@ -191,6 +193,15 @@ export function AdminUsersPage() {
   } = useQuery({
     queryKey: ['admin-users'],
     queryFn: getAdminUsers,
+  });
+
+  const expireMutation = useMutation({
+    mutationFn: expireUnusedDrawCredits,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+      void queryClient.invalidateQueries({ queryKey: ['my-summary'] });
+      void queryClient.invalidateQueries({ queryKey: ['my-draw-credits'] });
+    },
   });
 
   const filteredUsers = useMemo(() => filterUsers(users, filters), [filters, users]);
@@ -215,6 +226,39 @@ export function AdminUsersPage() {
         <h1>사용자/가챠권 조회</h1>
         <p>사용자별 주문, 가챠권, 당첨 결과, 수령 요청 수치를 조회합니다. 권한 변경과 수동 지급은 지원하지 않습니다.</p>
       </div>
+
+      <section className="admin-user-maintenance-card">
+        <div>
+          <span className="soft-badge">수동 처리</span>
+          <h2>만료 가챠권 처리</h2>
+          <p>
+            유효기간이 지난 미사용 가챠권을 만료 상태로 변경합니다. 만료 처리된 가챠권은
+            추첨에 사용할 수 없으며, 판매 수량은 복구되지 않습니다.
+          </p>
+        </div>
+        <button
+          className={expireMutation.isPending ? 'disabled-cta' : 'primary-cta'}
+          type="button"
+          disabled={expireMutation.isPending}
+          onClick={() => expireMutation.mutate()}
+        >
+          {expireMutation.isPending ? '처리 중' : '만료 가챠권 처리'}
+        </button>
+        {expireMutation.isSuccess ? (
+          <p className="admin-maintenance-result">
+            {expireMutation.data.expired_count > 0
+              ? `만료 가챠권 ${expireMutation.data.expired_count}개를 처리했습니다.`
+              : '처리할 만료 가챠권이 없습니다.'}
+          </p>
+        ) : null}
+        {expireMutation.isError ? (
+          <p className="admin-maintenance-error">
+            {expireMutation.error instanceof Error
+              ? expireMutation.error.message
+              : '만료 가챠권 처리 중 오류가 발생했습니다.'}
+          </p>
+        ) : null}
+      </section>
 
       <section className="admin-user-filter-card">
         <label>

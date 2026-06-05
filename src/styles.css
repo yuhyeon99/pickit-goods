@@ -2136,6 +2136,7 @@ a {
 }
 
 .admin-user-filter-card,
+.admin-user-maintenance-card,
 .admin-user-card {
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -2148,6 +2149,36 @@ a {
   align-items: end;
   gap: 12px;
   padding: 16px;
+}
+
+.admin-user-maintenance-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.admin-user-maintenance-card h2,
+.admin-user-maintenance-card p {
+  margin: 0;
+}
+
+.admin-user-maintenance-card h2 {
+  margin-top: 10px;
+}
+
+.admin-user-maintenance-card p {
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.admin-maintenance-result {
+  color: var(--color-success);
+  font-weight: 850;
+}
+
+.admin-maintenance-error {
+  color: var(--color-danger);
+  font-weight: 850;
 }
 
 .admin-user-filter-card label {
@@ -3602,6 +3633,16 @@ a {
 
   .admin-user-filter-card {
     grid-template-columns: minmax(260px, 1fr) 150px 170px auto;
+  }
+
+  .admin-user-maintenance-card {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .admin-user-maintenance-card .admin-maintenance-result,
+  .admin-user-maintenance-card .admin-maintenance-error {
+    grid-column: 1 / -1;
   }
 
   .admin-user-summary,
