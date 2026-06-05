@@ -615,6 +615,24 @@ Excluded from first pass unless explicitly scheduled:
 - sold_count restoration on expiration.
 - Automatic resale of remaining physical inventory.
 
+## Task 18.3 Order Detail UI
+
+Goal:
+
+Improve order traceability for users and admins.
+
+Implemented app work:
+
+- Added `/my/orders` for the current user's order history.
+- Added a `주문 내역` card from the `/my` dashboard.
+- User order cards show order status, total amount, checkout dates, ordered items, issued draw credit quantity, credit status summary, and linked refund request summary.
+- Admin `/admin/orders` cards include a detail expansion with order metadata, ordered items, issued credit status summary, and linked refund request summary.
+
+Policy constraints:
+
+- Checkout, payment, refund, and draw RPC logic are unchanged.
+- This task is read-only UI for order verification.
+
 ## Task 19. Final Review
 
 Goal:

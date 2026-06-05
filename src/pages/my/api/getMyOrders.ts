@@ -1,26 +1,21 @@
 import { supabase } from '../../../shared/api/supabaseClient';
 import type {
-  AdminOrder,
-  AdminOrderCreditSummary,
-  AdminOrderRefundRequest,
-  OrderStatus,
-} from '../model/orderTypes';
-import type { CreditStatus } from '../model/userTypes';
-import type { RefundRequestStatus } from '../../my/api/getMyDrawCredits';
+  MyOrder,
+  MyOrderCreditSummary,
+  MyOrderRefundRequest,
+  MyOrderStatus,
+} from '../model/types';
+import type { DrawCreditStatus, RefundRequestStatus } from './getMyDrawCredits';
 
 type MaybeArray<T> = T | T[] | null;
 
 type OrderRow = {
   id: string;
-  user_id: string;
-  status: OrderStatus;
+  status: MyOrderStatus;
   total_amount: number;
   created_at: string;
   paid_at: string | null;
   canceled_at: string | null;
-  profiles: MaybeArray<{
-    display_name: string | null;
-  }>;
   order_items: Array<{
     id: string;
     draw_product_id: string;
@@ -34,7 +29,6 @@ type OrderRow = {
 };
 
 type CreditIssuanceRow = {
-  id: string;
   order_id: string;
   order_item_id: string;
   issued_quantity: number;
@@ -43,7 +37,7 @@ type CreditIssuanceRow = {
 
 type CreditRow = {
   order_id: string | null;
-  status: CreditStatus;
+  status: DrawCreditStatus;
 };
 
 type RefundRequestRow = {
@@ -62,7 +56,7 @@ function firstRelation<T>(value: MaybeArray<T>): T | null {
   return value;
 }
 
-function createEmptyCreditSummary(): AdminOrderCreditSummary {
+function createEmptyCreditSummary(): MyOrderCreditSummary {
   return {
     total: 0,
     unused: 0,
@@ -73,19 +67,17 @@ function createEmptyCreditSummary(): AdminOrderCreditSummary {
   };
 }
 
-export async function getAdminOrders(): Promise<AdminOrder[]> {
+export async function getMyOrders(userId: string): Promise<MyOrder[]> {
   const { data: orders, error } = await supabase
     .from('orders')
     .select(
       `
         id,
-        user_id,
         status,
         total_amount,
         created_at,
         paid_at,
         canceled_at,
-        profiles(display_name),
         order_items(
           id,
           draw_product_id,
@@ -96,8 +88,8 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
         )
       `,
     )
+    .eq('user_id', userId)
     .order('created_at', { ascending: false })
-    .limit(200)
     .returns<OrderRow[]>();
 
   if (error) {
@@ -106,8 +98,8 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
 
   const orderIds = (orders ?? []).map((order) => order.id);
   const issuancesByOrderItem = new Map<string, CreditIssuanceRow>();
-  const creditSummaryByOrder = new Map<string, AdminOrderCreditSummary>();
-  const refundRequestsByOrder = new Map<string, AdminOrderRefundRequest[]>();
+  const creditSummaryByOrder = new Map<string, MyOrderCreditSummary>();
+  const refundRequestsByOrder = new Map<string, MyOrderRefundRequest[]>();
 
   if (orderIds.length > 0) {
     const [
@@ -117,7 +109,7 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
     ] = await Promise.all([
       supabase
         .from('credit_issuances')
-        .select('id, order_id, order_item_id, issued_quantity, created_at')
+        .select('order_id, order_item_id, issued_quantity, created_at')
         .in('order_id', orderIds)
         .returns<CreditIssuanceRow[]>(),
       supabase
@@ -133,9 +125,7 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
         .returns<RefundRequestRow[]>(),
     ]);
 
-    if (issuanceError) {
-      throw issuanceError;
-    }
+    if (issuanceError) throw issuanceError;
     if (creditError) throw creditError;
     if (refundError) throw refundError;
 
@@ -167,34 +157,30 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
   return (orders ?? []).map((order) => {
     const items = order.order_items.map((item) => {
       const issuance = issuancesByOrderItem.get(item.id);
-      const issuedQuantity = issuance?.issued_quantity ?? 0;
 
       return {
         id: item.id,
-        drawProductId: item.draw_product_id,
         drawProductTitle: firstRelation(item.draw_products)?.title ?? '알 수 없는 상품',
         quantity: item.quantity,
         unitPrice: item.unit_price,
         totalPrice: item.quantity * item.unit_price,
         creditAmount: item.credit_amount,
-        issuedQuantity,
+        issuedQuantity: issuance?.issued_quantity ?? 0,
         issuedAt: issuance?.created_at ?? null,
       };
     });
 
     return {
       id: order.id,
-      userId: order.user_id,
-      userDisplayName: firstRelation(order.profiles)?.display_name ?? null,
       status: order.status,
       totalAmount: order.total_amount,
-      totalIssuedQuantity: items.reduce((sum, item) => sum + item.issuedQuantity, 0),
       createdAt: order.created_at,
       paidAt: order.paid_at,
       canceledAt: order.canceled_at,
+      totalIssuedQuantity: items.reduce((sum, item) => sum + item.issuedQuantity, 0),
       creditSummary: creditSummaryByOrder.get(order.id) ?? createEmptyCreditSummary(),
-      refundRequests: refundRequestsByOrder.get(order.id) ?? [],
       items,
+      refundRequests: refundRequestsByOrder.get(order.id) ?? [],
     };
   });
 }

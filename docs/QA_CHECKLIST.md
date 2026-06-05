@@ -51,7 +51,10 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] `/my` links to `/my/draws`.
 - [x] `/my` links to `/my/items`.
 - [x] `/my` links to `/my/claims`.
+- [ ] `/my` links to `/my/orders`.
 - [x] `/my` links to `/cart`.
+- [ ] `/my/orders` shows the current user's orders.
+- [ ] `/my/orders` order detail shows order items, issued credit quantity, credit status summary, and refund request summary.
 - [x] `/my/draws` shows owned draw credits.
 - [x] `/my/draws` shows credit issue date.
 - [x] `/my/draws` shows credit expiration date.
@@ -118,6 +121,9 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] Order cards show order item list.
 - [x] Order cards show gacha name, quantity, unit price, line total, and credit amount.
 - [x] Credit issuance quantity is shown.
+- [ ] Order detail expansion shows full order metadata.
+- [ ] Order detail expansion shows issued credit status summary.
+- [ ] Order detail expansion shows linked refund request summary, when present.
 - [x] Order search by order ID works.
 - [x] Order search by user works.
 - [x] Order status filter works.

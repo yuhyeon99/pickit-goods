@@ -25,6 +25,7 @@ import { HomePage } from '../../pages/home/HomePage';
 import { MyClaimsPage } from '../../pages/my/MyClaimsPage';
 import { MyDrawsPage } from '../../pages/my/MyDrawsPage';
 import { MyItemsPage } from '../../pages/my/MyItemsPage';
+import { MyOrdersPage } from '../../pages/my/MyOrdersPage';
 import { MyPage } from '../../pages/my/MyPage';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 import { RefundPolicyPage } from '../../pages/policy/RefundPolicyPage';
@@ -98,6 +99,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <MyClaimsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/my/orders',
+        element: (
+          <ProtectedRoute>
+            <MyOrdersPage />
           </ProtectedRoute>
         ),
       },

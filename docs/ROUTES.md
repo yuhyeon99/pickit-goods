@@ -51,6 +51,9 @@ Won item box
 /my/claims
 Claim request history
 
+/my/orders
+Order history and order detail
+
 /claim
 Create claim request page
 

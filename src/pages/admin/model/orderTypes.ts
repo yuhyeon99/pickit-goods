@@ -1,4 +1,11 @@
+import type { CreditStatus } from './userTypes';
+import type { RefundRequestStatus } from '../../my/api/getMyDrawCredits';
+
 export type OrderStatus = 'pending' | 'paid' | 'canceled' | 'refund_requested' | 'refunded';
+
+export type AdminOrderCreditSummary = Record<CreditStatus, number> & {
+  total: number;
+};
 
 export type AdminOrderItem = {
   id: string;
@@ -22,7 +29,16 @@ export type AdminOrder = {
   createdAt: string;
   paidAt: string | null;
   canceledAt: string | null;
+  creditSummary: AdminOrderCreditSummary;
+  refundRequests: AdminOrderRefundRequest[];
   items: AdminOrderItem[];
+};
+
+export type AdminOrderRefundRequest = {
+  id: string;
+  status: RefundRequestStatus;
+  requestedAt: string;
+  processedAt: string | null;
 };
 
 export type AdminOrderFilters = {

@@ -2069,13 +2069,16 @@ a {
 }
 
 .admin-orders-page,
-.admin-order-list {
+.admin-order-list,
+.my-orders-page,
+.my-order-list {
   display: grid;
   gap: 18px;
 }
 
 .admin-order-filter-card,
-.admin-order-card {
+.admin-order-card,
+.my-order-card {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   background: var(--color-surface);
@@ -2115,7 +2118,8 @@ a {
   outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
 
-.admin-order-card {
+.admin-order-card,
+.my-order-card {
   display: grid;
   gap: 18px;
   padding: 20px;
@@ -2214,6 +2218,78 @@ a {
   grid-template-columns: 1fr;
   gap: 8px;
   margin: 0;
+}
+
+.order-detail-panel {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+}
+
+.order-detail-panel summary {
+  cursor: pointer;
+  color: var(--color-text-strong);
+  font-weight: 850;
+  min-height: 44px;
+  padding: 8px 0;
+}
+
+.order-detail-panel[open] summary {
+  margin-bottom: 6px;
+}
+
+.order-detail-panel section {
+  display: grid;
+  gap: 12px;
+  padding: 14px 0;
+}
+
+.order-detail-panel section + section {
+  border-top: 1px solid var(--color-border);
+}
+
+.order-detail-panel h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 16px;
+}
+
+.order-detail-meta,
+.order-credit-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.order-detail-meta div,
+.order-credit-summary div {
+  min-width: 0;
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.order-detail-meta dt,
+.order-credit-summary dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.order-detail-meta dd,
+.order-credit-summary dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.order-detail-note {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
 }
 
 .admin-users-page,
@@ -3720,6 +3796,14 @@ a {
 
   .admin-order-item dl {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .order-detail-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .order-credit-summary {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .admin-user-filter-card {

@@ -73,6 +73,13 @@ function NavigationCards({ summary }: { summary?: MySummary }) {
       cta: '요청 내역 보기',
     },
     {
+      title: '주문 내역',
+      description: '테스트 결제로 생성된 주문과 발급된 가챠권 수량을 확인할 수 있어요.',
+      to: '/my/orders',
+      count: '주문 확인',
+      cta: '주문 내역 보기',
+    },
+    {
       title: '장바구니',
       description: '담아둔 가챠 이용권을 확인하고 테스트 결제로 이어갈 수 있어요.',
       to: '/cart',

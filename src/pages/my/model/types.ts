@@ -69,3 +69,45 @@ export type MySummary = {
   recentResultName: string | null;
   recentClaimStatus: ClaimRequestStatus | null;
 };
+
+export type MyOrderStatus = 'pending' | 'paid' | 'canceled' | 'refund_requested' | 'refunded';
+
+export type MyOrderCreditSummary = {
+  total: number;
+  unused: number;
+  used: number;
+  expired: number;
+  refunded: number;
+  failed: number;
+};
+
+export type MyOrderItem = {
+  id: string;
+  drawProductTitle: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+  creditAmount: number;
+  issuedQuantity: number;
+  issuedAt: string | null;
+};
+
+export type MyOrderRefundRequest = {
+  id: string;
+  status: string;
+  requestedAt: string;
+  processedAt: string | null;
+};
+
+export type MyOrder = {
+  id: string;
+  status: MyOrderStatus;
+  totalAmount: number;
+  createdAt: string;
+  paidAt: string | null;
+  canceledAt: string | null;
+  totalIssuedQuantity: number;
+  creditSummary: MyOrderCreditSummary;
+  items: MyOrderItem[];
+  refundRequests: MyOrderRefundRequest[];
+};
