@@ -142,6 +142,7 @@ Draw credit expiration and refunds:
 - Expired draw credits cannot be used for drawing.
 - Expiration does not automatically restore draw_products.sold_count.
 - Processed refunds for unused credits do restore draw_products.sold_count by 1.
+- Admins can manually synchronize `unused` credits with `expires_at <= now()` to `expired` through `expire_unused_draw_credits()`.
 - Public refund/expiration wording must be reviewed before production launch because it can involve consumer protection requirements.
 
 ## 5. Exchange Policy
@@ -301,6 +302,8 @@ Rules:
 - Expiration does not automatically restore sales capacity.
 - sold_count is not decremented on expiration.
 - sold_count is decremented only when an unused credit refund is processed by an admin.
+- `expire_unused_draw_credits()` can manually change `unused + expires_at <= now()` credits to `expired`.
+- Manual expiration synchronization does not modify sold_count, inventory_units, draw_results, or draw_logs.
 - Automatic expiration jobs and notifications are not implemented yet.
 - The draw RPC excludes expired credits by requiring `expires_at > now()`.
 - The checkout RPC sets `expires_at = now() + interval '30 days'` when issuing credits.

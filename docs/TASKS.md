@@ -560,6 +560,7 @@ Implemented database/RPC work:
 - Backfilled existing credits from created_at + 30 days.
 - checkout_cart() sets expires_at to now() + 30 days.
 - draw_gacha() only selects unused credits with expires_at > now().
+- Added `expire_unused_draw_credits()` for admin-only manual synchronization from unused to expired.
 - Added index for user/product/status/expires_at lookup.
 
 Implemented app work:
@@ -571,6 +572,8 @@ Implemented app work:
 Remaining work:
 
 - Admin/user views can further distinguish raw unused credits from usable unexpired credits.
+- Admin screen button for running `expire_unused_draw_credits()` manually.
+- Supabase cron or scheduled function for automatic credit expiration synchronization.
 
 ## Task 18.2 Draw Credit Refund Requests
 

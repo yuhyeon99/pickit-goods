@@ -259,6 +259,11 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] `draw_gacha()` does not select expired credits.
 - [x] If only expired unused credits exist, draw RPC returns a clear error.
 - [x] Expiration does not decrement `draw_products.sold_count`.
+- [ ] Admin can run `expire_unused_draw_credits()` manually.
+- [ ] `expire_unused_draw_credits()` changes `unused + expires_at <= now()` credits to `expired`.
+- [ ] `expire_unused_draw_credits()` returns the processed credit count.
+- [ ] Expiration synchronization does not change `draw_products.sold_count`.
+- [ ] Expiration synchronization does not change `inventory_units`, `draw_results`, or `draw_logs`.
 - [x] Automatic `unused → expired` batch/cron is not implemented.
 - [x] Refund request feature is MVP manual status management only, not PG refund automation.
 

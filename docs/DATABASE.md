@@ -281,11 +281,13 @@ Rules:
 - Expired credits cannot be used for drawing.
 - Expiration changes credit usability but does not decrement draw_products.sold_count.
 - Processed refunds for unused credits do decrement draw_products.sold_count by 1.
+- `expire_unused_draw_credits()` can manually synchronize `status = unused and expires_at <= now()` rows to `expired`.
+- Manual expiration synchronization does not change sold_count, inventory_units, draw_results, or draw_logs.
 - checkout_cart() sets expires_at to now() + interval '30 days' when credits are issued.
 - Existing credits are backfilled to created_at + interval '30 days' by migration.
 - draw_gacha() only selects unused credits where expires_at > now().
 - `/my/draws` shows issue date, expiration date, remaining days, and usable/expired state.
-- Automatic unused → expired synchronization is not implemented yet.
+- Automatic scheduled unused → expired synchronization is not implemented yet.
 - Refund request creation and admin processing are implemented for unused and unexpired credits.
 
 Expiration design notes:
