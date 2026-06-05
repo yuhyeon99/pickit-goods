@@ -302,6 +302,26 @@ a {
   box-shadow: 0 10px 22px rgb(37 99 235 / 0.18);
 }
 
+.secondary-link-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text-strong);
+  cursor: pointer;
+  font-weight: 850;
+  padding: 0 14px;
+  text-align: center;
+}
+
+.secondary-link-button:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-soft);
+}
+
 .primary-cta:disabled {
   background: #dbe3ef;
   color: #637083;
@@ -624,6 +644,11 @@ a {
 .purchase-summary-card .success-message {
   color: #047857;
   font-weight: 800;
+}
+
+.cart-success-cta {
+  display: grid;
+  gap: 10px;
 }
 
 .purchase-summary-card .error-message {

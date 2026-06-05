@@ -108,7 +108,12 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
               : '로그인 후 가챠 이용권을 장바구니에 담을 수 있습니다.'}
           </p>
           {addCartMutation.isSuccess ? (
-            <p className="success-message">장바구니에 담았습니다.</p>
+            <div className="cart-success-cta">
+              <p className="success-message">장바구니에 담았습니다.</p>
+              <Link className="secondary-link-button" to="/cart">
+                장바구니로 이동
+              </Link>
+            </div>
           ) : null}
           {addCartMutation.isError ? (
             <p className="error-message">
