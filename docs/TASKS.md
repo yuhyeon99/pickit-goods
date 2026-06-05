@@ -585,6 +585,7 @@ Implemented database/RPC work:
 - `cancel_refund_request()` allows users to cancel only their own `requested` requests.
 - `update_refund_request_status()` allows admins to transition `requested → approved/rejected` and `approved → processed/rejected`.
 - `processed` refund requests change the linked credit to `refunded`.
+- `processed` refund requests restore `draw_products.sold_count` by 1 for the linked unused credit.
 
 Implemented app work:
 
@@ -595,7 +596,8 @@ Implemented app work:
 Policy constraints:
 
 - Actual PG refund is not implemented.
-- `draw_products.sold_count` is not restored after refund processing.
+- `draw_products.sold_count` is restored only after an unused-credit refund becomes `processed`.
+- Expired credits still do not automatically restore `draw_products.sold_count`.
 - `inventory_units`, `draw_results`, and `draw_logs` are not modified by refunds.
 
 Remaining work:

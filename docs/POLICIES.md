@@ -104,10 +104,12 @@ Admin reviews request
 Admin marks request as processed
   ↓
 Credit status changes to refunded
+  ↓
+draw_products.sold_count decreases by 1
 ```
 
 Actual payment refund automation is excluded from MVP.
-The MVP does not automatically cancel the original payment, change the order status, or restore `draw_products.sold_count`.
+The MVP does not automatically cancel the original payment or change the order status.
 
 refund_requests.status values:
 
@@ -127,7 +129,8 @@ Implemented MVP refund request rules:
 - Rejected or canceled requests may be requested again while the credit is still unused and unexpired.
 - Admin processing uses `/admin/refunds` and the `update_refund_request_status` RPC.
 - When a request becomes `processed`, the linked `user_draw_credits.status` changes to `refunded` and `refunded_at` is set.
-- `draw_products.sold_count`, `inventory_units`, `draw_results`, and `draw_logs` are not changed by refund processing.
+- When an unused credit refund becomes `processed`, the linked `draw_products.sold_count` is decreased by 1.
+- `inventory_units`, `draw_results`, and `draw_logs` are not changed by refund processing.
 
 Public-facing policy wording in the MVP is temporary guidance. Refund, expiration, delivery, and pickup wording must be reviewed and finalized before production launch.
 
@@ -138,6 +141,7 @@ Draw credit expiration and refunds:
 - Used draw credits cannot be refunded.
 - Expired draw credits cannot be used for drawing.
 - Expiration does not automatically restore draw_products.sold_count.
+- Processed refunds for unused credits do restore draw_products.sold_count by 1.
 - Public refund/expiration wording must be reviewed before production launch because it can involve consumer protection requirements.
 
 ## 5. Exchange Policy
@@ -261,8 +265,9 @@ Inventory and credit expiration rules:
 
 - inventory_units are deducted only when a draw is executed.
 - Purchasing a draw credit increases sold_count but does not select or deduct a specific inventory unit.
+- Processing a refund for an unused credit decreases sold_count by 1.
 - A credit that expires does not reduce sold_count.
-- For the MVP, sold_count remains the issued credit count after paid checkout, not the currently active credit count.
+- For the MVP, sold_count represents paid checkout issued credits minus processed unused-credit refunds.
 - Any physical inventory left after credit expiration is handled by a later operational policy, such as separate resale, event use, or disposal.
 
 User-facing quantity wording:
@@ -295,8 +300,8 @@ Rules:
 - Expired credits are not drawable.
 - Expiration does not automatically restore sales capacity.
 - sold_count is not decremented on expiration.
+- sold_count is decremented only when an unused credit refund is processed by an admin.
 - Automatic expiration jobs and notifications are not implemented yet.
-- Refund request creation/processing is not implemented yet.
 - The draw RPC excludes expired credits by requiring `expires_at > now()`.
 - The checkout RPC sets `expires_at = now() + interval '30 days'` when issuing credits.
 

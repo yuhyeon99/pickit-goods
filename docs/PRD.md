@@ -184,16 +184,19 @@ Draw execution
 → inventory_units.status changes to drawn
 ```
 
-At purchase time the winning reward is not determined, so a specific inventory unit must not be deducted. sold_count represents issued sales rights, while inventory_units represents physical stock that is only consumed at draw execution.
+At purchase time the winning reward is not determined, so a specific inventory unit must not be deducted. sold_count represents currently reflected paid sales rights, while inventory_units represents physical stock that is only consumed at draw execution.
 
-For the first MVP, sold_count remains a cumulative issued credit count. It should not be decreased when a credit expires, because restoring sold_count would require additional accounting fields and reconciliation rules.
+For the first MVP, unused-credit refunds and expiration are handled differently.
+
+- When an unused credit refund becomes processed, sold_count decreases by 1 and purchase availability recovers.
+- When an unused credit simply expires, sold_count is not automatically restored.
 
 Planned implementation impact:
 
 - Add `user_draw_credits.expires_at`.
 - Show issued date, expiration date, remaining days, and usable/expired state on `/my/draws`.
 - Block draw execution for expired credits.
-- Keep refund eligibility limited to unused credits, with legal/policy review before public launch.
+- Keep refund eligibility limited to unused and unexpired credits, with legal/policy review before public launch.
 
 ## 7. Theme Policy
 

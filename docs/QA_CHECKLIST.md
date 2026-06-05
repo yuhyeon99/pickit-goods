@@ -282,7 +282,8 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [ ] Admin can change `approved → processed`.
 - [ ] Admin can change `approved → rejected`.
 - [ ] `processed` changes linked `user_draw_credits.status = refunded`.
-- [ ] Refund processing does not change `draw_products.sold_count`.
+- [ ] `processed` decrements linked `draw_products.sold_count` by 1.
+- [ ] Re-processing an already processed refund is rejected and does not decrement sold_count again.
 - [ ] Refund processing does not change `inventory_units`.
 
 ## 6. UI, Responsive, And Theme QA

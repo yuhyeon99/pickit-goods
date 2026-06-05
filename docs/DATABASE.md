@@ -128,7 +128,7 @@ Examples:
 | price | integer | MVP test price |
 | credit_amount | integer | issued credits count |
 | sales_limit | integer | default 100 |
-| sold_count | integer | default 0, issued credit count after paid checkout |
+| sold_count | integer | default 0, issued credit count minus processed unused-credit refunds |
 | status | text | draft, active, sold_out, hidden, archived |
 | thumbnail_url | text | nullable |
 | created_at | timestamptz | default now() |
@@ -140,11 +140,12 @@ Rules:
 - A gacha 1 draw purchase increases sold_count by 1.
 - A gacha 10 draw purchase increases sold_count by 10.
 - A theme ticket 5-pack purchase increases sold_count by 5.
+- A processed refund for an unused credit decreases sold_count by 1.
 - New purchases must stop if available inventory count is 0.
 - New purchases must stop if sold_count reaches sales_limit.
 - Existing unused credits can still be drawn against a sold_out product if available inventory remains.
 - sold_count is not automatically restored when a credit expires.
-- For the MVP, sold_count is a cumulative issued credit count after paid checkout, not an active unexpired credit count.
+- For the MVP, sold_count is the current paid sale count after processed unused-credit refunds, not completed draw count.
 
 ## 6. draw_product_items
 
@@ -279,12 +280,13 @@ Rules:
 - Draw credits are valid for 30 days after paid checkout.
 - Expired credits cannot be used for drawing.
 - Expiration changes credit usability but does not decrement draw_products.sold_count.
+- Processed refunds for unused credits do decrement draw_products.sold_count by 1.
 - checkout_cart() sets expires_at to now() + interval '30 days' when credits are issued.
 - Existing credits are backfilled to created_at + interval '30 days' by migration.
 - draw_gacha() only selects unused credits where expires_at > now().
 - `/my/draws` shows issue date, expiration date, remaining days, and usable/expired state.
 - Automatic unused → expired synchronization is not implemented yet.
-- Refund request creation/processing is not implemented yet.
+- Refund request creation and admin processing are implemented for unused and unexpired credits.
 
 Expiration design notes:
 
@@ -441,7 +443,8 @@ Rules:
 - processed: actual refund processing is complete.
 - In the MVP, refunds are designed around manual admin processing.
 - When status becomes `processed`, the linked user_draw_credits row changes to `refunded`.
-- Refund processing does not restore draw_products.sold_count and does not modify inventory_units, draw_results, or draw_logs.
+- When an unused credit refund becomes `processed`, draw_products.sold_count decreases by 1.
+- Refund processing does not modify inventory_units, draw_results, or draw_logs.
 
 ## 18. faq_items
 

@@ -114,7 +114,7 @@ function AdminRefundCard({
           </label>
           {actions.includes('processed') ? (
             <p className="admin-danger-note">
-              환불 처리 완료 시 연결된 가챠권이 환불됨 상태로 변경됩니다. 판매 수량은 복구하지 않습니다.
+              환불 처리 완료 시 연결된 가챠권이 환불됨 상태로 변경되고 판매 반영 수량이 1개 복구됩니다.
             </p>
           ) : null}
           <div className="draw-credit-actions">
