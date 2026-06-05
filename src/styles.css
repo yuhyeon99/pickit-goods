@@ -1401,6 +1401,12 @@ a {
 
 .won-item-grid {
   display: grid;
+  align-items: start;
+  gap: 14px;
+}
+
+.claim-history-list {
+  display: grid;
   gap: 14px;
 }
 
@@ -1603,6 +1609,7 @@ a {
 .claim-section-card,
 .claim-history-card {
   display: grid;
+  align-self: start;
   gap: 18px;
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -1624,6 +1631,86 @@ a {
   margin: 0;
   color: var(--color-muted);
   line-height: 1.6;
+}
+
+.claim-detail-panel {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+}
+
+.claim-detail-panel summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 850;
+}
+
+.claim-detail-panel[open] summary {
+  margin-bottom: 12px;
+}
+
+.claim-detail-panel section {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.claim-detail-panel h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 16px;
+}
+
+.claim-detail-meta {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.claim-detail-meta div {
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.claim-detail-meta dt {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.claim-detail-meta dd {
+  margin: 6px 0 0;
+  color: var(--color-text-strong);
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.claim-detail-item-list {
+  display: grid;
+  gap: 8px;
+}
+
+.claim-detail-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  padding: 12px;
+}
+
+.claim-detail-item strong {
+  display: block;
+  color: var(--color-text-strong);
+}
+
+.claim-detail-item small {
+  color: var(--color-muted);
+  line-height: 1.5;
 }
 
 .claim-item-grid,
@@ -3570,6 +3657,10 @@ a {
   .claim-form-grid label:nth-child(4),
   .claim-form-grid label:nth-child(6) {
     grid-column: 1 / -1;
+  }
+
+  .claim-detail-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .admin-claim-header {

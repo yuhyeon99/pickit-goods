@@ -35,8 +35,27 @@ export type MyClaimRequest = {
   claimMethod: ClaimMethod;
   status: ClaimRequestStatus;
   itemCount: number;
+  recipientName: string | null;
+  recipientPhone: string | null;
+  postalCode: string | null;
+  address1: string | null;
+  address2: string | null;
+  deliveryNote: string | null;
   pickupQrCode: string | null;
+  trackingNumber: string | null;
   createdAt: string;
+  completedAt: string | null;
+  items: MyClaimRequestItem[];
+};
+
+export type MyClaimRequestItem = {
+  id: string;
+  drawResultId: string;
+  rewardName: string;
+  themeName: string | null;
+  drawProductTitle: string;
+  grade: RewardGrade;
+  wonAt: string;
 };
 
 export type MySummary = {

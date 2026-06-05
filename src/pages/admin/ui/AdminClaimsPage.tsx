@@ -25,6 +25,15 @@ function shortId(value: string) {
   return value.slice(0, 8);
 }
 
+const claimStatusDescriptions = {
+  requested: '요청이 접수되었습니다. 준비 단계로 변경할 수 있습니다.',
+  preparing: '상품 확인과 포장 또는 현장 수령 준비가 진행 중입니다.',
+  ready_for_pickup: '현장에서 수령 가능한 상태입니다.',
+  shipping: '배송이 시작되었습니다. 완료 처리 전 송장 정보를 확인하세요.',
+  completed: '수령 처리가 완료되었습니다.',
+  canceled: '수령 요청이 취소되었습니다.',
+};
+
 function AdminClaimCard({
   claim,
   isUpdating,
@@ -60,21 +69,57 @@ function AdminClaimCard({
       </div>
 
       <section className="admin-claim-section">
-        <h3>포함 상품</h3>
-        <div className="admin-claim-item-list">
-          {claim.items.map((item) => (
-            <div key={item.id} className="admin-claim-item">
-              <span className="grade-badge">{item.grade}</span>
+        <details className="claim-detail-panel" open>
+          <summary>요청 상세</summary>
+          <section>
+            <h3>요청 상태</h3>
+            <dl className="admin-claim-meta">
               <div>
-                <strong>{item.rewardName}</strong>
-                <small>
-                  {item.themeName ?? '여러 테마'} · {item.drawProductTitle} · 검증{' '}
-                  {item.publicVerifyCode.slice(0, 8)}
-                </small>
+                <dt>요청 ID</dt>
+                <dd>{shortId(claim.id)}</dd>
               </div>
+              <div>
+                <dt>요청자</dt>
+                <dd>{claim.userDisplayName ?? `사용자 ${shortId(claim.userId)}`}</dd>
+              </div>
+              <div>
+                <dt>수령 방식</dt>
+                <dd>{adminClaimMethodLabels[claim.claimMethod]}</dd>
+              </div>
+              <div>
+                <dt>현재 상태</dt>
+                <dd>{adminClaimStatusLabels[claim.status]}</dd>
+              </div>
+              <div>
+                <dt>요청일</dt>
+                <dd>{formatDate(claim.createdAt)}</dd>
+              </div>
+              <div>
+                <dt>완료일</dt>
+                <dd>{claim.completedAt ? formatDate(claim.completedAt) : '-'}</dd>
+              </div>
+            </dl>
+            <p>{claimStatusDescriptions[claim.status]}</p>
+          </section>
+
+          <section>
+            <h3>포함 상품</h3>
+            <div className="admin-claim-item-list">
+              {claim.items.map((item) => (
+                <div key={item.id} className="admin-claim-item">
+                  <span className="grade-badge">{item.grade}</span>
+                  <div>
+                    <strong>{item.rewardName}</strong>
+                    <small>
+                      {item.themeName ?? '여러 테마'} · {item.drawProductTitle} · 당첨일{' '}
+                      {formatDate(item.wonAt)} · 검증 {item.publicVerifyCode.slice(0, 8)}
+                    </small>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </section>
+        </details>
       </section>
 
       {claim.claimMethod === 'delivery' ? (

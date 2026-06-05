@@ -13,7 +13,18 @@ const statusLabels: Record<ClaimRequestStatus, string> = {
   canceled: '취소됨',
 };
 
-function formatDate(value: string) {
+const statusDescriptions: Record<ClaimRequestStatus, string> = {
+  requested: '요청이 접수되었습니다. 운영자 확인 후 준비가 시작됩니다.',
+  preparing: '상품 수령 준비가 진행 중입니다.',
+  ready_for_pickup: '현장에서 수령 가능한 상태입니다.',
+  shipping: '배송이 시작되었습니다.',
+  completed: '수령 처리가 완료되었습니다.',
+  canceled: '수령 요청이 취소되었습니다.',
+};
+
+function formatDate(value: string | null) {
+  if (!value) return '-';
+
   return new Intl.DateTimeFormat('ko-KR', {
     year: 'numeric',
     month: 'long',
@@ -22,6 +33,8 @@ function formatDate(value: string) {
 }
 
 function ClaimCard({ claim }: { claim: MyClaimRequest }) {
+  const isDelivery = claim.claimMethod === 'delivery';
+
   return (
     <article className="claim-history-card">
       <div>
@@ -42,6 +55,103 @@ function ClaimCard({ claim }: { claim: MyClaimRequest }) {
           <dd>{claim.pickupQrCode?.slice(0, 20) ?? '-'}</dd>
         </div>
       </dl>
+      <details className="claim-detail-panel">
+        <summary>상세 보기</summary>
+        <section>
+          <h3>요청 상태</h3>
+          <dl className="claim-detail-meta">
+            <div>
+              <dt>요청 ID</dt>
+              <dd>{claim.id.slice(0, 8)}</dd>
+            </div>
+            <div>
+              <dt>수령 방식</dt>
+              <dd>{isDelivery ? '배송 수령' : '현장 수령'}</dd>
+            </div>
+            <div>
+              <dt>현재 상태</dt>
+              <dd>{statusLabels[claim.status]}</dd>
+            </div>
+            <div>
+              <dt>완료일</dt>
+              <dd>{formatDate(claim.completedAt)}</dd>
+            </div>
+          </dl>
+          <p>{statusDescriptions[claim.status]}</p>
+        </section>
+
+        {isDelivery ? (
+          <section>
+            <h3>배송지 정보</h3>
+            <dl className="claim-detail-meta">
+              <div>
+                <dt>수령자</dt>
+                <dd>{claim.recipientName ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>연락처</dt>
+                <dd>{claim.recipientPhone ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>우편번호</dt>
+                <dd>{claim.postalCode ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>주소</dt>
+                <dd>{claim.address1 ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>상세 주소</dt>
+                <dd>{claim.address2 ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>배송 요청사항</dt>
+                <dd>{claim.deliveryNote ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>송장번호</dt>
+                <dd>{claim.trackingNumber ?? '-'}</dd>
+              </div>
+            </dl>
+          </section>
+        ) : (
+          <section>
+            <h3>현장 수령 정보</h3>
+            <dl className="claim-detail-meta">
+              <div>
+                <dt>수령 코드</dt>
+                <dd>{claim.pickupQrCode ?? '-'}</dd>
+              </div>
+              <div>
+                <dt>수령 가능 여부</dt>
+                <dd>{claim.status === 'ready_for_pickup' ? '수령 가능' : '운영자 준비 후 가능'}</dd>
+              </div>
+              <div>
+                <dt>수령 완료</dt>
+                <dd>{claim.status === 'completed' ? '완료' : '미완료'}</dd>
+              </div>
+            </dl>
+          </section>
+        )}
+
+        <section>
+          <h3>포함 상품</h3>
+          <div className="claim-detail-item-list">
+            {claim.items.map((item) => (
+              <div key={item.id} className="claim-detail-item">
+                <span className="grade-badge">{item.grade}</span>
+                <div>
+                  <strong>{item.rewardName}</strong>
+                  <small>
+                    {item.themeName ?? '여러 테마'} · {item.drawProductTitle} · 당첨일{' '}
+                    {formatDate(item.wonAt)}
+                  </small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </details>
     </article>
   );
 }
@@ -91,7 +201,7 @@ export function MyClaimsPage() {
           </Link>
         </section>
       ) : (
-        <div className="won-item-grid">
+        <div className="claim-history-list">
           {claims.map((claim) => (
             <ClaimCard key={claim.id} claim={claim} />
           ))}
