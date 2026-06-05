@@ -8,6 +8,7 @@ import {
   getAdminRefundActions,
   getAdminRefundStatusTone,
 } from '../lib/refundStatus';
+import { orderStatusLabels } from '../lib/orderStatus';
 import type { AdminRefundRequest, UpdateAdminRefundStatusInput } from '../model/refundTypes';
 
 const creditStatusLabels: Record<AdminRefundRequest['creditStatus'], string> = {
@@ -78,7 +79,7 @@ function AdminRefundCard({
           </div>
           <div>
             <dt>주문 상태</dt>
-            <dd>{refund.orderStatus ?? '-'}</dd>
+            <dd>{refund.orderStatus ? orderStatusLabels[refund.orderStatus] : '-'}</dd>
           </div>
           <div>
             <dt>가챠권 상태</dt>

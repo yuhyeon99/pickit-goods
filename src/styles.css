@@ -1817,6 +1817,11 @@ a {
   padding-top: 16px;
 }
 
+.admin-claim-action .draw-credit-actions {
+  grid-column: 1 / -1;
+  justify-content: flex-start;
+}
+
 .admin-claim-action label {
   display: grid;
   gap: 8px;

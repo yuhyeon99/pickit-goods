@@ -1,4 +1,5 @@
 import type { DrawCreditStatus, RefundRequestStatus } from '../../my/api/getMyDrawCredits';
+import type { OrderStatus } from './orderTypes';
 
 export type AdminRefundRequest = {
   id: string;
@@ -6,7 +7,7 @@ export type AdminRefundRequest = {
   userDisplayName: string | null;
   userEmail: string | null;
   orderId: string | null;
-  orderStatus: string | null;
+  orderStatus: OrderStatus | null;
   userDrawCreditId: string;
   creditStatus: DrawCreditStatus;
   creditExpiresAt: string;
