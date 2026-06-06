@@ -13,6 +13,7 @@ type RewardItemRow = {
   id: string;
   name: string;
   description: string | null;
+  image_url: string | null;
   grade: RewardGrade;
   category: string;
   status: AdminRewardItem['status'];
@@ -70,6 +71,7 @@ export async function getAdminRewardItems(): Promise<AdminRewardItem[]> {
         id,
         name,
         description,
+        image_url,
         grade,
         category,
         status,
@@ -168,6 +170,7 @@ export async function getAdminRewardItems(): Promise<AdminRewardItem[]> {
       id: item.id,
       name: item.name,
       description: item.description,
+      imageUrl: item.image_url,
       grade: item.grade,
       category: item.category,
       status: item.status,

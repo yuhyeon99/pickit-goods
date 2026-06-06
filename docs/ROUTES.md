@@ -89,7 +89,7 @@ Admin dashboard
 Theme management
 
 /admin/items
-Reward item management
+Reward item management, creation, and editing
 
 /admin/pools
 Inventory pool management

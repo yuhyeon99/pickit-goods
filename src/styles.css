@@ -2790,7 +2790,8 @@ a {
 }
 
 .admin-reward-filter-card,
-.admin-reward-card {
+.admin-reward-card,
+.admin-reward-create-card {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   background: var(--color-surface);
@@ -2813,7 +2814,10 @@ a {
 }
 
 .admin-reward-filter-card input,
-.admin-reward-filter-card select {
+.admin-reward-filter-card select,
+.admin-reward-form input,
+.admin-reward-form select,
+.admin-reward-form textarea {
   width: 100%;
   min-height: 46px;
   border: 1px solid var(--color-border);
@@ -2824,8 +2828,17 @@ a {
   padding: 0 12px;
 }
 
+.admin-reward-form textarea {
+  min-height: 98px;
+  padding: 12px;
+  resize: vertical;
+}
+
 .admin-reward-filter-card input:focus,
-.admin-reward-filter-card select:focus {
+.admin-reward-filter-card select:focus,
+.admin-reward-form input:focus,
+.admin-reward-form select:focus,
+.admin-reward-form textarea:focus {
   border-color: var(--color-primary);
   outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
@@ -2834,6 +2847,87 @@ a {
   display: grid;
   gap: 18px;
   padding: 20px;
+}
+
+.admin-reward-create-card {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+}
+
+.admin-reward-create-card summary,
+.admin-reward-edit-panel summary {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 850;
+  min-height: 44px;
+  padding: 8px 0;
+}
+
+.admin-reward-edit-panel {
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+}
+
+.admin-reward-form {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-reward-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-reward-image-field {
+  display: grid;
+  gap: 10px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-reward-image-field small {
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.admin-reward-image-preview {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: min(100%, 240px);
+  overflow: hidden;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-muted);
+  padding: 12px;
+  text-align: center;
+}
+
+.admin-reward-image-preview img {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.admin-reward-form-wide,
+.admin-reward-form-actions,
+.admin-reward-image-field,
+.admin-reward-form .admin-maintenance-error {
+  grid-column: 1 / -1;
+}
+
+.admin-reward-form-actions {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .admin-reward-header {
@@ -3975,8 +4069,12 @@ a {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
+  .admin-reward-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .admin-reward-summary {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .admin-reward-inventory-grid {

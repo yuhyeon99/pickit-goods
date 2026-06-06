@@ -641,6 +641,28 @@ Policy constraints:
 - Checkout, payment, refund, and draw RPC logic are unchanged.
 - This task is read-only UI for order verification.
 
+## Task 18.4 Admin Reward Item Management
+
+Goal:
+
+Allow operators to manage physical reward item metadata before configuring gacha pools and inventory units.
+
+Implemented app work:
+
+- `/admin/items` includes a `실물 상품 추가` form.
+- Admins can create reward_items with name, description, grade, theme, category, status, and uploaded product image.
+- Admins can edit existing reward item metadata from each item card.
+- Product image input uses file upload instead of direct image URL entry.
+- Uploaded product images are center-cropped to a square WebP asset and stored in Supabase Storage bucket `reward-item-images`.
+- The list refreshes after create/update.
+- Deletion is not implemented; operators should use hidden or archived status.
+
+Policy constraints:
+
+- Draw product creation, pool composition, and inventory unit creation remain separate follow-up tasks.
+- Checkout, draw, refund, and claim logic are unchanged.
+- Existing uploaded image file cleanup is not implemented yet.
+
 ## Task 19. Final Review
 
 Goal:

@@ -18,6 +18,7 @@ export type AdminRewardItem = {
   id: string;
   name: string;
   description: string | null;
+  imageUrl: string | null;
   grade: RewardGrade;
   category: string;
   status: 'active' | 'hidden' | 'archived';
@@ -36,4 +37,23 @@ export type AdminRewardItemFilters = {
   themeId: string | 'all';
   inventoryPresence: 'all' | 'has_inventory' | 'no_inventory';
   poolSearch: string;
+};
+
+export type AdminRewardItemStatus = AdminRewardItem['status'];
+
+export type AdminRewardItemFormInput = {
+  id?: string;
+  name: string;
+  description: string;
+  grade: RewardGrade | '';
+  themeId: string;
+  category: string;
+  status: AdminRewardItemStatus;
+  imageUrl: string;
+};
+
+export type AdminRewardThemeOption = {
+  id: string;
+  name: string;
+  status: AdminRewardItemStatus;
 };

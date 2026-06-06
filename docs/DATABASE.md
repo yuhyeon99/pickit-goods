@@ -106,6 +106,23 @@ Stores actual goods that can be won.
 | created_at | timestamptz | default now() |
 | updated_at | timestamptz | default now() |
 
+Rules:
+
+- Admins can create and update reward_items from `/admin/items`.
+- `/admin/items` stores product images by uploading JPG, PNG, or WEBP files to Supabase Storage instead of asking admins to type image URLs.
+- Uploaded reward item images are center-cropped and converted to square WebP assets before `reward_items.image_url` is updated.
+- Deletion is not exposed in the MVP; use hidden or archived status instead.
+- Reward item creation/update manages only base item metadata.
+- Draw product pool composition and inventory unit creation are handled separately.
+- Existing uploaded image cleanup/replacement deletion is not automated yet.
+
+Storage:
+
+- Bucket: `reward-item-images`
+- Public read is allowed so item cards can render product images.
+- Insert/update is restricted to admins through Storage policies.
+- Delete is not exposed in the MVP.
+
 ## 5. draw_products
 
 Stores purchasable draw products.

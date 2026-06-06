@@ -157,7 +157,20 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] Grade filter works.
 - [x] Theme filter works.
 - [x] Inventory presence filter works.
-- [x] No reward item create/update/delete UI exists.
+- [x] No reward item delete UI exists.
+- [ ] Admin can create a reward item from `/admin/items`.
+- [ ] Reward item creation validates name, grade, theme, category, and status.
+- [ ] Reward item creation accepts JPG, PNG, and WEBP image files.
+- [ ] Reward item creation rejects files larger than 5MB.
+- [ ] Reward item image preview is shown in a square frame.
+- [ ] Reward item image is uploaded to Supabase Storage bucket `reward-item-images`.
+- [ ] Uploaded reward item image is saved as a square WebP URL in `reward_items.image_url`.
+- [ ] Admin can edit reward item metadata from `/admin/items`.
+- [ ] Existing reward item image preview is shown in the edit form.
+- [ ] Editing without selecting a new image keeps the existing image.
+- [ ] Selecting a new image uploads and stores the replacement image URL.
+- [ ] Admin can change reward item status instead of deleting it.
+- [ ] Reward item create/update does not create draw product pool items or inventory units.
 
 ### `/admin/pools`
 
