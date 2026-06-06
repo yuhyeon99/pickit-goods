@@ -163,6 +163,7 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [ ] Reward item creation accepts JPG, PNG, and WEBP image files.
 - [ ] Reward item creation rejects files larger than 5MB.
 - [ ] Reward item image preview is shown in a square frame.
+- [ ] Reward item image crop position and zoom can be adjusted before upload.
 - [ ] Reward item image is uploaded to Supabase Storage bucket `reward-item-images`.
 - [ ] Uploaded reward item image is saved as a square WebP URL in `reward_items.image_url`.
 - [ ] Admin can edit reward item metadata from `/admin/items`.

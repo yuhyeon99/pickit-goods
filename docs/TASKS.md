@@ -653,7 +653,8 @@ Implemented app work:
 - Admins can create reward_items with name, description, grade, theme, category, status, and uploaded product image.
 - Admins can edit existing reward item metadata from each item card.
 - Product image input uses file upload instead of direct image URL entry.
-- Uploaded product images are center-cropped to a square WebP asset and stored in Supabase Storage bucket `reward-item-images`.
+- Admins can adjust the square crop position and zoom from the image preview before uploading.
+- Uploaded product images are converted to a square WebP asset and stored in Supabase Storage bucket `reward-item-images`.
 - The list refreshes after create/update.
 - Deletion is not implemented; operators should use hidden or archived status.
 

@@ -110,7 +110,8 @@ Rules:
 
 - Admins can create and update reward_items from `/admin/items`.
 - `/admin/items` stores product images by uploading JPG, PNG, or WEBP files to Supabase Storage instead of asking admins to type image URLs.
-- Uploaded reward item images are center-cropped and converted to square WebP assets before `reward_items.image_url` is updated.
+- Uploaded reward item images are converted to square WebP assets before `reward_items.image_url` is updated.
+- Admins can adjust the square crop position and zoom in the preview before uploading.
 - Deletion is not exposed in the MVP; use hidden or archived status instead.
 - Reward item creation/update manages only base item metadata.
 - Draw product pool composition and inventory unit creation are handled separately.

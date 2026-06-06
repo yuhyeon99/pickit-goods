@@ -1,10 +1,14 @@
 import { supabase } from '../../../shared/api/supabaseClient';
-import { createSquareImageBlob } from '../lib/createSquareImageBlob';
+import { createSquareImageBlob, type SquareImageCrop } from '../lib/createSquareImageBlob';
 
 const REWARD_ITEM_IMAGE_BUCKET = 'reward-item-images';
 
-export async function uploadAdminRewardItemImage(rewardItemId: string, file: File) {
-  const imageBlob = await createSquareImageBlob(file);
+export async function uploadAdminRewardItemImage(
+  rewardItemId: string,
+  file: File,
+  crop: SquareImageCrop,
+) {
+  const imageBlob = await createSquareImageBlob(file, crop);
   const path = `reward-items/${rewardItemId}/${Date.now()}.webp`;
 
   const { error } = await supabase.storage

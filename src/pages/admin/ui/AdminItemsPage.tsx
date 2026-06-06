@@ -1,10 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
+} from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createAdminRewardItem } from '../api/createAdminRewardItem';
 import { getAdminRewardItems } from '../api/getAdminRewardItems';
 import { getAdminRewardThemes } from '../api/getAdminRewardThemes';
 import { uploadAdminRewardItemImage } from '../api/uploadAdminRewardItemImage';
 import { updateAdminRewardItem } from '../api/updateAdminRewardItem';
+import {
+  defaultSquareImageCrop,
+  drawSquareImageToCanvas,
+  type SquareImageCrop,
+} from '../lib/createSquareImageBlob';
 import { getAdminGachaStatus } from '../lib/gachaStatus';
 import { formatCurrency } from '../lib/orderStatus';
 import { inventoryStatusLabels, inventoryStatusOrder, rewardItemStatusLabels } from '../lib/rewardGrade';
@@ -25,6 +37,13 @@ const maxImageSize = 5 * 1024 * 1024;
 
 type RewardItemFormSubmitInput = AdminRewardItemFormInput & {
   imageFile: File | null;
+  imageCrop: SquareImageCrop;
+};
+
+type ImageDragState = {
+  pointerId: number;
+  x: number;
+  y: number;
 };
 
 const emptyFormInput: AdminRewardItemFormInput = {
@@ -102,6 +121,18 @@ function validateRewardItemForm(input: AdminRewardItemFormInput) {
   return null;
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function clampImageCrop(crop: SquareImageCrop): SquareImageCrop {
+  return {
+    zoom: clamp(crop.zoom, 1, 3),
+    offsetX: clamp(crop.offsetX, -100, 100),
+    offsetY: clamp(crop.offsetY, -100, 100),
+  };
+}
+
 function RewardItemForm({
   initialValue,
   themes,
@@ -118,8 +149,11 @@ function RewardItemForm({
   const [input, setInput] = useState(initialValue);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(initialValue.imageUrl);
+  const [imageCrop, setImageCrop] = useState<SquareImageCrop>(defaultSquareImageCrop);
   const [imageError, setImageError] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const imageDragRef = useRef<ImageDragState | null>(null);
 
   useEffect(() => {
     return () => {
@@ -129,6 +163,38 @@ function RewardItemForm({
     };
   }, [imagePreviewUrl]);
 
+  useEffect(() => {
+    if (!imageFile || !imagePreviewUrl) return;
+
+    let isActive = true;
+    const image = new Image();
+
+    image.onload = () => {
+      if (!isActive) return;
+
+      const canvas = previewCanvasRef.current;
+      const context = canvas?.getContext('2d');
+
+      if (!canvas || !context) return;
+
+      canvas.width = 800;
+      canvas.height = 800;
+      drawSquareImageToCanvas(context, image, imageCrop);
+    };
+
+    image.onerror = () => {
+      if (isActive) {
+        setImageError('이미지를 불러오지 못했습니다. 상품 이미지를 다시 선택해주세요.');
+      }
+    };
+
+    image.src = imagePreviewUrl;
+
+    return () => {
+      isActive = false;
+    };
+  }, [imageCrop, imageFile, imagePreviewUrl]);
+
   function handleImageChange(fileList: FileList | null) {
     const file = fileList?.[0];
 
@@ -137,6 +203,7 @@ function RewardItemForm({
     if (!file) {
       setImageFile(null);
       setImagePreviewUrl(initialValue.imageUrl);
+      setImageCrop(defaultSquareImageCrop);
       return;
     }
 
@@ -157,7 +224,68 @@ function RewardItemForm({
     }
 
     setImageFile(file);
+    setImageCrop(defaultSquareImageCrop);
     setImagePreviewUrl(URL.createObjectURL(file));
+  }
+
+  function handleImageWheel(event: ReactWheelEvent<HTMLCanvasElement>) {
+    if (!imageFile) return;
+
+    event.preventDefault();
+    const zoomDelta = event.deltaY < 0 ? 0.08 : -0.08;
+    setImageCrop((current) =>
+      clampImageCrop({
+        ...current,
+        zoom: current.zoom + zoomDelta,
+      }),
+    );
+  }
+
+  function handleImagePointerDown(event: ReactPointerEvent<HTMLCanvasElement>) {
+    if (!imageFile) return;
+
+    event.preventDefault();
+    imageDragRef.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function handleImagePointerMove(event: ReactPointerEvent<HTMLCanvasElement>) {
+    const dragState = imageDragRef.current;
+
+    if (!imageFile || !dragState || dragState.pointerId !== event.pointerId) return;
+
+    event.preventDefault();
+    const rect = event.currentTarget.getBoundingClientRect();
+    const deltaX = ((event.clientX - dragState.x) / rect.width) * 200;
+    const deltaY = ((event.clientY - dragState.y) / rect.height) * 200;
+
+    setImageCrop((current) =>
+      clampImageCrop({
+        ...current,
+        offsetX: current.offsetX + deltaX,
+        offsetY: current.offsetY + deltaY,
+      }),
+    );
+
+    imageDragRef.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+  }
+
+  function handleImagePointerEnd(event: ReactPointerEvent<HTMLCanvasElement>) {
+    if (imageDragRef.current?.pointerId === event.pointerId) {
+      imageDragRef.current = null;
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
   }
 
   return (
@@ -168,7 +296,7 @@ function RewardItemForm({
         const error = validateRewardItemForm(input);
         setValidationError(error);
         if (error || imageError) return;
-        onSubmit({ ...input, imageFile });
+        onSubmit({ ...input, imageFile, imageCrop });
       }}
     >
       <label>
@@ -236,21 +364,47 @@ function RewardItemForm({
         </select>
       </label>
       <div className="admin-reward-image-field">
-        <label htmlFor={`reward-image-${initialValue.id ?? 'new'}`}>상품 이미지</label>
+        <span>상품 이미지</span>
         <input
+          className="admin-reward-image-input"
           id={`reward-image-${initialValue.id ?? 'new'}`}
           type="file"
           accept={allowedImageTypes.join(',')}
           onChange={(event) => handleImageChange(event.target.files)}
         />
+        <div className="admin-reward-image-upload-row">
+          <label
+            className="admin-reward-image-upload-button"
+            htmlFor={`reward-image-${initialValue.id ?? 'new'}`}
+          >
+            이미지 업로드
+          </label>
+          {imageFile ? <span className="soft-badge">{imageFile.name}</span> : null}
+        </div>
         <div className="admin-reward-image-preview" aria-label="상품 이미지 정사각형 미리보기">
-          {imagePreviewUrl ? (
+          {imageFile ? (
+            <canvas
+              ref={previewCanvasRef}
+              aria-label="조정된 상품 이미지 미리보기"
+              onPointerDown={handleImagePointerDown}
+              onPointerMove={handleImagePointerMove}
+              onPointerUp={handleImagePointerEnd}
+              onPointerCancel={handleImagePointerEnd}
+              onLostPointerCapture={handleImagePointerEnd}
+              onWheel={handleImageWheel}
+            />
+          ) : imagePreviewUrl ? (
             <img src={imagePreviewUrl} alt="상품 이미지 미리보기" />
           ) : (
             <span>이미지를 선택하면 정사각형으로 미리볼 수 있습니다.</span>
           )}
         </div>
-        <small>상품 이미지는 중앙 기준 정사각형으로 저장됩니다. JPG, PNG, WEBP 형식을 지원하며 최대 5MB까지 업로드할 수 있습니다.</small>
+        {imageFile ? (
+          <p className="admin-reward-image-help">
+            미리보기를 드래그해서 위치를 조정하고, 마우스 휠로 확대/축소할 수 있습니다. 현재 확대율 {Math.round(imageCrop.zoom * 100)}%
+          </p>
+        ) : null}
+        <small>상품 이미지는 위 정사각형 미리보기와 같은 위치/크기로 저장됩니다. JPG, PNG, WEBP 형식을 지원하며 최대 5MB까지 업로드할 수 있습니다.</small>
         {imageError ? <p className="admin-maintenance-error">{imageError}</p> : null}
       </div>
       <label className="admin-reward-form-wide">
@@ -381,6 +535,7 @@ function AdminRewardItemCard({
 export function AdminItemsPage() {
   const queryClient = useQueryClient();
   const [createFormVersion, setCreateFormVersion] = useState(0);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [filters, setFilters] = useState<AdminRewardItemFilters>({
     search: '',
     grade: 'all',
@@ -413,7 +568,7 @@ export function AdminItemsPage() {
     mutationFn: async (input: RewardItemFormSubmitInput) => {
       const rewardItemId = crypto.randomUUID();
       const imageUrl = input.imageFile
-        ? await uploadAdminRewardItemImage(rewardItemId, input.imageFile)
+        ? await uploadAdminRewardItemImage(rewardItemId, input.imageFile, input.imageCrop)
         : input.imageUrl;
 
       return createAdminRewardItem({
@@ -424,6 +579,7 @@ export function AdminItemsPage() {
     },
     onSuccess: () => {
       setCreateFormVersion((current) => current + 1);
+      setIsCreateModalOpen(false);
       void queryClient.invalidateQueries({ queryKey: ['admin-reward-items'] });
     },
   });
@@ -431,7 +587,7 @@ export function AdminItemsPage() {
   const updateMutation = useMutation({
     mutationFn: async ({ itemId, input }: { itemId: string; input: RewardItemFormSubmitInput }) => {
       const imageUrl = input.imageFile
-        ? await uploadAdminRewardItemImage(itemId, input.imageFile)
+        ? await uploadAdminRewardItemImage(itemId, input.imageFile, input.imageCrop)
         : input.imageUrl;
 
       return updateAdminRewardItem({ id: itemId, ...input, imageUrl });
@@ -480,27 +636,63 @@ export function AdminItemsPage() {
         <p>당첨 대상 상품의 기본 정보를 생성하고 수정합니다. 가챠 상품 풀 구성과 재고 생성은 별도 단계에서 처리합니다.</p>
       </div>
 
-      <details className="admin-reward-create-card">
-        <summary>실물 상품 추가</summary>
-        <RewardItemForm
-          key={createFormVersion}
-          initialValue={emptyFormInput}
-          themes={themes}
-          isSaving={createMutation.isPending}
-          submitLabel="실물 상품 추가"
-          onSubmit={(input) => createMutation.mutate(input)}
-        />
+      <div className="admin-reward-toolbar">
+        <button
+          className="primary-cta"
+          type="button"
+          onClick={() => {
+            createMutation.reset();
+            setIsCreateModalOpen(true);
+          }}
+        >
+          실물 상품 추가
+        </button>
         {createMutation.isSuccess ? (
           <p className="admin-maintenance-result">실물 상품을 추가했습니다.</p>
         ) : null}
-        {createMutation.isError ? (
-          <p className="admin-maintenance-error">
-            {createMutation.error instanceof Error
-              ? createMutation.error.message
-              : '실물 상품을 추가하지 못했습니다.'}
-          </p>
-        ) : null}
-      </details>
+      </div>
+
+      {isCreateModalOpen ? (
+        <div className="admin-reward-modal-backdrop" role="presentation">
+          <section
+            className="admin-reward-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-reward-create-title"
+          >
+            <div className="admin-reward-modal-header">
+              <div>
+                <p className="section-label">실물 상품 추가</p>
+                <h2 id="admin-reward-create-title">새 실물 상품 등록</h2>
+                <p>기본 상품 정보와 이미지를 등록합니다. 재고와 상품 풀 구성은 이후 단계에서 연결합니다.</p>
+              </div>
+              <button
+                className="text-button"
+                type="button"
+                disabled={createMutation.isPending}
+                onClick={() => setIsCreateModalOpen(false)}
+              >
+                닫기
+              </button>
+            </div>
+            <RewardItemForm
+              key={createFormVersion}
+              initialValue={emptyFormInput}
+              themes={themes}
+              isSaving={createMutation.isPending}
+              submitLabel="실물 상품 추가"
+              onSubmit={(input) => createMutation.mutate(input)}
+            />
+            {createMutation.isError ? (
+              <p className="admin-maintenance-error">
+                {createMutation.error instanceof Error
+                  ? createMutation.error.message
+                  : '실물 상품을 추가하지 못했습니다.'}
+              </p>
+            ) : null}
+          </section>
+        </div>
+      ) : null}
 
       {updateMutation.isError ? (
         <section className="state-card state-card-error">
