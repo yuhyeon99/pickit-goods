@@ -34,6 +34,7 @@ type DrawProductItemRow = {
     title: string;
     status: DrawProductStatus;
     price: number;
+    display_theme_name: string | null;
     themes: MaybeArray<{
       name: string;
     }>;
@@ -111,6 +112,7 @@ export async function getAdminRewardItems(): Promise<AdminRewardItem[]> {
             title,
             status,
             price,
+            display_theme_name,
             themes(name)
           )
         `,
@@ -151,7 +153,7 @@ export async function getAdminRewardItems(): Promise<AdminRewardItem[]> {
       drawProductTitle: drawProduct.title,
       drawProductStatus: drawProduct.status,
       drawProductPrice: drawProduct.price,
-      drawProductThemeName: firstRelation(drawProduct.themes)?.name ?? null,
+      drawProductThemeName: firstRelation(drawProduct.themes)?.name ?? drawProduct.display_theme_name ?? null,
       quantity: poolItem.quantity,
     });
     poolsByRewardItem.set(poolItem.reward_item_id, currentItems);

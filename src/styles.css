@@ -411,6 +411,24 @@ a {
   padding: 24px;
 }
 
+.gacha-card-image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f6f8fb;
+  color: #526172;
+  font-weight: 850;
+  text-align: center;
+}
+
+.gacha-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .gacha-card-header {
   display: grid;
   gap: 16px;
@@ -599,6 +617,24 @@ a {
   display: grid;
   gap: 24px;
   padding: 28px;
+}
+
+.detail-hero-image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f6f8fb;
+  color: #526172;
+  font-weight: 850;
+  text-align: center;
+}
+
+.detail-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .detail-hero-content {
@@ -2631,7 +2667,10 @@ a {
 }
 
 .admin-gacha-filter-card input,
-.admin-gacha-filter-card select {
+.admin-gacha-filter-card select,
+.admin-gacha-form input,
+.admin-gacha-form select,
+.admin-gacha-form textarea {
   width: 100%;
   min-height: 46px;
   border: 1px solid var(--color-border);
@@ -2642,8 +2681,17 @@ a {
   padding: 0 12px;
 }
 
+.admin-gacha-form textarea {
+  min-height: 98px;
+  padding: 12px;
+  resize: vertical;
+}
+
 .admin-gacha-filter-card input:focus,
-.admin-gacha-filter-card select:focus {
+.admin-gacha-filter-card select:focus,
+.admin-gacha-form input:focus,
+.admin-gacha-form select:focus,
+.admin-gacha-form textarea:focus {
   border-color: var(--color-primary);
   outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
@@ -2652,6 +2700,225 @@ a {
   display: grid;
   gap: 18px;
   padding: 20px;
+}
+
+.admin-gacha-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-gacha-toolbar .admin-maintenance-result {
+  margin: 0;
+}
+
+.admin-gacha-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--color-bg) 72%, rgba(0, 0, 0, 0.56));
+  padding: 16px;
+}
+
+.admin-gacha-modal {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 920px);
+  max-height: min(92vh, 980px);
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 28px 80px var(--color-shadow);
+  padding: 18px;
+}
+
+.admin-gacha-modal-header {
+  display: grid;
+  gap: 12px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 14px;
+}
+
+.admin-gacha-modal-header h2 {
+  margin: 4px 0 6px;
+  color: var(--color-text-strong);
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.admin-gacha-modal-header p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.admin-gacha-edit-panel {
+  border-top: 1px solid var(--color-border);
+  padding-top: 14px;
+}
+
+.admin-gacha-edit-panel summary {
+  cursor: pointer;
+  color: var(--color-primary);
+  font-weight: 850;
+  min-height: 44px;
+  padding: 8px 0;
+}
+
+.admin-gacha-form {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-gacha-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-gacha-image-card {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: min(100%, 180px);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-gacha-image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-gacha-image-field {
+  display: grid;
+  gap: 10px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-gacha-image-field small {
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.admin-gacha-image-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.admin-gacha-image-upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-gacha-image-upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 42px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-text-strong);
+  cursor: pointer;
+  font-weight: 850;
+  padding: 0 16px;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.admin-gacha-image-upload-button:hover {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-strong));
+  transform: translateY(-1px);
+}
+
+.admin-gacha-image-input:focus-visible + .admin-gacha-image-upload-row .admin-gacha-image-upload-button {
+  border-color: var(--color-primary);
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.admin-gacha-image-preview {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: min(100%, 240px);
+  overflow: hidden;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: 8px;
+  background: var(--color-surface-strong);
+  color: var(--color-muted);
+  padding: 12px;
+  text-align: center;
+}
+
+.admin-gacha-image-preview img,
+.admin-gacha-image-preview canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  cursor: grab;
+  object-fit: cover;
+  touch-action: none;
+}
+
+.admin-gacha-image-preview canvas:active {
+  cursor: grabbing;
+}
+
+.admin-gacha-image-help {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.admin-gacha-form-wide,
+.admin-gacha-image-field,
+.admin-gacha-form-note,
+.admin-gacha-form-actions,
+.admin-gacha-form .admin-maintenance-error {
+  grid-column: 1 / -1;
+}
+
+.admin-gacha-form-note {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.admin-gacha-form-actions {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .admin-gacha-header {
@@ -3973,7 +4240,7 @@ a {
 
   .detail-hero-card {
     align-items: stretch;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: minmax(220px, 0.55fr) minmax(0, 1fr) 320px;
     padding: 40px;
   }
 
@@ -4166,6 +4433,15 @@ a {
   .admin-gacha-header {
     align-items: start;
     grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .admin-gacha-modal-header {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .admin-gacha-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .admin-gacha-summary {

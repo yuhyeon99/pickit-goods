@@ -25,6 +25,7 @@ type DrawProductRow = {
   scope: DrawProductScope;
   price: number;
   theme_id: string | null;
+  display_theme_name: string | null;
   sales_limit: number;
   sold_count: number;
   created_at: string;
@@ -83,6 +84,7 @@ export async function getAdminPools(): Promise<AdminPool[]> {
         scope,
         price,
         theme_id,
+        display_theme_name,
         sales_limit,
         sold_count,
         created_at,
@@ -203,7 +205,7 @@ export async function getAdminPools(): Promise<AdminPool[]> {
       scope: product.scope,
       price: product.price,
       themeId: product.theme_id,
-      themeName: firstRelation(product.themes)?.name ?? null,
+      themeName: firstRelation(product.themes)?.name ?? product.display_theme_name ?? null,
       salesLimit: product.sales_limit,
       soldCount: product.sold_count,
       remainingPurchaseQuantity: calculateRemainingPurchaseQuantity(

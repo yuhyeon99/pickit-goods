@@ -57,7 +57,7 @@ function AdminPoolCard({ pool }: { pool: AdminPool }) {
           <div className="cart-item-title-row">
             <span className={`status-badge status-badge-${status.tone}`}>{status.rawLabel}</span>
             <span className="soft-badge">{pool.type === 'gacha' ? '가챠' : pool.type}</span>
-            <span className="soft-badge">{pool.scope === 'random' ? '랜덤' : '테마'}</span>
+            <span className="soft-badge">테마: {pool.themeName ?? '미지정'}</span>
             <span className={pool.hasMismatch ? 'item-status-badge item-status-warning' : 'item-status-badge item-status-success'}>
               {pool.hasMismatch ? '재고 확인 필요' : '구성 일치'}
             </span>

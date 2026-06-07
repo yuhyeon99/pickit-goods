@@ -12,6 +12,7 @@ type ProductRow = {
   sales_limit: number;
   sold_count: number;
   scope: DrawProductScope;
+  display_theme_name: string | null;
   themes: { name: string } | null;
 };
 
@@ -32,6 +33,7 @@ export async function getProductPurchaseInfo(productId: string): Promise<CartDra
         sales_limit,
         sold_count,
         scope,
+        display_theme_name,
         themes(name)
       `,
     )
@@ -70,7 +72,7 @@ export async function getProductPurchaseInfo(productId: string): Promise<CartDra
     salesLimit: product.sales_limit,
     soldCount: product.sold_count,
     scope: product.scope,
-    themeName: product.themes?.name ?? null,
+    themeName: product.themes?.name ?? product.display_theme_name ?? null,
     availableInventoryCount,
     remainingPurchaseQuantity: calculateRemainingPurchaseQuantity(
       product.sales_limit,

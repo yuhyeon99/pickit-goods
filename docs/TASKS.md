@@ -664,6 +664,34 @@ Policy constraints:
 - Checkout, draw, refund, and claim logic are unchanged.
 - Existing uploaded image file cleanup is not implemented yet.
 
+## Task 18.5 Admin Gacha Product Management
+
+Goal:
+
+Allow operators to manage gacha product metadata before configuring reward pools and inventory units.
+
+Implemented app work:
+
+- `/admin/gacha` includes a `가챠 상품 추가` button and modal form.
+- Admins can create `type = gacha` draw_products with representative image, theme selection, title, description, price, credit amount, sales limit, and status.
+- Admins can edit existing gacha product metadata from each gacha card.
+- Gacha product forms no longer expose random/theme scope selection UI.
+- Gacha products require selecting an existing `themes` row through `theme_id`.
+- Representative images are uploaded to Supabase Storage bucket `draw-product-images`.
+- User `/gacha` and `/gacha/:id` show the representative image and theme name.
+- `/admin/gacha`, `/admin/pools`, and linked gacha displays use `themes.name` first, with `display_theme_name` kept as legacy fallback.
+- `/admin/themes` route remains available and visible in the primary admin sidebar.
+- The list refreshes after create/update.
+- Deletion is not implemented; operators should use hidden or archived status.
+
+Policy constraints:
+
+- Ticket product creation remains out of scope.
+- `sold_count` is not editable from the admin form.
+- `display_theme_name` is retained only for compatibility and is not edited by the current UI.
+- Draw product pool composition and inventory unit creation remain separate follow-up tasks.
+- Checkout, draw, refund, and claim logic are unchanged.
+
 ## Task 19. Final Review
 
 Goal:

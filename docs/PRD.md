@@ -11,7 +11,7 @@ Users can purchase or receive draw credits, then use them to obtain real-world g
 
 For the first MVP, only gacha draw is implemented end to end. Ticket routes and placeholder UI are included, but actual ticket draw execution is deferred to the second phase.
 
-The service supports both random pools and theme-specific pools. A theme may represent a specific animation, character group, event, or collection.
+Themes are managed as top-level categories in the `themes` table. Each gacha product is a sale product that belongs to one theme through `draw_products.theme_id`.
 
 The service is built with React, Supabase, and Vercel.
 
@@ -85,6 +85,14 @@ Examples:
 - Gacha 10 draw credits
 - Theme-specific ticket 5-pack
 - Random ticket 1-pack
+
+Gacha products belong to a theme and include their own representative image.
+
+Examples:
+
+- Theme: 원피스 / product: 원피스 랜덤 가챠 1회권
+- Theme: 블리치 / product: 블리치 랜덤 가챠 1회권
+- Theme: 전체 랜덤 / product: 전체 랜덤 가챠 1회권
 
 ### 4.2 Reward Items
 
@@ -200,21 +208,17 @@ Planned implementation impact:
 
 ## 7. Theme Policy
 
-Random products and theme-specific products must use separate inventory pools.
+Themes are top-level operating categories.
 
 ```txt
-Random Gacha Pool
-→ Contains goods from multiple themes
-
-Theme Gacha Pool
-→ Contains goods only from a specific theme
-
-Random Ticket Pool
-→ Contains goods from multiple themes
-
-Theme Ticket Pool
-→ Contains goods only from a specific theme
+Theme
+→ Draw Product
+→ Reward Items
+→ Inventory Units
 ```
+
+Each gacha product must belong to one theme through `draw_products.theme_id`.
+If operators need an all-random product, create a theme such as `전체 랜덤` and assign the gacha product to that theme.
 
 ## 8. Grade Policy
 

@@ -140,8 +140,9 @@ Examples:
 | id | uuid | primary key |
 | type | text | gacha or ticket |
 | scope | text | random or theme |
-| theme_id | uuid | nullable, references themes |
+| theme_id | uuid | required for admin-created gacha products, references themes |
 | title | text | required |
+| display_theme_name | text | nullable, legacy fallback |
 | description | text | nullable |
 | price | integer | MVP test price |
 | credit_amount | integer | issued credits count |
@@ -154,6 +155,17 @@ Examples:
 
 Rules:
 
+- Admins can create and update `type = gacha` draw_products from `/admin/gacha`.
+- Themes are managed in the `themes` table as top-level categories.
+- Gacha products are sale products that belong to one theme through `theme_id`.
+- `/admin/gacha` requires selecting a theme from the existing `themes` table.
+- `thumbnail_url` stores the representative gacha product image uploaded through Supabase Storage.
+- `display_theme_name` remains as a legacy fallback column and is not directly edited in the current admin form.
+- New admin-created gacha products use `scope = theme` and a non-empty `theme_id`.
+- If an all-random gacha product is needed, create a theme such as `전체 랜덤` and select it.
+- Ticket product creation/editing is excluded from the current admin form.
+- Admin forms manage only draw product metadata; draw_product_items and inventory_units are configured separately.
+- Admin forms do not expose direct sold_count editing.
 - sold_count is based on issued credit quantity, not order item row count or completed draw count.
 - A gacha 1 draw purchase increases sold_count by 1.
 - A gacha 10 draw purchase increases sold_count by 10.
@@ -164,6 +176,13 @@ Rules:
 - Existing unused credits can still be drawn against a sold_out product if available inventory remains.
 - sold_count is not automatically restored when a credit expires.
 - For the MVP, sold_count is the current paid sale count after processed unused-credit refunds, not completed draw count.
+
+Storage:
+
+- Bucket: `draw-product-images`
+- Public read is allowed so gacha cards and detail pages can render product images.
+- Insert/update is restricted to admins through Storage policies.
+- Delete is not exposed in the MVP.
 
 ## 6. draw_product_items
 

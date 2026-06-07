@@ -18,11 +18,14 @@ export type AdminGachaProduct = {
   id: string;
   title: string;
   description: string | null;
+  imageUrl: string | null;
   price: number;
+  creditAmount: number;
   status: DrawProductStatus;
   scope: DrawProductScope;
   themeId: string | null;
   themeName: string | null;
+  displayThemeName: string | null;
   salesLimit: number;
   soldCount: number;
   remainingPurchaseQuantity: number;
@@ -32,6 +35,7 @@ export type AdminGachaProduct = {
   gradeProbabilities: GradeProbability[];
   rewardItems: AdminGachaRewardItem[];
   createdAt: string;
+  updatedAt: string;
 };
 
 export type AdminGachaFilters = {
@@ -39,4 +43,28 @@ export type AdminGachaFilters = {
   status: DrawProductStatus | 'all';
   themeId: string | 'all';
   inventoryPresence: 'all' | 'has_available' | 'no_available';
+};
+
+export type AdminGachaProductFormInput = {
+  id?: string;
+  title: string;
+  themeId: string;
+  description: string;
+  imageUrl: string;
+  price: string;
+  creditAmount: string;
+  salesLimit: string;
+  status: DrawProductStatus;
+};
+
+export type AdminGachaProductMutationInput = {
+  id?: string;
+  title: string;
+  themeId: string;
+  description: string | null;
+  imageUrl: string | null;
+  price: number;
+  creditAmount: number;
+  salesLimit: number;
+  status: DrawProductStatus;
 };

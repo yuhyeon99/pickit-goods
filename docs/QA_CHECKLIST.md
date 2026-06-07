@@ -144,7 +144,19 @@ Use it for local Supabase, Supabase Cloud, and Vercel production checks. Mark it
 - [x] Grade counts and probabilities are shown.
 - [x] Included reward item list is shown.
 - [x] Search and filters work.
-- [x] No gacha create/update/delete UI exists.
+- [ ] Admin can create a gacha product from `/admin/gacha`.
+- [ ] Gacha product creation accepts an optional representative image.
+- [ ] Gacha product image preview supports drag position adjustment and mouse wheel zoom.
+- [ ] Gacha product creation requires selecting an existing theme.
+- [ ] Gacha product creation validates theme, title, price, credit amount, sales limit, and status.
+- [ ] Admin can edit existing gacha product metadata from each card.
+- [ ] Admin can change gacha product status instead of deleting it.
+- [ ] Admin cannot directly edit `sold_count` from the gacha form.
+- [ ] Gacha product create/update does not create draw_product_items or inventory_units.
+- [ ] `/gacha` shows gacha representative image and theme name.
+- [ ] `/gacha/:id` shows gacha representative image and theme name.
+- [ ] Existing seed gacha products use `themes.name` first and fall back to `display_theme_name` or a placeholder when needed.
+- [ ] `/admin/themes` is visible in the admin sidebar.
 
 ### `/admin/items`
 

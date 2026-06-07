@@ -81,6 +81,13 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
   return (
     <section className="gacha-detail-page">
       <div className="detail-hero-card">
+        <div className="detail-hero-image">
+          {product.imageUrl ? (
+            <img src={product.imageUrl} alt={`${product.title} 대표 이미지`} />
+          ) : (
+            <span>{product.themeName ?? 'Pickit Goods'}</span>
+          )}
+        </div>
         <div className="detail-hero-content">
           <span className={`status-badge status-badge-${displayStatus.tone}`}>
             {displayStatus.label}
@@ -88,6 +95,7 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
           <div>
             <p className="section-label">Gacha Detail</p>
             <h1>{product.title}</h1>
+            <span className="soft-badge">{product.themeName ?? '미지정 테마'}</span>
           </div>
           <p>{product.description}</p>
         </div>
@@ -130,12 +138,8 @@ function DetailContent({ product }: { product: GachaProductDetail }) {
           <h2>기본 정보</h2>
           <dl className="detail-info-list">
             <div>
-              <dt>구분</dt>
-              <dd>{product.scope === 'random' ? '랜덤 가챠' : '테마 가챠'}</dd>
-            </div>
-            <div>
               <dt>테마</dt>
-              <dd>{product.themeName ?? '여러 테마'}</dd>
+              <dd>{product.themeName ?? '미지정'}</dd>
             </div>
             <div>
               <dt>판매량</dt>

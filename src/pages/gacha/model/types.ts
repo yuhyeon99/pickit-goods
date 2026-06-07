@@ -8,6 +8,7 @@ export type GachaProduct = {
   id: string;
   title: string;
   description: string | null;
+  imageUrl: string | null;
   price: number;
   status: DrawProductStatus;
   salesLimit: number;

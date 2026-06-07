@@ -6,6 +6,8 @@ type DrawProductRow = {
   id: string;
   title: string;
   description: string | null;
+  thumbnail_url: string | null;
+  display_theme_name: string | null;
   price: number;
   status: GachaProduct['status'];
   sales_limit: number;
@@ -35,6 +37,8 @@ export async function getGachaProducts(): Promise<GachaProduct[]> {
         id,
         title,
         description,
+        thumbnail_url,
+        display_theme_name,
         price,
         status,
         sales_limit,
@@ -92,13 +96,14 @@ export async function getGachaProducts(): Promise<GachaProduct[]> {
       id: product.id,
       title: product.title,
       description: product.description,
+      imageUrl: product.thumbnail_url,
       price: product.price,
       status: product.status,
       salesLimit: product.sales_limit,
       soldCount: product.sold_count,
       scope: product.scope,
       themeId: product.theme_id,
-      themeName: product.themes?.name ?? null,
+      themeName: product.themes?.name ?? product.display_theme_name ?? null,
       availableInventoryCount,
       remainingPurchaseQuantity: calculateRemainingPurchaseQuantity(
         product.sales_limit,

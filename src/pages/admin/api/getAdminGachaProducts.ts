@@ -15,13 +15,17 @@ type DrawProductRow = {
   id: string;
   title: string;
   description: string | null;
+  thumbnail_url: string | null;
+  display_theme_name: string | null;
   price: number;
+  credit_amount: number;
   status: DrawProductStatus;
   scope: DrawProductScope;
   theme_id: string | null;
   sales_limit: number;
   sold_count: number;
   created_at: string;
+  updated_at: string;
   themes: MaybeArray<{
     name: string;
   }>;
@@ -71,13 +75,17 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
         id,
         title,
         description,
+        thumbnail_url,
+        display_theme_name,
         price,
+        credit_amount,
         status,
         scope,
         theme_id,
         sales_limit,
         sold_count,
         created_at,
+        updated_at,
         themes(name)
       `,
     )
@@ -186,11 +194,14 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
       id: product.id,
       title: product.title,
       description: product.description,
+      imageUrl: product.thumbnail_url,
       price: product.price,
+      creditAmount: product.credit_amount,
       status: product.status,
       scope: product.scope,
       themeId: product.theme_id,
-      themeName: firstRelation(product.themes)?.name ?? null,
+      themeName: firstRelation(product.themes)?.name ?? product.display_theme_name ?? null,
+      displayThemeName: product.display_theme_name,
       salesLimit: product.sales_limit,
       soldCount: product.sold_count,
       remainingPurchaseQuantity,
@@ -200,6 +211,7 @@ export async function getAdminGachaProducts(): Promise<AdminGachaProduct[]> {
       gradeProbabilities: calculateGradeProbabilities(gradeCounts, availableInventoryCount),
       rewardItems: rewardItemsByProduct.get(product.id) ?? [],
       createdAt: product.created_at,
+      updatedAt: product.updated_at,
     };
   });
 }

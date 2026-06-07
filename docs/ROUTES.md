@@ -86,7 +86,7 @@ OAuth login page
 Admin dashboard
 
 /admin/themes
-Theme management
+Theme management placeholder. Theme is the top-level category used by gacha products and reward items, so the admin sidebar keeps this route visible.
 
 /admin/items
 Reward item management, creation, and editing
@@ -164,7 +164,6 @@ Main navigation:
 Admin navigation:
 
 - Dashboard
-- Themes
 - Reward Items
 - Pools
 - Gacha

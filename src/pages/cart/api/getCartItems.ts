@@ -17,6 +17,7 @@ type CartItemRow = {
     sales_limit: number;
     sold_count: number;
     scope: DrawProductScope;
+    display_theme_name: string | null;
     themes: { name: string } | null;
   };
 };
@@ -43,6 +44,7 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
           sales_limit,
           sold_count,
           scope,
+          display_theme_name,
           themes(name)
         )
       `,
@@ -98,7 +100,7 @@ export async function getCartItems(userId: string): Promise<CartItem[]> {
         salesLimit: row.draw_products.sales_limit,
         soldCount: row.draw_products.sold_count,
         scope: row.draw_products.scope,
-        themeName: row.draw_products.themes?.name ?? null,
+        themeName: row.draw_products.themes?.name ?? row.draw_products.display_theme_name ?? null,
         availableInventoryCount,
         remainingPurchaseQuantity,
       },

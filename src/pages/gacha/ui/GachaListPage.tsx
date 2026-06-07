@@ -21,6 +21,13 @@ function GachaProductCard({ product }: { product: GachaProduct }) {
 
   return (
     <article className="gacha-card">
+      <div className="gacha-card-image">
+        {product.imageUrl ? (
+          <img src={product.imageUrl} alt={`${product.title} 대표 이미지`} />
+        ) : (
+          <span>{product.themeName ?? 'Pickit Goods'}</span>
+        )}
+      </div>
       <div className="gacha-card-header">
         <div className="gacha-card-title-group">
           <span className={`status-badge status-badge-${displayStatus.tone}`}>
@@ -35,12 +42,8 @@ function GachaProductCard({ product }: { product: GachaProduct }) {
 
       <dl className="gacha-meta-grid">
         <div>
-          <dt>구분</dt>
-          <dd>{product.scope === 'random' ? '랜덤 가챠' : '테마 가챠'}</dd>
-        </div>
-        <div>
           <dt>테마</dt>
-          <dd>{product.themeName ?? '여러 테마'}</dd>
+          <dd>{product.themeName ?? '미지정'}</dd>
         </div>
         <div>
           <dt>판매량</dt>
